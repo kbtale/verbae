@@ -1,0 +1,72 @@
+{
+  "ser": {
+    "present_simple_yo": "soy",
+    "present_simple_tu": "eres",
+    "present_simple_elEllaUsted": "es",
+    "present_simple_nosotros": "somos",
+    "present_simple_vosotros": "sois",
+    "present_simple_ellosEllasUstedes": "son",
+    "preterite_yo": "fui",
+    "preterite_tu": "fuiste",
+    "preterite_elEllaUsted": "fue",
+    "preterite_nosotros": "fuimos",
+    "preterite_vosotros": "fuisteis",
+    "preterite_ellosEllasUstedes": "fueron"
+  },
+  "estar": {
+    "present_simple_yo": "estoy",
+    "present_simple_tu": "estás",
+    "present_simple_elEllaUsted": "está",
+    "present_simple_nosotros": "estamos",
+    "present_simple_vosotros": "estáis",
+    "present_simple_ellosEllasUstedes": "están"
+  },
+  "ir": {
+    "present_simple_yo": "voy",
+    "present_simple_tu": "vas",
+    "present_simple_elEllaUsted": "va",
+    "present_simple_nosotros": "vamos",
+    "present_simple_vosotros": "vais",
+    "present_simple_ellosEllasUstedes": "van"
+  },
+  "haber": {
+    "present_simple_yo": "he",
+    "present_simple_tu": "has",
+    "present_simple_elEllaUsted": "ha",
+    "present_simple_nosotros": "hemos",
+    "present_simple_vosotros": "habéis",
+    "present_simple_ellosEllasUstedes": "han"
+  },
+  "tener": {
+    "present_simple_yo": "tengo",
+    "present_simple_tu": "tienes",
+    "present_simple_elEllaUsted": "tiene",
+    "present_simple_nosotros": "tenemos",
+    "present_simple_vosotros": "tenéis",
+    "present_simple_ellosEllasUstedes": "tienen"
+  },
+  "hacer": {
+    "present_simple_yo": "hago",
+    "present_simple_tu": "haces",
+    "present_simple_elEllaUsted": "hace",
+    "present_simple_nosotros": "hacemos",
+    "present_simple_vosotros": "hacéis",
+    "present_simple_ellosEllasUstedes": "hacen"
+  },
+  "decir": {
+    "present_simple_yo": "digo",
+    "present_simple_tu": "dices",
+    "present_simple_elEllaUsted": "dice",
+    "present_simple_nosotros": "decimos",
+    "present_simple_vosotros": "decís",
+    "present_simple_ellosEllasUstedes": "dicen"
+  },
+  "poder": {
+    "present_simple_yo": "puedo",
+    "present_simple_tu": "puedes",
+    "present_simple_elEllaUsted": "puede",
+    "present_simple_nosotros": "podemos",
+    "present_simple_vosotros": "podéis",
+    "present_simple_ellosEllasUstedes": "pueden"
+  }
+}

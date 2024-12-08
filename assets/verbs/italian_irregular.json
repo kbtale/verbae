@@ -1,0 +1,14 @@
+[
+  ["essere", "sono", "sei", "è", "siamo", "siete", "sono", "ero", "eri", "era", "eravamo", "eravate", "erano", "sarò", "sarai", "sarà", "saremo", "sarete", "saranno"],
+  ["avere", "ho", "hai", "ha", "abbiamo", "avete", "hanno", "avevo", "avevi", "aveva", "avevamo", "avevate", "avevano", "avrò", "avrai", "avrà", "avremo", "avrete", "avranno"],
+  ["fare", "faccio", "fai", "fa", "facciamo", "fate", "fanno", "facevo", "facevi", "faceva", "facevamo", "facevate", "facevano", "farò", "farai", "farà", "faremo", "farete", "faranno"],
+  ["andare", "vado", "vai", "va", "andiamo", "andate", "vanno", "andavo", "andavi", "andava", "andavamo", "andavate", "andavano", "andrò", "andrai", "andrà", "andremo", "andrete", "andranno"],
+  ["venire", "vengo", "vieni", "viene", "veniamo", "venite", "vengono", "venivo", "venivi", "veniva", "venivamo", "venivate", "venivano", "verrò", "verrai", "verrà", "verremo", "verrete", "verranno"],
+  ["dire", "dico", "dici", "dice", "diciamo", "dite", "dicono", "dicevo", "dicevi", "diceva", "dicevamo", "dicevate", "dicevano", "dirò", "dirai", "dirà", "diremo", "direte", "diranno"],
+  ["stare", "sto", "stai", "sta", "stiamo", "state", "stanno", "stavo", "stavi", "stava", "stavamo", "stavate", "stavano", "starò", "starai", "starà", "staremo", "starete", "staranno"],
+  ["dare", "do", "dai", "dà", "diamo", "date", "danno", "davo", "davi", "dava", "davamo", "davate", "davano", "darò", "darai", "darà", "daremo", "darete", "daranno"],
+  ["sapere", "so", "sai", "sa", "sappiamo", "sapete", "sanno", "sapevo", "sapevi", "sapeva", "sapevamo", "sapevate", "sapevano", "saprò", "saprai", "saprà", "sapremo", "saprete", "sapranno"],
+  ["volere", "voglio", "vuoi", "vuole", "vogliamo", "volete", "vogliono", "volevo", "volevi", "voleva", "volevamo", "volevate", "volevano", "vorrò", "vorrai", "vorrà", "vorremo", "vorrete", "vorranno"],
+  ["potere", "posso", "puoi", "può", "possiamo", "potete", "possono", "potevo", "potevi", "poteva", "potevamo", "potevate", "potevano", "potrò", "potrai", "potrà", "potremo", "potrete", "potranno"],
+  ["dovere", "devo", "devi", "deve", "dobbiamo", "dovete", "devono", "dovevo", "dovevi", "doveva", "dovevamo", "dovevate", "dovevano", "dovrò", "dovrai", "dovrà", "dovremo", "dovrete", "dovranno"]
+]
