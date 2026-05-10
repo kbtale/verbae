@@ -1,0 +1,5 @@
+{
+  "language": "italian",
+  "regular": "assets/verbs/italian_regular.json",
+  "irregular": "assets/verbs/italian_irregular.json"
+}
