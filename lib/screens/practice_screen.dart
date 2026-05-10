@@ -194,6 +194,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
                 Navigator.of(context).pop();
                 setState(() {
                   _currentVerbIndex = 0;
+                  _practiceStartTime = DateTime.now();
                   _resetControllers();
                 });
               },
@@ -208,22 +209,6 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
         _resetControllers();
       });
     }
-  }
-
-  void _moveToNextVerb() {
-    if (_verbSet.isEmpty) {
-      return;
-    }
-
-    if (_masterMode) {
-      bool allCorrect = _validationStatus.values.every((status) => status == true);
-      if (!allCorrect) return;
-    }
-
-    setState(() {
-      _currentVerbIndex = (_currentVerbIndex + 1) % _verbSet.length;
-      _resetControllers();
-    });
   }
 
   InputDecoration _getInputDecoration(String key) {
@@ -370,7 +355,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
                     setState(() {
                       _validationStatus[entry.key] = null;
                       _showCorrectAnswers = false;
-                        _answersLocked = false;
+                      _answersLocked = false;
                     });
                   },
                 ),
