@@ -89,6 +89,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   }
 
   void _resetControllers() {
+    _disposeControllers();
     _controllers.clear();
     _validationStatus.clear();
     _showCorrectAnswers = false;
@@ -102,6 +103,12 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
         _controllers[person] = TextEditingController();
         _validationStatus[person] = null;
       }
+    }
+  }
+
+  void _disposeControllers() {
+    for (final controller in _controllers.values) {
+      controller.dispose();
     }
   }
 
@@ -430,9 +437,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
 
   @override
   void dispose() {
-    for (var controller in _controllers.values) {
-      controller.dispose();
-    }
+    _disposeControllers();
     _animationController.dispose();
     super.dispose();
   }
