@@ -1,5 +1,96 @@
 {
   "language": "spanish",
-  "regular": "assets/verbs/spanish_regular.json",
-  "irregular": "assets/verbs/spanish_irregular.json"
+  "verbs": [
+    {
+      "type": "regular",
+      "base": "hablar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": {
+          "affirmative": {
+            "yo": "{base}o",
+            "tu": "{base}as",
+            "elEllaUsted": "{base}a",
+            "nosotros": "{base}amos",
+            "vosotros": "{base}áis",
+            "ellosEllasUstedes": "{base}an"
+          }
+        }
+      },
+      "spelling_rules": {
+        "default": "regular"
+      }
+    },
+    {
+      "type": "regular",
+      "base": "cantar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": {
+          "affirmative": {
+            "yo": "{base}o"
+          }
+        }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "bailar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": { "present_simple": { "affirmative": { "yo": "{base}o" } } },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "irregular",
+      "base": "ser",
+      "language": "spanish",
+      "category": "irregular",
+      "forms": {
+        "present_simple_yo": "soy",
+        "present_simple_tu": "eres",
+        "present_simple_elEllaUsted": "es",
+        "present_simple_nosotros": "somos",
+        "present_simple_vosotros": "sois",
+        "present_simple_ellosEllasUstedes": "son",
+        "preterite_yo": "fui",
+        "preterite_tu": "fuiste",
+        "preterite_elEllaUsted": "fue",
+        "preterite_nosotros": "fuimos",
+        "preterite_vosotros": "fuisteis",
+        "preterite_ellosEllasUstedes": "fueron"
+      }
+    },
+    {
+      "type": "irregular",
+      "base": "estar",
+      "language": "spanish",
+      "category": "irregular",
+      "forms": {
+        "present_simple_yo": "estoy",
+        "present_simple_tu": "estás",
+        "present_simple_elEllaUsted": "está",
+        "present_simple_nosotros": "estamos",
+        "present_simple_vosotros": "estáis",
+        "present_simple_ellosEllasUstedes": "están"
+      }
+    },
+    {
+      "type": "irregular",
+      "base": "ir",
+      "language": "spanish",
+      "category": "irregular",
+      "forms": {
+        "present_simple_yo": "voy",
+        "present_simple_tu": "vas",
+        "present_simple_elEllaUsted": "va",
+        "present_simple_nosotros": "vamos",
+        "present_simple_vosotros": "vais",
+        "present_simple_ellosEllasUstedes": "van"
+      }
+    }
+  ]
 }

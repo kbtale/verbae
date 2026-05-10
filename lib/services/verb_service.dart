@@ -49,11 +49,6 @@ class VerbService {
     _verbCache.clear();
   }
 
-  Future<VerbCatalog> _loadCatalog(Language language) async {
-    final String jsonString = await rootBundle.loadString(_verbFiles[language]!);
-    final decodedJson = json.decode(jsonString);
-
-    if (decodedJson is Map<String, dynamic>) {
       return VerbCatalog.fromJson(decodedJson);
     }
 
@@ -136,6 +131,16 @@ class VerbService {
     }
 
     throw FormatException('Unsupported irregular map format for $language');
+  }
+
+  Verb _buildIrregularVerbFromMap(Map<String, dynamic> map) {
+    final base = map['base'] as String? ?? '';
+    final type = map['type'] as String? ?? 'irregular';
+    final v = Verb(base: base, type: type);
+    if (map['forms'] is Map<String, dynamic>) {
+      v.forms = Map<String, String>.from(map['forms']);
+    }
+    return v;
   }
 
   Verb _buildLegacyIrregularVerb(Language language, List<dynamic> entry) {

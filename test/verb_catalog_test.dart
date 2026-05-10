@@ -62,4 +62,14 @@ void main() {
     expect(catalog.verbs.first.isRegular, isTrue);
     expect(catalog.verbs.last.isRegular, isFalse);
   });
+
+  test('unified spanish catalog loads verbs', () {
+    final spanishJson = jsonDecode(File('assets/verbs/spanish.json').readAsStringSync());
+    final catalog = VerbCatalog.fromJson(spanishJson);
+    expect(catalog.language, equals('spanish'));
+    expect(catalog.verbs, isNotEmpty);
+    final ser = catalog.verbs!.firstWhere((v) => v.base == 'ser');
+    expect(ser.type, equals('irregular'));
+    expect(ser.forms, isNotNull);
+  });
 }
