@@ -4,6 +4,7 @@ import 'package:lingua_verb_master/models/verb.dart';
 import 'package:lingua_verb_master/services/verb_service.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   test('generatePracticeSet returns only verbs valid for the selected tense', () async {
     final service = VerbService();
 

@@ -5,10 +5,12 @@ import 'models/verb.dart';
 import 'services/verb_service.dart';
 
 void main() {
-  runApp(VerbaeApp());
+  runApp(const VerbaeApp());
 }
 
 class VerbaeApp extends StatelessWidget {
+  const VerbaeApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -47,6 +49,8 @@ class VerbaeApp extends StatelessWidget {
 }
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -54,7 +58,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   VerbTense _selectedTense = VerbTense.presentSimple;
   final VerbService _verbService = VerbService();
-  Map<Language, Set<VerbTense>> _availableTenses = {};
+  final Map<Language, Set<VerbTense>> _availableTenses = {};
 
   @override
   void initState() {
@@ -118,29 +122,29 @@ class _HomeScreenState extends State<HomeScreen> {
                   () => _navigateToPractice(context, Language.italian),
                   _isTenseAvailable(Language.italian),
                 ),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 _buildLanguageButton(
                   context, 
                   'English', 
                   () => _navigateToPractice(context, Language.english),
                   _isTenseAvailable(Language.english),
                 ),
-                SizedBox(height: 12),
+                const SizedBox(height: 12),
                 _buildLanguageButton(
                   context, 
                   'Spanish', 
                   () => _navigateToPractice(context, Language.spanish),
                   _isTenseAvailable(Language.spanish),
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 
                 // Tense selector
                 Container(
                   width: double.infinity,
-                  margin: EdgeInsets.symmetric(horizontal: 24),
+                  margin: const EdgeInsets.symmetric(horizontal: 24),
                   child: DropdownButtonFormField<VerbTense>(
-                    value: _selectedTense,
-                    decoration: InputDecoration(
+                    initialValue: _selectedTense,
+                    decoration: const InputDecoration(
                       labelText: 'Select Tense',
                       border: OutlineInputBorder(),
                       contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -160,26 +164,26 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 
                 // Dashboard button
                 Container(
                   width: double.infinity,
-                  margin: EdgeInsets.symmetric(horizontal: 24),
+                  margin: const EdgeInsets.symmetric(horizontal: 24),
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(
                         context, 
-                        MaterialPageRoute(builder: (context) => DashboardScreen())
+                        MaterialPageRoute(builder: (context) => const DashboardScreen())
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: 16),
+                      padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    child: Text(
+                    child: const Text(
                       'View Progress',
                       style: TextStyle(fontSize: 16),
                     ),
@@ -201,11 +205,11 @@ class _HomeScreenState extends State<HomeScreen> {
   ) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 24),
+      margin: const EdgeInsets.symmetric(horizontal: 24),
       child: ElevatedButton(
         onPressed: enabled ? onPressed : null,
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: 20),
+          padding: const EdgeInsets.symmetric(vertical: 20),
           backgroundColor: enabled ? Theme.of(context).colorScheme.primary : Colors.grey[300],
           foregroundColor: Colors.white,
           elevation: enabled ? 2 : 0,
@@ -215,7 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         child: Text(
           language, 
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,
           ),
