@@ -33,16 +33,23 @@ class VerbService {
 
   Future<List<Verb>> generatePracticeSet({
     required Language language, 
+    required VerbTense tense,
     String? category,
     int setSize = 10
   }) async {
     final verbs = await fetchVerbs(language);
-    if (category != null) {
-      return verbs.where((v) => v.category == category).toList();
+    final validVerbs = verbs.where((v) => v.hasTense(tense)).toList(growable: false);
+    final filteredVerbs = category != null
+        ? validVerbs.where((v) => v.category == category).toList(growable: false)
+        : validVerbs;
+
+    if (filteredVerbs.length <= setSize) {
+      return filteredVerbs;
     }
-    // Shuffle and take a subset
-    verbs.shuffle();
-    return verbs.take(setSize).toList();
+
+    final practiceSet = filteredVerbs.toList();
+    practiceSet.shuffle();
+    return practiceSet.take(setSize).toList(growable: false);
   }
 
   void clearCache() {

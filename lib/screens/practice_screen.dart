@@ -22,14 +22,18 @@ class PracticeScreen extends StatefulWidget {
 class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProviderStateMixin {
   final Map<String, TextEditingController> _controllers = {};
   final Map<String, bool?> _validationStatus = {};
-  late StatsService _statsService;
+  StatsService? _statsService;
   late AnimationController _animationController;
   final VerbService _verbService = VerbService();
   List<Verb> _verbSet = [];
   int _currentVerbIndex = 0;
   bool _showCorrectAnswers = false;
   bool _masterMode = false;
+  bool _answersLocked = false;
+  bool _isAdvancing = false;
   DateTime? _practiceStartTime;
+  bool _isLoading = true;
+  String? _loadErrorMessage;
 
   @override
   void initState() {
@@ -44,26 +48,53 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   }
 
   Future<void> _initializeStatsService() async {
-    _statsService = await StatsService.create();
+    final statsService = await StatsService.create();
+    if (!mounted) {
+      return;
+    }
+    _statsService = statsService;
   }
 
   Future<void> _loadVerbSet() async {
-    final verbs = await _verbService.generatePracticeSet(
-      language: widget.language,
-      category: widget.category,
-    );
-    
-    setState(() {
-      _verbSet = verbs.where((v) => v.hasTense(widget.tense)).toList();
-      _resetControllers();
-    });
+    try {
+      final verbs = await _verbService.generatePracticeSet(
+        language: widget.language,
+        tense: widget.tense,
+        category: widget.category,
+      );
+      
+      if (!mounted) {
+        return;
+      }
+
+      setState(() {
+        _verbSet = verbs;
+        _currentVerbIndex = 0;
+        _loadErrorMessage = null;
+        _isLoading = false;
+        _resetControllers();
+      });
+    } catch (error) {
+      if (!mounted) {
+        return;
+      }
+
+      setState(() {
+        _verbSet = [];
+        _currentVerbIndex = 0;
+        _loadErrorMessage = 'Unable to load practice set. Please try again.';
+        _isLoading = false;
+      });
+    }
   }
 
   void _resetControllers() {
     _controllers.clear();
     _validationStatus.clear();
     _showCorrectAnswers = false;
-    if (_verbSet.isNotEmpty) {
+    _answersLocked = false;
+    _isAdvancing = false;
+    if (_verbSet.isNotEmpty && _currentVerbIndex < _verbSet.length) {
       final currentVerb = _verbSet[_currentVerbIndex];
       final conjugations = currentVerb.tenses[widget.tense] ?? {};
       
@@ -75,6 +106,14 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   }
 
   void _checkAnswer() async {
+    if (_verbSet.isEmpty || _currentVerbIndex >= _verbSet.length) {
+      return;
+    }
+
+    if (_answersLocked) {
+      return;
+    }
+
     final currentVerb = _verbSet[_currentVerbIndex];
     final conjugations = currentVerb.tenses[widget.tense] ?? {};
     bool allCorrect = true;
@@ -95,17 +134,28 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
         : 0;
 
     // Record practice results
-    await _statsService.recordPractice(
-      language: widget.language,
-      tense: widget.tense,
-      isCorrect: allCorrect,
-      verbId: currentVerb.id,
-      practiceTimeSeconds: practiceTimeSeconds,
-    );
+    final statsService = _statsService;
+    if (statsService != null) {
+      await statsService.recordPractice(
+        language: widget.language,
+        tense: widget.tense,
+        isCorrect: allCorrect,
+        verbId: currentVerb.id,
+        practiceTimeSeconds: practiceTimeSeconds,
+      );
+    }
+
+    if (!mounted) {
+      return;
+    }
 
     setState(() {
+      _answersLocked = true;
       if (!_masterMode || allCorrect) {
         _showCorrectAnswers = true;
+      }
+      if (allCorrect) {
+        _isAdvancing = true;
       }
     });
 
@@ -125,6 +175,14 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   }
 
   void _nextVerb() {
+    if (_verbSet.isEmpty) {
+      return;
+    }
+
+    if (_isAdvancing) {
+      _isAdvancing = false;
+    }
+
     if (_currentVerbIndex >= _verbSet.length - 1) {
       // If we're at the last verb, show a completion dialog
       showDialog(
@@ -145,6 +203,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
                 Navigator.of(context).pop();
                 setState(() {
                   _currentVerbIndex = 0;
+                  _practiceStartTime = DateTime.now();
                   _resetControllers();
                 });
               },
@@ -159,18 +218,6 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
         _resetControllers();
       });
     }
-  }
-
-  void _moveToNextVerb() {
-    if (_masterMode) {
-      bool allCorrect = _validationStatus.values.every((status) => status == true);
-      if (!allCorrect) return;
-    }
-
-    setState(() {
-      _currentVerbIndex = (_currentVerbIndex + 1) % _verbSet.length;
-      _resetControllers();
-    });
   }
 
   InputDecoration _getInputDecoration(String key) {
@@ -206,20 +253,84 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   }
 
   Widget _buildNextButton() {
+    if (_masterMode) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Text(
+          'Master Mode auto-advances after a correct answer.',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.orange,
+            fontStyle: FontStyle.italic,
+          ),
+        ),
+      );
+    }
+
     return ElevatedButton(
-      onPressed: _showCorrectAnswers ? _nextVerb : null,
+      onPressed: _showCorrectAnswers && !_isAdvancing ? _nextVerb : null,
       child: Text('Next Verb'),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_verbSet.isEmpty) {
+    if (_isLoading) {
       return Scaffold(
         appBar: AppBar(
           title: Text('Practice ${widget.tense.getDisplayNameForLanguage(widget.language)}'),
         ),
         body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (_loadErrorMessage != null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Practice ${widget.tense.getDisplayNameForLanguage(widget.language)}'),
+        ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  _loadErrorMessage!,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _isLoading = true;
+                      _loadErrorMessage = null;
+                    });
+                    _loadVerbSet();
+                  },
+                  child: const Text('Retry'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
+    if (_verbSet.isEmpty) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Practice ${widget.tense.getDisplayNameForLanguage(widget.language)}'),
+        ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Text(
+              'No verbs are available for ${widget.tense.getDisplayNameForLanguage(widget.language)} in this language.',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
       );
     }
 
@@ -239,6 +350,8 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
                   setState(() {
                     _masterMode = value;
                     _showCorrectAnswers = false;
+                    _answersLocked = false;
+                    _isAdvancing = false;
                     _validationStatus.clear();
                   });
                 },
@@ -267,6 +380,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
                     setState(() {
                       _validationStatus[entry.key] = null;
                       _showCorrectAnswers = false;
+                      _answersLocked = false;
                     });
                   },
                 ),
