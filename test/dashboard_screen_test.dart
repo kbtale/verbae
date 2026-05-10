@@ -8,7 +8,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('dashboard screen starts in loading state', (tester) async {
-    await tester.pumpWidget(MaterialApp(home: DashboardScreen()));
+    await tester.pumpWidget(const MaterialApp(home: DashboardScreen()));
 
     expect(find.text('Dashboard'), findsOneWidget);
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
