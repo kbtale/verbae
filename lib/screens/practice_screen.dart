@@ -31,6 +31,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   bool _masterMode = false;
   DateTime? _practiceStartTime;
   bool _isLoading = true;
+  String? _loadErrorMessage;
 
   @override
   void initState() {
@@ -49,22 +50,36 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   }
 
   Future<void> _loadVerbSet() async {
-    final verbs = await _verbService.generatePracticeSet(
-      language: widget.language,
-      tense: widget.tense,
-      category: widget.category,
-    );
-    
-    if (!mounted) {
-      return;
-    }
+    try {
+      final verbs = await _verbService.generatePracticeSet(
+        language: widget.language,
+        tense: widget.tense,
+        category: widget.category,
+      );
+      
+      if (!mounted) {
+        return;
+      }
 
-    setState(() {
-      _verbSet = verbs;
-      _currentVerbIndex = 0;
-      _isLoading = false;
-      _resetControllers();
-    });
+      setState(() {
+        _verbSet = verbs;
+        _currentVerbIndex = 0;
+        _loadErrorMessage = null;
+        _isLoading = false;
+        _resetControllers();
+      });
+    } catch (error) {
+      if (!mounted) {
+        return;
+      }
+
+      setState(() {
+        _verbSet = [];
+        _currentVerbIndex = 0;
+        _loadErrorMessage = 'Unable to load practice set. Please try again.';
+        _isLoading = false;
+      });
+    }
   }
 
   void _resetControllers() {
@@ -240,6 +255,39 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
           title: Text('Practice ${widget.tense.getDisplayNameForLanguage(widget.language)}'),
         ),
         body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (_loadErrorMessage != null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Practice ${widget.tense.getDisplayNameForLanguage(widget.language)}'),
+        ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  _loadErrorMessage!,
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _isLoading = true;
+                      _loadErrorMessage = null;
+                    });
+                    _loadVerbSet();
+                  },
+                  child: const Text('Retry'),
+                ),
+              ],
+            ),
+          ),
+        ),
       );
     }
 
