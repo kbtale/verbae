@@ -253,6 +253,20 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   }
 
   Widget _buildNextButton() {
+    if (_masterMode) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Text(
+          'Master Mode auto-advances after a correct answer.',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.orange,
+            fontStyle: FontStyle.italic,
+          ),
+        ),
+      );
+    }
+
     return ElevatedButton(
       onPressed: _showCorrectAnswers && !_isAdvancing ? _nextVerb : null,
       child: Text('Next Verb'),
@@ -336,6 +350,8 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
                   setState(() {
                     _masterMode = value;
                     _showCorrectAnswers = false;
+                    _answersLocked = false;
+                    _isAdvancing = false;
                     _validationStatus.clear();
                   });
                 },
