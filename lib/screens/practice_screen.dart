@@ -16,7 +16,8 @@ class PracticeScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _PracticeScreenState createState() => _PracticeScreenState();
+  @override
+  State<PracticeScreen> createState() => _PracticeScreenState();
 }
 
 class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProviderStateMixin {

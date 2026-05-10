@@ -4,7 +4,7 @@ import '../models/verb_catalog.dart';
 import '../models/verb.dart';
 
 class VerbService {
-  final Map<Language, String> _verbFiles = {
+  final Map<Language, String> _verbFiles = const {
     Language.english: 'assets/verbs/english.json',
     Language.spanish: 'assets/verbs/spanish.json',
     Language.italian: 'assets/verbs/italian.json',
