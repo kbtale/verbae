@@ -30,6 +30,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   bool _showCorrectAnswers = false;
   bool _masterMode = false;
   DateTime? _practiceStartTime;
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -55,6 +56,8 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
     
     setState(() {
       _verbSet = verbs.where((v) => v.hasTense(widget.tense)).toList();
+      _currentVerbIndex = 0;
+      _isLoading = false;
       _resetControllers();
     });
   }
@@ -63,7 +66,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
     _controllers.clear();
     _validationStatus.clear();
     _showCorrectAnswers = false;
-    if (_verbSet.isNotEmpty) {
+    if (_verbSet.isNotEmpty && _currentVerbIndex < _verbSet.length) {
       final currentVerb = _verbSet[_currentVerbIndex];
       final conjugations = currentVerb.tenses[widget.tense] ?? {};
       
@@ -75,6 +78,10 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   }
 
   void _checkAnswer() async {
+    if (_verbSet.isEmpty || _currentVerbIndex >= _verbSet.length) {
+      return;
+    }
+
     final currentVerb = _verbSet[_currentVerbIndex];
     final conjugations = currentVerb.tenses[widget.tense] ?? {};
     bool allCorrect = true;
@@ -125,6 +132,10 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   }
 
   void _nextVerb() {
+    if (_verbSet.isEmpty) {
+      return;
+    }
+
     if (_currentVerbIndex >= _verbSet.length - 1) {
       // If we're at the last verb, show a completion dialog
       showDialog(
@@ -162,6 +173,10 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   }
 
   void _moveToNextVerb() {
+    if (_verbSet.isEmpty) {
+      return;
+    }
+
     if (_masterMode) {
       bool allCorrect = _validationStatus.values.every((status) => status == true);
       if (!allCorrect) return;
@@ -214,12 +229,29 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
-    if (_verbSet.isEmpty) {
+    if (_isLoading) {
       return Scaffold(
         appBar: AppBar(
           title: Text('Practice ${widget.tense.getDisplayNameForLanguage(widget.language)}'),
         ),
         body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (_verbSet.isEmpty) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Practice ${widget.tense.getDisplayNameForLanguage(widget.language)}'),
+        ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Text(
+              'No verbs are available for ${widget.tense.getDisplayNameForLanguage(widget.language)} in this language.',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
       );
     }
 
