@@ -29,6 +29,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   int _currentVerbIndex = 0;
   bool _showCorrectAnswers = false;
   bool _masterMode = false;
+  bool _answersLocked = false;
   DateTime? _practiceStartTime;
   bool _isLoading = true;
   String? _loadErrorMessage;
@@ -90,6 +91,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
     _controllers.clear();
     _validationStatus.clear();
     _showCorrectAnswers = false;
+    _answersLocked = false;
     if (_verbSet.isNotEmpty && _currentVerbIndex < _verbSet.length) {
       final currentVerb = _verbSet[_currentVerbIndex];
       final conjugations = currentVerb.tenses[widget.tense] ?? {};
@@ -103,6 +105,10 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
 
   void _checkAnswer() async {
     if (_verbSet.isEmpty || _currentVerbIndex >= _verbSet.length) {
+      return;
+    }
+
+    if (_answersLocked) {
       return;
     }
 
@@ -142,6 +148,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
     }
 
     setState(() {
+      _answersLocked = true;
       if (!_masterMode || allCorrect) {
         _showCorrectAnswers = true;
       }
@@ -363,6 +370,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
                     setState(() {
                       _validationStatus[entry.key] = null;
                       _showCorrectAnswers = false;
+                        _answersLocked = false;
                     });
                   },
                 ),
