@@ -51,6 +51,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   Future<void> _loadVerbSet() async {
     final verbs = await _verbService.generatePracticeSet(
       language: widget.language,
+      tense: widget.tense,
       category: widget.category,
     );
     
@@ -59,7 +60,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
     }
 
     setState(() {
-      _verbSet = verbs.where((v) => v.hasTense(widget.tense)).toList();
+      _verbSet = verbs;
       _currentVerbIndex = 0;
       _isLoading = false;
       _resetControllers();
