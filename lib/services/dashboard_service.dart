@@ -39,24 +39,14 @@ class DashboardService {
     try {
       final practiceTimes = await _stats.getPracticeTimes();
       final streakInfo = await _stats.getStreakInfo();
-      final progress = await aggregateProgress();
-
-      double total = 0.0;
-      int count = 0;
-      for (final langMap in progress.values) {
-        for (final v in langMap.values) {
-          total += v;
-          count++;
-        }
-      }
-
-      final overallCoverage = count == 0 ? 0.0 : total / count;
+      final aggregation = await _aggregateMetrics();
 
       return {
         'practiceTimes': practiceTimes,
         'streakInfo': streakInfo,
-        'overallCoverage': overallCoverage,
-        'perLanguageProgress': progress,
+        'overallCoverage': aggregation.overallCoverage,
+        'perLanguageProgress': aggregation.progress,
+        'perLanguageAccuracy': aggregation.accuracy,
       };
     } catch (e, st) {
       if (kDebugMode) {
@@ -68,7 +58,83 @@ class DashboardService {
         'streakInfo': {'currentStreak': 0, 'lastPractice': DateTime.now()},
         'overallCoverage': 0.0,
         'perLanguageProgress': <Language, Map<String, double>>{},
+        'perLanguageAccuracy': <Language, Map<String, double>>{},
       };
     }
   }
+
+  Future<_DashboardAggregation> _aggregateMetrics() async {
+    final practicedVerbs = await _stats.getPracticedVerbs();
+    final stats = await _stats.getStats();
+
+    final Map<Language, Map<String, double>> progress = {};
+    final Map<Language, Map<String, double>> accuracy = {};
+
+    int totalAvailable = 0;
+    int totalPracticed = 0;
+
+    for (final language in Language.values) {
+      final Map<String, double> languageProgress = {};
+      final Map<String, double> languageAccuracy = {};
+
+      try {
+        final verbs = await _verbs.fetchVerbs(language);
+        if (verbs.isEmpty) {
+          progress[language] = {};
+          accuracy[language] = {};
+          continue;
+        }
+
+        for (final tense in VerbTense.values) {
+          final key = '${language.name}_${tense.name}';
+          final total = verbs.where((v) => v.hasTense(tense)).length;
+          if (total == 0) continue;
+
+          final practiced = practicedVerbs[key]?.length ?? 0;
+          final practicedClamped = practiced > total ? total : practiced;
+
+          languageProgress[tense.name] = (practicedClamped / total) * 100;
+
+          totalAvailable += total;
+          totalPracticed += practicedClamped;
+
+          final statsEntry = stats[key];
+          final totalCount = statsEntry?['total'] ?? 0;
+          final correctCount = statsEntry?['correct'] ?? 0;
+          final accuracyValue = totalCount == 0 ? 0.0 : (correctCount / totalCount) * 100;
+
+          languageAccuracy[tense.name] = accuracyValue;
+        }
+      } catch (e, st) {
+        if (kDebugMode) {
+          // ignore: avoid_print
+          print('DashboardService._aggregateMetrics error for $language: $e\n$st');
+        }
+      }
+
+      progress[language] = languageProgress;
+      accuracy[language] = languageAccuracy;
+    }
+
+    final overallCoverage = totalAvailable == 0 ? 0.0 : (totalPracticed / totalAvailable) * 100;
+
+    return _DashboardAggregation(
+      progress: progress,
+      accuracy: accuracy,
+      overallCoverage: overallCoverage,
+    );
+  }
+
+}
+
+class _DashboardAggregation {
+  final Map<Language, Map<String, double>> progress;
+  final Map<Language, Map<String, double>> accuracy;
+  final double overallCoverage;
+
+  _DashboardAggregation({
+    required this.progress,
+    required this.accuracy,
+    required this.overallCoverage,
+  });
 }
