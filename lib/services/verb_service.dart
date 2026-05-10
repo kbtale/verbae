@@ -71,7 +71,7 @@ class VerbService {
       return VerbCatalog.fromJson(decodedJson);
     }
 
-    throw FormatException('Verb catalog must be a JSON object.');
+    throw const FormatException('Verb catalog must be a JSON object.');
   }
 
   Future<List<Verb>> _loadVerbList(
