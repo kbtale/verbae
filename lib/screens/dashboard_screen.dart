@@ -17,6 +17,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Map<String, int> _practiceTimes = {};
   Map<String, dynamic> _streakInfo = {'currentStreak': 0, 'lastPractice': DateTime.now()};
   bool _isLoading = true;
+  bool _hasActivity = false;
 
   @override
   void initState() {
@@ -41,6 +42,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     _progressData.clear();
     _practiceTimes = {};
     _streakInfo = {'currentStreak': 0, 'lastPractice': DateTime.now()};
+    _hasActivity = false;
 
     // Load practice times
     _practiceTimes = await _statsService.getPracticeTimes();
@@ -54,6 +56,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
       final percentages = await _statsService.getPracticedVerbsPercentage(language, verbs);
       _progressData[language] = percentages;
     }
+
+    _hasActivity = _practiceTimes.values.any((seconds) => seconds > 0) ||
+        _progressData.values.any((languageProgress) =>
+            languageProgress.values.any((progress) => progress > 0));
 
     if (!mounted) {
       return;
@@ -115,7 +121,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         child: Padding(
           padding: EdgeInsets.all(16),
-          child: const Text('No practice time recorded yet'),
+          child: Text('No practice time recorded yet'),
         ),
       );
     }
@@ -184,6 +190,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget _buildLanguageProgressCards() {
+    if (!_hasActivity) {
+      return Card(
+        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Progress will appear here after your first practice session.',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'Choose a language and tense to start building stats.',
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     return Column(
       children: _progressData.entries.map((languageEntry) {
         final language = languageEntry.key;
