@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:lingua_verb_master/models/verb.dart';
@@ -61,5 +64,51 @@ void main() {
     expect(catalog.verbs, hasLength(2));
     expect(catalog.verbs.first.isRegular, isTrue);
     expect(catalog.verbs.last.isRegular, isFalse);
+  });
+
+  test('unified italian catalog loads verbs', () {
+    final italianJson = jsonDecode(File('assets/verbs/italian.json').readAsStringSync()) as Map<String, dynamic>;
+    final catalog = VerbCatalog.fromJson(italianJson);
+
+    expect(catalog.language, Language.italian);
+    expect(catalog.verbs, hasLength(37));
+    expect(catalog.verbs.any((verb) => verb.base == 'parlare' && verb.isRegular), isTrue);
+    expect(catalog.verbs.any((verb) => verb.base == 'essere' && !verb.isRegular), isTrue);
+  });
+
+  test('rejects malformed unified verb entries', () {
+    final catalogJson = <String, dynamic>{
+      'language': 'english',
+      'verbs': [
+        {
+          'type': 'regular',
+          'base': '',
+          'language': 'english',
+          'category': 'regular',
+          'conjugation_rules': {},
+          'spelling_rules': {},
+        },
+      ],
+    };
+
+    expect(() => VerbCatalog.fromJson(catalogJson), throwsFormatException);
+  });
+
+  test('rejects unified verbs whose language does not match the catalog', () {
+    final catalogJson = <String, dynamic>{
+      'language': 'italian',
+      'verbs': [
+        {
+          'type': 'regular',
+          'base': 'walkare',
+          'language': 'english',
+          'category': 'regular',
+          'conjugation_rules': {},
+          'spelling_rules': {},
+        },
+      ],
+    };
+
+    expect(() => VerbCatalog.fromJson(catalogJson), throwsFormatException);
   });
 }
