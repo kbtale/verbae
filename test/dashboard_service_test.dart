@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:lingua_verb_master/services/stats_service.dart';
 import 'package:lingua_verb_master/services/dashboard_service.dart';
+import 'package:lingua_verb_master/services/verb_service.dart';
 import 'package:lingua_verb_master/models/verb.dart';
 
 class _FakeVerbService extends VerbService {
