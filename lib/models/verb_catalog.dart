@@ -16,7 +16,7 @@ class VerbCatalog {
   factory VerbCatalog.fromJson(Map<String, dynamic> json) {
     final languageValue = json['language'] as String?;
     if (languageValue == null) {
-      throw FormatException('Missing language in verb catalog.');
+      throw const FormatException('Missing language in verb catalog.');
     }
 
     final catalogLanguage = _parseLanguage(languageValue);
@@ -41,7 +41,7 @@ class VerbCatalog {
     final irregularFile = json['irregular'] as String? ?? '';
 
     if (verbs.isEmpty && (regularFile.isEmpty || irregularFile.isEmpty)) {
-      throw FormatException('Verb catalog must define either verbs or regular and irregular files.');
+      throw const FormatException('Verb catalog must define either verbs or regular and irregular files.');
     }
 
     return VerbCatalog(
