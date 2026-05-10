@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:verbae/services/stats_service.dart';
-import 'package:verbae/services/dashboard_service.dart';
-import 'package:verbae/models/verb.dart';
+import 'package:lingua_verb_master/services/stats_service.dart';
+import 'package:lingua_verb_master/services/dashboard_service.dart';
+import 'package:lingua_verb_master/models/verb.dart';
 
 class _FakeVerbService {
   final Map<Language, List<Verb>> data;
