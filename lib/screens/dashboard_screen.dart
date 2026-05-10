@@ -36,6 +36,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
     setState(() => _isLoading = true);
 
+    _progressData.clear();
+    _practiceTimes = {};
+    _streakInfo = {'currentStreak': 0, 'lastPractice': DateTime.now()};
+
     // Load practice times
     _practiceTimes = await _statsService.getPracticeTimes();
 
