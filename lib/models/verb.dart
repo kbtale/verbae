@@ -26,7 +26,10 @@ class Verb {
     required VerbForm form,
   }) {
     if (!isRegular && irregularForms != null) {
-      return _conjugateIrregular(tense, subject, form);
+      final irregularForm = _conjugateIrregular(tense, subject, form);
+      if (irregularForm.isNotEmpty) {
+        return irregularForm;
+      }
     }
     return _conjugateRegular(tense, subject, form);
   }
@@ -42,8 +45,19 @@ class Verb {
   String _conjugateIrregular(VerbTense tense, String subject, VerbForm form) {
     final tenseStr = _getTenseString(tense);
     final formStr = _getFormString(form);
-    
-    return irregularForms![tenseStr][formStr][subject];
+
+    final tenseForms = irregularForms?[tenseStr];
+    if (tenseForms is Map<String, dynamic>) {
+      final formForms = tenseForms[formStr];
+      if (formForms is Map<String, dynamic>) {
+        final value = formForms[subject];
+        if (value is String) {
+          return value;
+        }
+      }
+    }
+
+    return '';
   }
 
   String _applyTemplate(String template, String baseVerb) {

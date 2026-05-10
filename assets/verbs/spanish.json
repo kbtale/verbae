@@ -1,0 +1,5 @@
+{
+  "language": "spanish",
+  "regular": "assets/verbs/spanish_regular.json",
+  "irregular": "assets/verbs/spanish_irregular.json"
+}

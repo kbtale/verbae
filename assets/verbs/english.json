@@ -1,0 +1,210 @@
+{
+  "language": "english",
+  "verbs": [
+    {
+      "type": "regular",
+      "base": "walk",
+      "language": "english",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": {
+          "affirmative": {
+            "I": "{base}",
+            "you": "{base}",
+            "he/she/it": "{base}s",
+            "we": "{base}",
+            "they": "{base}"
+          },
+          "negative": {
+            "I": "do not {base}",
+            "you": "do not {base}",
+            "he/she/it": "does not {base}",
+            "we": "do not {base}",
+            "they": "do not {base}"
+          },
+          "question": {
+            "I": "do I {base}",
+            "you": "do you {base}",
+            "he/she/it": "does he/she/it {base}",
+            "we": "do we {base}",
+            "they": "do they {base}"
+          }
+        },
+        "present_continuous": {
+          "affirmative": {
+            "I": "am {base}ing",
+            "you": "are {base}ing",
+            "he/she/it": "is {base}ing",
+            "we": "are {base}ing",
+            "they": "are {base}ing"
+          }
+        },
+        "past_simple": {
+          "affirmative": {
+            "I": "{base}ed",
+            "you": "{base}ed",
+            "he/she/it": "{base}ed",
+            "we": "{base}ed",
+            "they": "{base}ed"
+          }
+        },
+        "past_continuous": {
+          "affirmative": {
+            "I": "was {base}ing",
+            "you": "were {base}ing",
+            "he/she/it": "was {base}ing",
+            "we": "were {base}ing",
+            "they": "were {base}ing"
+          }
+        },
+        "future_simple": {
+          "affirmative": {
+            "I": "will {base}",
+            "you": "will {base}",
+            "he/she/it": "will {base}",
+            "we": "will {base}",
+            "they": "will {base}"
+          }
+        },
+        "future_continuous": {
+          "affirmative": {
+            "I": "will be {base}ing",
+            "you": "will be {base}ing",
+            "he/she/it": "will be {base}ing",
+            "we": "will be {base}ing",
+            "they": "will be {base}ing"
+          }
+        }
+      },
+      "spelling_rules": {
+        "third_person_singular": "default",
+        "past_simple": "default",
+        "present_participle": "default"
+      }
+    },
+    {
+      "type": "regular",
+      "base": "talk",
+      "language": "english",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": {
+          "affirmative": {
+            "I": "{base}",
+            "you": "{base}",
+            "he/she/it": "{base}s",
+            "we": "{base}",
+            "they": "{base}"
+          }
+        },
+        "past_simple": {
+          "affirmative": {
+            "I": "{base}ed",
+            "you": "{base}ed",
+            "he/she/it": "{base}ed",
+            "we": "{base}ed",
+            "they": "{base}ed"
+          }
+        },
+        "future_simple": {
+          "affirmative": {
+            "I": "will {base}",
+            "you": "will {base}",
+            "he/she/it": "will {base}",
+            "we": "will {base}",
+            "they": "will {base}"
+          }
+        }
+      },
+      "spelling_rules": {
+        "third_person_singular": "default",
+        "past_simple": "default",
+        "present_participle": "default"
+      }
+    },
+    {
+      "type": "irregular",
+      "base": "be",
+      "language": "english",
+      "category": "irregular",
+      "forms": {
+        "present_simple": {
+          "affirmative": {
+            "I": "am",
+            "you": "are",
+            "he/she/it": "is",
+            "we": "are",
+            "they": "are"
+          },
+          "negative": {
+            "I": "am not",
+            "you": "are not",
+            "he/she/it": "is not",
+            "we": "are not",
+            "they": "are not"
+          },
+          "question": {
+            "I": "am I",
+            "you": "are you",
+            "he/she/it": "is he/she/it",
+            "we": "are we",
+            "they": "are they"
+          }
+        },
+        "past_simple": {
+          "affirmative": {
+            "I": "was",
+            "you": "were",
+            "he/she/it": "was",
+            "we": "were",
+            "they": "were"
+          }
+        },
+        "future_simple": {
+          "affirmative": {
+            "I": "will be",
+            "you": "will be",
+            "he/she/it": "will be",
+            "we": "will be",
+            "they": "will be"
+          }
+        }
+      }
+    },
+    {
+      "type": "irregular",
+      "base": "go",
+      "language": "english",
+      "category": "irregular",
+      "forms": {
+        "present_simple": {
+          "affirmative": {
+            "I": "go",
+            "you": "go",
+            "he/she/it": "goes",
+            "we": "go",
+            "they": "go"
+          }
+        },
+        "past_simple": {
+          "affirmative": {
+            "I": "went",
+            "you": "went",
+            "he/she/it": "went",
+            "we": "went",
+            "they": "went"
+          }
+        },
+        "future_simple": {
+          "affirmative": {
+            "I": "will go",
+            "you": "will go",
+            "he/she/it": "will go",
+            "we": "will go",
+            "they": "will go"
+          }
+        }
+      }
+    }
+  ]
+}
