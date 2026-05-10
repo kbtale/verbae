@@ -22,7 +22,7 @@ class PracticeScreen extends StatefulWidget {
 class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProviderStateMixin {
   final Map<String, TextEditingController> _controllers = {};
   final Map<String, bool?> _validationStatus = {};
-  late StatsService _statsService;
+  StatsService? _statsService;
   late AnimationController _animationController;
   final VerbService _verbService = VerbService();
   List<Verb> _verbSet = [];
@@ -46,7 +46,11 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   }
 
   Future<void> _initializeStatsService() async {
-    _statsService = await StatsService.create();
+    final statsService = await StatsService.create();
+    if (!mounted) {
+      return;
+    }
+    _statsService = statsService;
   }
 
   Future<void> _loadVerbSet() async {
@@ -122,13 +126,20 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
         : 0;
 
     // Record practice results
-    await _statsService.recordPractice(
-      language: widget.language,
-      tense: widget.tense,
-      isCorrect: allCorrect,
-      verbId: currentVerb.id,
-      practiceTimeSeconds: practiceTimeSeconds,
-    );
+    final statsService = _statsService;
+    if (statsService != null) {
+      await statsService.recordPractice(
+        language: widget.language,
+        tense: widget.tense,
+        isCorrect: allCorrect,
+        verbId: currentVerb.id,
+        practiceTimeSeconds: practiceTimeSeconds,
+      );
+    }
+
+    if (!mounted) {
+      return;
+    }
 
     setState(() {
       if (!_masterMode || allCorrect) {
