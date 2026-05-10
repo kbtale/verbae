@@ -2,11 +2,13 @@ import 'verb.dart';
 
 class VerbCatalog {
   final Language language;
+  final List<Verb> verbs;
   final String regularFile;
   final String irregularFile;
 
   VerbCatalog({
     required this.language,
+    required this.verbs,
     required this.regularFile,
     required this.irregularFile,
   });
@@ -17,18 +19,24 @@ class VerbCatalog {
       throw FormatException('Missing language in verb catalog.');
     }
 
-    final regularFile = json['regular'] as String?;
-    if (regularFile == null) {
-      throw FormatException('Missing regular file in verb catalog.');
-    }
+    final verbsValue = json['verbs'];
+    final verbs = verbsValue is List
+        ? verbsValue
+            .cast<Map<String, dynamic>>()
+            .map(Verb.fromJson)
+            .toList(growable: false)
+        : <Verb>[];
 
-    final irregularFile = json['irregular'] as String?;
-    if (irregularFile == null) {
-      throw FormatException('Missing irregular file in verb catalog.');
+    final regularFile = json['regular'] as String? ?? '';
+    final irregularFile = json['irregular'] as String? ?? '';
+
+    if (verbs.isEmpty && (regularFile.isEmpty || irregularFile.isEmpty)) {
+      throw FormatException('Verb catalog must define either verbs or regular and irregular files.');
     }
 
     return VerbCatalog(
       language: _parseLanguage(languageValue),
+      verbs: verbs,
       regularFile: regularFile,
       irregularFile: irregularFile,
     );

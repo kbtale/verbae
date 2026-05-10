@@ -16,5 +16,50 @@ void main() {
     expect(catalog.language, Language.english);
     expect(catalog.regularFile, 'assets/verbs/english_regular.json');
     expect(catalog.irregularFile, 'assets/verbs/english_irregular.json');
+    expect(catalog.verbs, isEmpty);
+  });
+
+  test('parses a unified language catalog with verb entries', () {
+    final catalogJson = <String, dynamic>{
+      'language': 'spanish',
+      'verbs': [
+        {
+          'type': 'regular',
+          'base': 'hablar',
+          'language': 'spanish',
+          'category': 'regular',
+          'conjugation_rules': {
+            'present_simple': {
+              'affirmative': {
+                'yo': '{base}o',
+              },
+            },
+          },
+          'spelling_rules': {
+            'default': 'regular',
+          },
+        },
+        {
+          'type': 'irregular',
+          'base': 'ser',
+          'language': 'spanish',
+          'category': 'irregular',
+          'forms': {
+            'present_simple': {
+              'affirmative': {
+                'yo': 'soy',
+              },
+            },
+          },
+        },
+      ],
+    };
+
+    final catalog = VerbCatalog.fromJson(catalogJson);
+
+    expect(catalog.language, Language.spanish);
+    expect(catalog.verbs, hasLength(2));
+    expect(catalog.verbs.first.isRegular, isTrue);
+    expect(catalog.verbs.last.isRegular, isFalse);
   });
 }

@@ -18,6 +18,11 @@ class VerbService {
     }
 
     final catalog = await _loadCatalog(language);
+    if (catalog.verbs.isNotEmpty) {
+      _verbCache[language] = catalog.verbs;
+      return catalog.verbs;
+    }
+
     final regularVerbs = await _loadVerbList(catalog.regularFile, language, true);
     final irregularVerbs = await _loadVerbList(catalog.irregularFile, language, false);
     final verbs = [...regularVerbs, ...irregularVerbs];
