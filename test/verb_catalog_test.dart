@@ -75,4 +75,22 @@ void main() {
     expect(catalog.verbs.any((verb) => verb.base == 'parlare' && verb.isRegular), isTrue);
     expect(catalog.verbs.any((verb) => verb.base == 'essere' && !verb.isRegular), isTrue);
   });
+
+  test('rejects malformed unified verb entries', () {
+    final catalogJson = <String, dynamic>{
+      'language': 'english',
+      'verbs': [
+        {
+          'type': 'regular',
+          'base': '',
+          'language': 'english',
+          'category': 'regular',
+          'conjugation_rules': {},
+          'spelling_rules': {},
+        },
+      ],
+    };
+
+    expect(() => VerbCatalog.fromJson(catalogJson), throwsFormatException);
+  });
 }

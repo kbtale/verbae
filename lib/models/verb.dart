@@ -198,10 +198,15 @@ class Verb {
   }
 
   factory Verb.fromJson(Map<String, dynamic> json) {
+    final base = json['base'] as String?;
+    if (base == null || base.trim().isEmpty) {
+      throw FormatException('Verb entry is missing a base value.');
+    }
+
     if (json['type'] == 'regular') {
       return Verb(
-        id: '${json['base']}_1',
-        base: json['base'],
+        id: '${base}_1',
+        base: base,
         language: json['language'],
         category: json['category'],
         isRegular: true,
@@ -210,8 +215,8 @@ class Verb {
       );
     } else {
       return Verb(
-        id: json['base'],
-        base: json['base'],
+        id: base,
+        base: base,
         language: json['language'],
         category: json['category'],
         isRegular: false,
