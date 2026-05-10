@@ -19,11 +19,21 @@ class VerbCatalog {
       throw FormatException('Missing language in verb catalog.');
     }
 
+    final catalogLanguage = _parseLanguage(languageValue);
+
     final verbsValue = json['verbs'];
     final verbs = verbsValue is List
         ? verbsValue
             .cast<Map<String, dynamic>>()
-            .map(Verb.fromJson)
+            .map((verbJson) {
+              final verbLanguage = verbJson['language'] as String?;
+              if (verbLanguage != null && verbLanguage != languageValue) {
+                throw FormatException(
+                  'Verb entry language must match catalog language: $verbLanguage != $languageValue',
+                );
+              }
+              return Verb.fromJson(verbJson);
+            })
             .toList(growable: false)
         : <Verb>[];
 
@@ -35,7 +45,7 @@ class VerbCatalog {
     }
 
     return VerbCatalog(
-      language: _parseLanguage(languageValue),
+      language: catalogLanguage,
       verbs: verbs,
       regularFile: regularFile,
       irregularFile: irregularFile,

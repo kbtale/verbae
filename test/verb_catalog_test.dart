@@ -93,4 +93,22 @@ void main() {
 
     expect(() => VerbCatalog.fromJson(catalogJson), throwsFormatException);
   });
+
+  test('rejects unified verbs whose language does not match the catalog', () {
+    final catalogJson = <String, dynamic>{
+      'language': 'italian',
+      'verbs': [
+        {
+          'type': 'regular',
+          'base': 'walkare',
+          'language': 'english',
+          'category': 'regular',
+          'conjugation_rules': {},
+          'spelling_rules': {},
+        },
+      ],
+    };
+
+    expect(() => VerbCatalog.fromJson(catalogJson), throwsFormatException);
+  });
 }
