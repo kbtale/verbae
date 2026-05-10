@@ -21,33 +21,33 @@ void main() {
 
   test('parses a unified language catalog with verb entries', () {
     final catalogJson = <String, dynamic>{
-      'language': 'spanish',
+      'language': 'english',
       'verbs': [
         {
           'type': 'regular',
-          'base': 'hablar',
-          'language': 'spanish',
+          'base': 'walk',
+          'language': 'english',
           'category': 'regular',
           'conjugation_rules': {
             'present_simple': {
               'affirmative': {
-                'yo': '{base}o',
+                'I': '{base}',
               },
             },
           },
           'spelling_rules': {
-            'default': 'regular',
+            'third_person_singular': 'default',
           },
         },
         {
           'type': 'irregular',
-          'base': 'ser',
-          'language': 'spanish',
+          'base': 'be',
+          'language': 'english',
           'category': 'irregular',
           'forms': {
             'present_simple': {
               'affirmative': {
-                'yo': 'soy',
+                'I': 'am',
               },
             },
           },
@@ -57,7 +57,7 @@ void main() {
 
     final catalog = VerbCatalog.fromJson(catalogJson);
 
-    expect(catalog.language, Language.spanish);
+    expect(catalog.language, Language.english);
     expect(catalog.verbs, hasLength(2));
     expect(catalog.verbs.first.isRegular, isTrue);
     expect(catalog.verbs.last.isRegular, isFalse);
