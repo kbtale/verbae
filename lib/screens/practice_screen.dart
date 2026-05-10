@@ -30,6 +30,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   bool _showCorrectAnswers = false;
   bool _masterMode = false;
   bool _answersLocked = false;
+  bool _isAdvancing = false;
   DateTime? _practiceStartTime;
   bool _isLoading = true;
   String? _loadErrorMessage;
@@ -92,6 +93,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
     _validationStatus.clear();
     _showCorrectAnswers = false;
     _answersLocked = false;
+    _isAdvancing = false;
     if (_verbSet.isNotEmpty && _currentVerbIndex < _verbSet.length) {
       final currentVerb = _verbSet[_currentVerbIndex];
       final conjugations = currentVerb.tenses[widget.tense] ?? {};
@@ -152,6 +154,9 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
       if (!_masterMode || allCorrect) {
         _showCorrectAnswers = true;
       }
+      if (allCorrect) {
+        _isAdvancing = true;
+      }
     });
 
     if (allCorrect) {
@@ -172,6 +177,10 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   void _nextVerb() {
     if (_verbSet.isEmpty) {
       return;
+    }
+
+    if (_isAdvancing) {
+      _isAdvancing = false;
     }
 
     if (_currentVerbIndex >= _verbSet.length - 1) {
@@ -245,7 +254,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
 
   Widget _buildNextButton() {
     return ElevatedButton(
-      onPressed: _showCorrectAnswers ? _nextVerb : null,
+      onPressed: _showCorrectAnswers && !_isAdvancing ? _nextVerb : null,
       child: Text('Next Verb'),
     );
   }
