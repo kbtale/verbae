@@ -4,6 +4,8 @@ import '../services/stats_service.dart';
 import '../services/verb_service.dart';
 
 class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({super.key});
+
   @override
   _DashboardScreenState createState() => _DashboardScreenState();
 }
@@ -11,7 +13,7 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   late StatsService _statsService;
   final VerbService _verbService = VerbService();
-  Map<Language, Map<String, double>> _progressData = {};
+  final Map<Language, Map<String, double>> _progressData = {};
   Map<String, int> _practiceTimes = {};
   Map<String, dynamic> _streakInfo = {'currentStreak': 0, 'lastPractice': DateTime.now()};
   bool _isLoading = true;
@@ -35,6 +37,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
       return;
     }
     setState(() => _isLoading = true);
+
+    _progressData.clear();
+    _practiceTimes = {};
+    _streakInfo = {'currentStreak': 0, 'lastPractice': DateTime.now()};
 
     // Load practice times
     _practiceTimes = await _statsService.getPracticeTimes();
@@ -62,7 +68,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final hours = seconds ~/ 3600;
     final minutes = (seconds % 3600) ~/ 60;
     if (hours > 0) {
-      return '$hours h ${minutes} min';
+      return '$hours h $minutes min';
     }
     return '$minutes min';
   }
@@ -76,16 +82,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final daysSinceLastPractice = todayDay.difference(lastPracticeDay).inDays;
 
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                Icon(Icons.local_fire_department, color: Colors.orange),
-                SizedBox(width: 8),
+                const Icon(Icons.local_fire_department, color: Colors.orange),
+                const SizedBox(width: 8),
                 Text(
                   'Current Streak: $streak days',
                   style: Theme.of(context).textTheme.titleMedium,
@@ -95,7 +101,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             if (daysSinceLastPractice > 0)
               Text(
                 'Last practice: ${daysSinceLastPractice == 1 ? 'yesterday' : '$daysSinceLastPractice days ago'}',
-                style: TextStyle(color: Colors.grey),
+                style: const TextStyle(color: Colors.grey),
               ),
           ],
         ),
@@ -105,19 +111,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Widget _buildPracticeTimeCard() {
     if (_practiceTimes.isEmpty) {
-      return Card(
+      return const Card(
         margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         child: Padding(
           padding: EdgeInsets.all(16),
-          child: Text('No practice time recorded yet'),
+          child: const Text('No practice time recorded yet'),
         ),
       );
     }
 
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -125,12 +131,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
               'Practice Time',
               style: Theme.of(context).textTheme.titleMedium,
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             ..._practiceTimes.entries.map((entry) {
               final language = entry.key;
               final timeInSeconds = entry.value;
               return Padding(
-                padding: EdgeInsets.symmetric(vertical: 4),
+                padding: const EdgeInsets.symmetric(vertical: 4),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -159,7 +165,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             category.toUpperCase(),
             style: Theme.of(context).textTheme.titleSmall,
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
           LinearProgressIndicator(
             value: progress / 100,
             backgroundColor: Colors.grey[300],
@@ -184,9 +190,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         final tensesProgress = languageEntry.value;
 
         return Card(
-          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           child: Padding(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -194,7 +200,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   language.toString().split('.').last.toUpperCase(),
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 ...tensesProgress.entries.map((entry) {
                   return _buildProgressBar(
                     category: entry.key,
@@ -213,17 +219,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     if (_isLoading) {
       return Scaffold(
-        appBar: AppBar(title: Text('Dashboard')),
-        body: Center(child: CircularProgressIndicator()),
+        appBar: AppBar(title: const Text('Dashboard')),
+        body: const Center(child: CircularProgressIndicator()),
       );
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dashboard'),
+        title: const Text('Dashboard'),
         actions: [
           IconButton(
-            icon: Icon(Icons.refresh),
+            icon: const Icon(Icons.refresh),
             onPressed: _loadStats,
           ),
         ],

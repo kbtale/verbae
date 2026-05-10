@@ -61,8 +61,28 @@ class Verb {
   }
 
   String _applyTemplate(String template, String baseVerb) {
-    var processedBase = _applySpellingRules(baseVerb, template);
+    // Determine language-aware stem (e.g., Italian: remove infinitive ending)
+    final stem = _getStemForLanguage(baseVerb);
+    var processedBase = _applySpellingRules(stem, template);
     return template.replaceAll('{base}', processedBase);
+  }
+
+  String _getStemForLanguage(String baseVerb) {
+    final lang = language.toLowerCase();
+    if (lang.contains('ital')) {
+      // Italian infinitives typically end with -are, -ere, -ire
+      if (baseVerb.endsWith('are') || baseVerb.endsWith('ere') || baseVerb.endsWith('ire')) {
+        return baseVerb.substring(0, baseVerb.length - 3);
+      }
+    }
+    if (lang.contains('span')) {
+      // Spanish infinitives end with -ar, -er, -ir
+      if (baseVerb.endsWith('ar') || baseVerb.endsWith('er') || baseVerb.endsWith('ir')) {
+        return baseVerb.substring(0, baseVerb.length - 2);
+      }
+    }
+    // Default: return full base (English and others)
+    return baseVerb;
   }
 
   String _applySpellingRules(String word, String template) {
@@ -115,7 +135,7 @@ class Verb {
     
     // Rule 3: CVC pattern (Consonant-Vowel-Consonant) -> double final consonant
     if (_isCVCPattern(word)) {
-      return '${word}${word[word.length - 1]}ed';
+      return '$word${word[word.length - 1]}ed';
     }
     
     // Default: just add 'ed'
@@ -135,7 +155,7 @@ class Verb {
     
     // Rule 3: CVC pattern -> double final consonant
     if (_isCVCPattern(word)) {
-      return '${word}${word[word.length - 1]}ing';
+      return '$word${word[word.length - 1]}ing';
     }
     
     // Default: just add 'ing'
@@ -200,7 +220,7 @@ class Verb {
   factory Verb.fromJson(Map<String, dynamic> json) {
     final base = json['base'] as String?;
     if (base == null || base.trim().isEmpty) {
-      throw FormatException('Verb entry is missing a base value.');
+      throw const FormatException('Verb entry is missing a base value.');
     }
 
     if (json['type'] == 'regular') {
@@ -226,6 +246,49 @@ class Verb {
       );
     }
   }
+
+  bool hasTense(VerbTense tense) {
+    final tenseStr = _getTenseString(tense);
+    if (irregularForms != null && irregularForms!.containsKey(tenseStr)) return true;
+    return conjugationRules.containsKey(tenseStr);
+  }
+
+  Map<VerbTense, Map<String, String>> get tenses {
+    final Map<VerbTense, Map<String, String>> result = {};
+    for (final vt in VerbTense.values) {
+      final tenseStr = _getTenseString(vt);
+      Map<String, String> entries = {};
+
+      // Prefer explicit irregular forms when available
+      if (irregularForms != null && irregularForms!.containsKey(tenseStr)) {
+        final tenseForms = irregularForms![tenseStr];
+        if (tenseForms is Map<String, dynamic>) {
+          final affirmative = tenseForms['affirmative'];
+          if (affirmative is Map<String, dynamic>) {
+            entries = affirmative.map((k, v) => MapEntry(k.toString(), v.toString()));
+          }
+        }
+      }
+
+      // Fallback to regular conjugation rules
+      if (entries.isEmpty && conjugationRules.containsKey(tenseStr)) {
+        final forms = conjugationRules[tenseStr];
+        if (forms is Map<String, dynamic>) {
+          final affirmative = forms['affirmative'];
+          if (affirmative is Map<String, dynamic>) {
+            entries = affirmative.map((k, v) => MapEntry(k.toString(), v.toString()));
+          }
+        }
+      }
+
+      if (entries.isNotEmpty) {
+        result[vt] = entries;
+      }
+    }
+    return result;
+  }
+
+  String get infinitive => base;
 }
 
 // Enum for verb categories
@@ -258,6 +321,30 @@ enum VerbForm {
   affirmative,
   negative,
   question
+}
+
+extension VerbTenseDisplay on VerbTense {
+  String get displayName {
+    switch (this) {
+      case VerbTense.presentSimple:
+        return 'Present Simple';
+      case VerbTense.presentContinuous:
+        return 'Present Continuous';
+      case VerbTense.pastSimple:
+        return 'Past Simple';
+      case VerbTense.pastContinuous:
+        return 'Past Continuous';
+      case VerbTense.futureSimple:
+        return 'Future Simple';
+      case VerbTense.futureContinuous:
+        return 'Future Continuous';
+    }
+  }
+
+  String getDisplayNameForLanguage(Language language) {
+    // Currently language-agnostic; placeholder for future localization
+    return displayName;
+  }
 }
 
 class EnglishVerb {
@@ -298,7 +385,7 @@ class EnglishVerb {
     switch (form) {
       case VerbForm.affirmative:
         if (subject == 'he/she/it') {
-          return _applyThirdPersonRule(base);
+          return _applyThirdPersonRule();
         }
         return base;
       
@@ -326,7 +413,7 @@ class EnglishVerb {
       case VerbForm.negative:
         return '$auxiliary not $participle';
       case VerbForm.question:
-        return '${auxiliary.split(' ')[0]} $subject ${auxiliary.split(' ')[1] ?? ''} $participle';
+        return '${auxiliary.split(' ')[0]} $subject ${auxiliary.split(' ').length > 1 ? auxiliary.split(' ')[1] : ''} $participle';
     }
   }
 
@@ -353,7 +440,7 @@ class EnglishVerb {
       case VerbForm.negative:
         return '$auxiliary not $participle';
       case VerbForm.question:
-        return '${auxiliary.split(' ')[0]} $subject ${auxiliary.split(' ')[1] ?? ''} $participle';
+        return '${auxiliary.split(' ')[0]} $subject ${auxiliary.split(' ').length > 1 ? auxiliary.split(' ')[1] : ''} $participle';
     }
   }
 
@@ -439,7 +526,7 @@ class EnglishVerb {
     
     // Rule 3: CVC pattern -> double final consonant
     if (_isCVCPattern()) {
-      return '${base}${base[base.length - 1]}ed';
+      return '$base${base[base.length - 1]}ed';
     }
     
     // Default: just add 'ed'
@@ -459,7 +546,7 @@ class EnglishVerb {
     
     // Rule 3: CVC pattern -> double final consonant
     if (_isCVCPattern()) {
-      return '${base}${base[base.length - 1]}ing';
+      return '$base${base[base.length - 1]}ing';
     }
     
     // Default: just add 'ing'

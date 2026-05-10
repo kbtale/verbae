@@ -42,7 +42,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
     _initializeStatsService();
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
     );
     _practiceStartTime = DateTime.now();
   }
@@ -60,7 +60,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
       final verbs = await _verbService.generatePracticeSet(
         language: widget.language,
         tense: widget.tense,
-        category: widget.category,
+        category: widget.category?.name,
       );
       
       if (!mounted) {
@@ -89,6 +89,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   }
 
   void _resetControllers() {
+    _disposeControllers();
     _controllers.clear();
     _validationStatus.clear();
     _showCorrectAnswers = false;
@@ -102,6 +103,12 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
         _controllers[person] = TextEditingController();
         _validationStatus[person] = null;
       }
+    }
+  }
+
+  void _disposeControllers() {
+    for (final controller in _controllers.values) {
+      controller.dispose();
     }
   }
 
@@ -162,7 +169,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
     if (allCorrect) {
       _animationController.forward().then((_) {
         _animationController.reverse();
-        Future.delayed(Duration(milliseconds: 800), () {
+        Future.delayed(const Duration(milliseconds: 800), () {
           if (mounted) {
             _nextVerb();
           }
@@ -188,15 +195,15 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Practice Complete!'),
-          content: Text('You\'ve completed this practice set.'),
+          title: const Text('Practice Complete!'),
+          content: const Text('You\'ve completed this practice set.'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close dialog
                 Navigator.of(context).pop(); // Return to home screen
               },
-              child: Text('Return to Home'),
+              child: const Text('Return to Home'),
             ),
             TextButton(
               onPressed: () {
@@ -207,7 +214,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
                   _resetControllers();
                 });
               },
-              child: Text('Practice Again'),
+              child: const Text('Practice Again'),
             ),
           ],
         ),
@@ -227,9 +234,9 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
 
     return InputDecoration(
       labelText: key,
-      hintText: 'Enter ${key} conjugation',
+      hintText: 'Enter $key conjugation',
       helperText: _showCorrectAnswers && status == false ? 'Correct: $correctAnswer' : null,
-      helperStyle: TextStyle(color: Colors.red),
+      helperStyle: const TextStyle(color: Colors.red),
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(
           color: status == null 
@@ -254,8 +261,8 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
 
   Widget _buildNextButton() {
     if (_masterMode) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
+      return const Padding(
+        padding: EdgeInsets.symmetric(vertical: 8.0),
         child: Text(
           'Master Mode auto-advances after a correct answer.',
           textAlign: TextAlign.center,
@@ -269,7 +276,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
 
     return ElevatedButton(
       onPressed: _showCorrectAnswers && !_isAdvancing ? _nextVerb : null,
-      child: Text('Next Verb'),
+      child: const Text('Next Verb'),
     );
   }
 
@@ -280,7 +287,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
         appBar: AppBar(
           title: Text('Practice ${widget.tense.getDisplayNameForLanguage(widget.language)}'),
         ),
-        body: Center(child: CircularProgressIndicator()),
+        body: const Center(child: CircularProgressIndicator()),
       );
     }
 
@@ -343,7 +350,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
         actions: [
           Row(
             children: [
-              Text('Master Mode'),
+              const Text('Master Mode'),
               Switch(
                 value: _masterMode,
                 onChanged: (bool value) {
@@ -369,7 +376,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
               'Infinitive: ${currentVerb.infinitive}',
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ...conjugations.entries.map((entry) => 
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -386,14 +393,14 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
                 ),
               )
             ).toList(),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _checkAnswer,
-              child: Text('Check Answers'),
+              child: const Text('Check Answers'),
             ),
             if (_masterMode)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Text(
                   'Master Mode: All answers must be correct to proceed',
                   style: TextStyle(
@@ -410,8 +417,8 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
                 curve: Curves.elasticOut,
               ),
               child: Container(
-                padding: EdgeInsets.all(8),
-                child: Text(
+                padding: const EdgeInsets.all(8),
+                child: const Text(
                   'Correct!',
                   style: TextStyle(
                     color: Colors.green,
@@ -430,7 +437,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
 
   @override
   void dispose() {
-    _controllers.values.forEach((controller) => controller.dispose());
+    _disposeControllers();
     _animationController.dispose();
     super.dispose();
   }

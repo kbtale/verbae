@@ -82,7 +82,20 @@ class StatsService {
   Future<Map<String, int>> getPracticeTimes() async {
     final String? timesJson = _prefs.getString(_practiceTimeKey);
     if (timesJson == null) return {};
-    return Map<String, int>.from(jsonDecode(timesJson));
+
+    try {
+      final decoded = jsonDecode(timesJson);
+      if (decoded is! Map<String, dynamic>) {
+        return {};
+      }
+
+      return decoded.map((key, value) {
+        final parsedValue = value is int ? value : int.tryParse(value.toString()) ?? 0;
+        return MapEntry(key, parsedValue);
+      });
+    } catch (_) {
+      return {};
+    }
   }
 
   // Get streak information
@@ -136,14 +149,22 @@ class StatsService {
   Future<Map<String, Set<String>>> getPracticedVerbs() async {
     final String? verbsJson = _prefs.getString(_verbsPracticedKey);
     if (verbsJson == null) return {};
-    
-    final Map<String, dynamic> decoded = jsonDecode(verbsJson);
-    return Map<String, Set<String>>.from(
-      decoded.map((key, value) => MapEntry(
-        key,
-        Set<String>.from(value as List),
-      )),
-    );
+
+    try {
+      final decoded = jsonDecode(verbsJson);
+      if (decoded is! Map<String, dynamic>) {
+        return {};
+      }
+
+      return decoded.map((key, value) {
+        if (value is List) {
+          return MapEntry(key, Set<String>.from(value.map((entry) => entry.toString())));
+        }
+        return MapEntry(key, <String>{});
+      });
+    } catch (_) {
+      return {};
+    }
   }
 
   // Save practiced verbs
@@ -160,13 +181,24 @@ class StatsService {
     final String? statsJson = _prefs.getString(_statsKey);
     if (statsJson == null) return {};
 
-    final Map<String, dynamic> decoded = jsonDecode(statsJson);
-    return Map<String, Map<String, int>>.from(
-      decoded.map((key, value) => MapEntry(
-        key,
-        Map<String, int>.from(value as Map),
-      )),
-    );
+    try {
+      final decoded = jsonDecode(statsJson);
+      if (decoded is! Map<String, dynamic>) {
+        return {};
+      }
+
+      return decoded.map((key, value) {
+        if (value is Map<String, dynamic>) {
+          return MapEntry(
+            key,
+            value.map((metric, count) => MapEntry(metric, count is int ? count : int.tryParse(count.toString()) ?? 0)),
+          );
+        }
+        return MapEntry(key, <String, int>{});
+      });
+    } catch (_) {
+      return {};
+    }
   }
 
   // Get accuracy for a specific language and tense

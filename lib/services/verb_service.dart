@@ -31,6 +31,8 @@ class VerbService {
     return verbs;
   }
 
+  
+
   Future<List<Verb>> generatePracticeSet({
     required Language language, 
     required VerbTense tense,
@@ -56,6 +58,16 @@ class VerbService {
     _verbCache.clear();
   }
 
+  Future<VerbCatalog> _loadCatalog(Language language) async {
+    final filePath = _verbFiles[language];
+    if (filePath == null || filePath.isEmpty) {
+      throw FormatException('No verb catalog configured for $language');
+    }
+
+    final String jsonString = await rootBundle.loadString(filePath);
+    final decodedJson = json.decode(jsonString);
+
+    if (decodedJson is Map<String, dynamic>) {
       return VerbCatalog.fromJson(decodedJson);
     }
 
@@ -140,15 +152,10 @@ class VerbService {
     throw FormatException('Unsupported irregular map format for $language');
   }
 
-  Verb _buildIrregularVerbFromMap(Map<String, dynamic> map) {
-    final base = map['base'] as String? ?? '';
-    final type = map['type'] as String? ?? 'irregular';
-    final v = Verb(base: base, type: type);
-    if (map['forms'] is Map<String, dynamic>) {
-      v.forms = Map<String, String>.from(map['forms']);
-    }
-    return v;
-  }
+  // Removed legacy _buildIrregularVerbFromMap to avoid keeping
+  // dead or ambiguous compatibility code. New code paths use
+  // `Verb.fromJson`, `_buildIrregularVerbFromForms`, or
+  // `_buildLegacyIrregularVerb` for legacy list formats.
 
   Verb _buildLegacyIrregularVerb(Language language, List<dynamic> entry) {
     if (language == Language.english) {
@@ -178,9 +185,9 @@ class VerbService {
 
     if (language == Language.italian) {
       final base = entry[0] as String;
-      final presentSubjects = const ['io', 'tu', 'luiLei', 'noi', 'voi', 'loro'];
-      final pastSubjects = const ['io', 'tu', 'luiLei', 'noi', 'voi', 'loro'];
-      final futureSubjects = const ['io', 'tu', 'luiLei', 'noi', 'voi', 'loro'];
+      const presentSubjects = ['io', 'tu', 'luiLei', 'noi', 'voi', 'loro'];
+      const pastSubjects = ['io', 'tu', 'luiLei', 'noi', 'voi', 'loro'];
+      const futureSubjects = ['io', 'tu', 'luiLei', 'noi', 'voi', 'loro'];
 
       return Verb(
         id: '${language.name}_$base',
