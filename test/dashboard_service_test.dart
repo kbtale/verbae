@@ -7,11 +7,12 @@ import 'package:lingua_verb_master/services/stats_service.dart';
 import 'package:lingua_verb_master/services/dashboard_service.dart';
 import 'package:lingua_verb_master/models/verb.dart';
 
-class _FakeVerbService {
+class _FakeVerbService extends VerbService {
   final Map<Language, List<Verb>> data;
 
   _FakeVerbService(this.data);
 
+  @override
   Future<List<Verb>> fetchVerbs(Language language) async => data[language] ?? <Verb>[];
 }
 
