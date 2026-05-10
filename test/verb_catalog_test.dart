@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:lingua_verb_master/models/verb.dart';
@@ -63,13 +66,13 @@ void main() {
     expect(catalog.verbs.last.isRegular, isFalse);
   });
 
-  test('unified spanish catalog loads verbs', () {
-    final spanishJson = jsonDecode(File('assets/verbs/spanish.json').readAsStringSync());
-    final catalog = VerbCatalog.fromJson(spanishJson);
-    expect(catalog.language, equals('spanish'));
-    expect(catalog.verbs, isNotEmpty);
-    final ser = catalog.verbs!.firstWhere((v) => v.base == 'ser');
-    expect(ser.type, equals('irregular'));
-    expect(ser.forms, isNotNull);
+  test('unified italian catalog loads verbs', () {
+    final italianJson = jsonDecode(File('assets/verbs/italian.json').readAsStringSync()) as Map<String, dynamic>;
+    final catalog = VerbCatalog.fromJson(italianJson);
+
+    expect(catalog.language, Language.italian);
+    expect(catalog.verbs, hasLength(37));
+    expect(catalog.verbs.any((verb) => verb.base == 'parlare' && verb.isRegular), isTrue);
+    expect(catalog.verbs.any((verb) => verb.base == 'essere' && !verb.isRegular), isTrue);
   });
 }
