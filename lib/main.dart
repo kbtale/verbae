@@ -69,6 +69,9 @@ class _HomeScreenState extends State<HomeScreen> {
       for (var verb in verbs) {
         tenses.addAll(verb.tenses.keys);
       }
+      if (!mounted) {
+        return;
+      }
       setState(() {
         _availableTenses[language] = tenses;
       });

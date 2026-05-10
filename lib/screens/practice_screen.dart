@@ -54,6 +54,10 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
       category: widget.category,
     );
     
+    if (!mounted) {
+      return;
+    }
+
     setState(() {
       _verbSet = verbs.where((v) => v.hasTense(widget.tense)).toList();
       _currentVerbIndex = 0;

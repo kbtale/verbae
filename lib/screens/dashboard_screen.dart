@@ -24,10 +24,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Future<void> _initializeStats() async {
     _statsService = await StatsService.create();
+    if (!mounted) {
+      return;
+    }
     await _loadStats();
   }
 
   Future<void> _loadStats() async {
+    if (!mounted) {
+      return;
+    }
     setState(() => _isLoading = true);
 
     // Load practice times
@@ -41,6 +47,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
       final verbs = await _verbService.fetchVerbs(language);
       final percentages = await _statsService.getPracticedVerbsPercentage(language, verbs);
       _progressData[language] = percentages;
+    }
+
+    if (!mounted) {
+      return;
     }
 
     setState(() => _isLoading = false);
