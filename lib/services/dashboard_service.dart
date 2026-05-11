@@ -53,7 +53,7 @@ class DashboardService {
     } catch (e, st) {
       if (kDebugMode) {
         developer.log('computeMetrics error',
-          name: 'DashboardService', error: e, stackTrace: st);
+          name: 'DashboardService', error: e, stackTrace: st,);
       }
       return {
         'practiceTimes': <String, int>{},
