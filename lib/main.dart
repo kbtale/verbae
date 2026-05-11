@@ -1,3 +1,5 @@
+import 'dart:developer' as developer;
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/practice_screen.dart';
@@ -15,6 +17,10 @@ class VerbaeApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FlutterError.onError = (details) {
+      developer.log('Flutter framework error',
+        name: 'VerbaeApp', error: details.exception, stackTrace: details.stack);
+    };
     return MaterialApp(
       title: 'Verbae',
       theme: AppTheme.light(),

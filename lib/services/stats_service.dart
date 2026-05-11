@@ -93,12 +93,10 @@ class StatsService {
         final parsedValue = value is int ? value : int.tryParse(value.toString()) ?? 0;
         return MapEntry(key, parsedValue);
       });
-    } catch (_) {
+    } catch (e) {
+      debugPrint('StatsService.getPracticeTimes JSON parse error: $e');
       return {};
     }
-  }
-
-  // Get streak information
   Future<Map<String, dynamic>> getStreakInfo() async {
     final lastPracticeMs = _prefs.getInt(_lastPracticeKey);
     final streak = _prefs.getInt(_streakKey) ?? 0;
@@ -162,7 +160,8 @@ class StatsService {
         }
         return MapEntry(key, <String>{});
       });
-    } catch (_) {
+    } catch (e) {
+      debugPrint('StatsService.getPracticedVerbs JSON parse error: $e');
       return {};
     }
   }
@@ -196,7 +195,8 @@ class StatsService {
         }
         return MapEntry(key, <String, int>{});
       });
-    } catch (_) {
+    } catch (e) {
+      debugPrint('StatsService.getStats JSON parse error: $e');
       return {};
     }
   }

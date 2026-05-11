@@ -50,5 +50,6 @@ app.*.map.json
 
 *.md
 !README.md
+!docs/verb-data-format.md
 .agents/
 skills-lock.json

@@ -1,3 +1,5 @@
+import 'dart:developer' as developer;
+
 import 'package:flutter/foundation.dart';
 
 import 'verb_service.dart';
@@ -25,8 +27,8 @@ class DashboardService {
         result[language] = percentages;
       } catch (e, st) {
         if (kDebugMode) {
-          // ignore: avoid_print
-          print('DashboardService.aggregateProgress error for $language: $e\n$st');
+          developer.log('aggregateProgress error for $language',
+            name: 'DashboardService', error: e, stackTrace: st);
         }
         result[language] = {};
       }
@@ -50,8 +52,8 @@ class DashboardService {
       };
     } catch (e, st) {
       if (kDebugMode) {
-        // ignore: avoid_print
-        print('DashboardService.computeMetrics error: $e\n$st');
+        developer.log('computeMetrics error',
+          name: 'DashboardService', error: e, stackTrace: st);
       }
       return {
         'practiceTimes': <String, int>{},
@@ -107,8 +109,8 @@ class DashboardService {
         }
       } catch (e, st) {
         if (kDebugMode) {
-          // ignore: avoid_print
-          print('DashboardService._aggregateMetrics error for $language: $e\n$st');
+          developer.log('_aggregateMetrics error for $language',
+            name: 'DashboardService', error: e, stackTrace: st);
         }
       }
 
