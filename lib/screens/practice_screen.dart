@@ -8,12 +8,14 @@ class PracticeScreen extends StatefulWidget {
   final Language language;
   final VerbTense tense;
   final VerbCategory? category;
+  final VerbService? verbService;
 
   const PracticeScreen({
     super.key, 
     required this.language,
     required this.tense,
     this.category,
+    this.verbService,
   });
 
   @override
@@ -25,8 +27,8 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   final Map<String, bool?> _validationStatus = {};
   StatsService? _statsService;
   bool _statsReady = false;
-  late AnimationController _animationController;
-  final VerbService _verbService = VerbService();
+  late final AnimationController _animationController;
+  late final VerbService _verbService;
   List<Verb> _verbSet = [];
   int _currentVerbIndex = 0;
   bool _showCorrectAnswers = false;
@@ -44,6 +46,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   @override
   void initState() {
     super.initState();
+    _verbService = widget.verbService ?? VerbService();
     _loadVerbSet();
     _initializeStatsService();
     _animationController = AnimationController(
