@@ -52,9 +52,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     // Load progress for each language
     for (final language in Language.values) {
-      final verbs = await _verbService.fetchVerbs(language);
-      final percentages = await _statsService.getPracticedVerbsPercentage(language, verbs);
-      _progressData[language] = percentages;
+      try {
+        final verbs = await _verbService.fetchVerbs(language);
+        final percentages = await _statsService.getPracticedVerbsPercentage(language, verbs);
+        _progressData[language] = percentages;
+      } catch (_) {
+        _progressData[language] = {};
+      }
     }
 
     _hasActivity = _practiceTimes.values.any((seconds) => seconds > 0) ||
