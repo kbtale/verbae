@@ -211,8 +211,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                  child: DropdownButtonFormField<VerbTense>(
-                    value: _selectedTense,
+                    child: DropdownButtonFormField<VerbTense>(
+                      initialValue: _selectedTense,
                     decoration: const InputDecoration(
                       labelText: 'Tense',
                       border: InputBorder.none,

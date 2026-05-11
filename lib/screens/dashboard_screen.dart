@@ -55,7 +55,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     _hasActivity = _practiceTimes.values.any((seconds) => seconds > 0) ||
         _progressData.values.any((languageProgress) =>
-            languageProgress.values.any((progress) => progress > 0));
+            languageProgress.values.any((progress) => progress > 0),
+        );
 
     if (!mounted) return;
     setState(() => _isLoading = false);
