@@ -16,7 +16,6 @@ class PracticeScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  @override
   State<PracticeScreen> createState() => _PracticeScreenState();
 }
 
@@ -24,6 +23,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   final Map<String, TextEditingController> _controllers = {};
   final Map<String, bool?> _validationStatus = {};
   StatsService? _statsService;
+  bool _statsReady = false;
   late AnimationController _animationController;
   final VerbService _verbService = VerbService();
   List<Verb> _verbSet = [];
@@ -54,6 +54,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
       return;
     }
     _statsService = statsService;
+    _statsReady = true;
   }
 
   Future<void> _loadVerbSet() async {
@@ -142,9 +143,8 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
         : 0;
 
     // Record practice results
-    final statsService = _statsService;
-    if (statsService != null) {
-      await statsService.recordPractice(
+    if (_statsReady) {
+      await _statsService!.recordPractice(
         language: widget.language,
         tense: widget.tense,
         isCorrect: allCorrect,
@@ -396,7 +396,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
             ).toList(),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _checkAnswer,
+              onPressed: _statsReady ? _checkAnswer : null,
               child: const Text('Check Answers'),
             ),
             if (_masterMode)
