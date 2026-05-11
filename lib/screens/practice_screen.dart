@@ -404,6 +404,17 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
                 color: Colors.grey,
               ),
             ),
+            if (_currentVerbIndex == 0)
+              Padding(
+                padding: const EdgeInsets.only(top: 4.0),
+                child: Text(
+                  'Type the conjugation and tap Check Answers',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Colors.grey,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ),
             const SizedBox(height: 12),
             ...conjugations.entries.map((entry) => 
               Padding(

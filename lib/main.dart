@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/practice_screen.dart';
 import 'screens/dashboard_screen.dart';
 import 'models/verb.dart';
@@ -59,11 +60,29 @@ class _HomeScreenState extends State<HomeScreen> {
   VerbTense _selectedTense = VerbTense.presentSimple;
   final VerbService _verbService = VerbService();
   final Map<Language, Set<VerbTense>> _availableTenses = {};
+  bool _showWelcomeCard = false;
+  bool _tensesLoading = true;
+  static const String _onboardingKey = 'onboarding_shown';
 
   @override
   void initState() {
     super.initState();
     _loadAvailableTenses();
+    _checkFirstRun();
+  }
+
+  Future<void> _checkFirstRun() async {
+    final prefs = await SharedPreferences.getInstance();
+    final shown = prefs.getBool(_onboardingKey) ?? false;
+    if (!mounted) return;
+    setState(() => _showWelcomeCard = !shown);
+  }
+
+  Future<void> _dismissWelcome() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_onboardingKey, true);
+    if (!mounted) return;
+    setState(() => _showWelcomeCard = false);
   }
 
   Future<void> _loadAvailableTenses() async {
@@ -80,6 +99,8 @@ class _HomeScreenState extends State<HomeScreen> {
         _availableTenses[language] = tenses;
       });
     }
+    if (!mounted) return;
+    setState(() => _tensesLoading = false);
   }
 
   bool _isTenseAvailable(Language language) {
@@ -100,6 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                if (_showWelcomeCard) _buildWelcomeCard(context),
                 // Logo
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 24.0),
@@ -118,6 +140,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ),
+                if (_tensesLoading)
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 12.0),
+                    child: Text(
+                      'Loading available tenses...',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ),
 
                 // Language buttons
                 _buildLanguageButton(
@@ -201,13 +231,54 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget _buildWelcomeCard(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      color: Theme.of(context).colorScheme.primaryContainer,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.waving_hand, color: Theme.of(context).colorScheme.primary),
+                const SizedBox(width: 8),
+                Text(
+                  'Welcome to Verbae!',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Pick a language, choose a tense, and practice verb conjugations. Track your progress anytime with View Progress.',
+              style: TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.8)),
+            ),
+            const SizedBox(height: 12),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton.icon(
+                onPressed: _dismissWelcome,
+                icon: const Icon(Icons.check, size: 18),
+                label: const Text('Got it'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildLanguageButton(
     BuildContext context, 
     String language, 
     VoidCallback onPressed,
     bool enabled,
   ) {
-    return Container(
+    final button = Container(
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 24),
       child: ElevatedButton(
@@ -230,6 +301,20 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+
+    if (!enabled && _tensesLoading) {
+      return Tooltip(
+        message: 'Loading available tenses...',
+        child: button,
+      );
+    }
+    if (!enabled) {
+      return Tooltip(
+        message: 'No verbs available for ${_selectedTense.displayName}',
+        child: button,
+      );
+    }
+    return button;
   }
 
   void _navigateToPractice(BuildContext context, Language language) {
