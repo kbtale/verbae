@@ -68,6 +68,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
     setState(() => _isLoading = false);
   }
 
+  String _formatTenseName(String key) {
+    final words = key.replaceAllMapped(RegExp(r'[A-Z]'), (m) => ' ${m.group(0)}');
+    if (words.isEmpty) return key;
+    return words[0].toUpperCase() + words.substring(1);
+  }
+
   String _formatPracticeTime(int seconds) {
     if (seconds == 0) return 'No practice yet';
     
@@ -146,7 +152,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(language.toUpperCase()),
+                    Text(language[0].toUpperCase() + language.substring(1)),
                     Text(_formatPracticeTime(timeInSeconds)),
                   ],
                 ),
@@ -168,19 +174,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            category.toUpperCase(),
+            _formatTenseName(category),
             style: Theme.of(context).textTheme.titleSmall,
           ),
           const SizedBox(height: 4),
           LinearProgressIndicator(
             value: progress / 100,
-            backgroundColor: Colors.grey[300],
+            backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
             valueColor: AlwaysStoppedAnimation<Color>(
               progress > 70
                   ? Colors.green
                   : progress > 40
                       ? Colors.orange
-                      : Colors.red,
+                      : Theme.of(context).colorScheme.error,
             ),
           ),
           Text('${progress.toStringAsFixed(1)}% verbs practiced'),
@@ -194,17 +200,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
       return Card(
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(24),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              const Icon(Icons.school, size: 48, color: Colors.grey),
+              const SizedBox(height: 12),
               Text(
                 'Progress will appear here after your first practice session.',
                 style: Theme.of(context).textTheme.titleMedium,
+                textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),
               const Text(
                 'Choose a language and tense to start building stats.',
+                textAlign: TextAlign.center,
               ),
             ],
           ),
@@ -225,7 +235,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  language.toString().split('.').last.toUpperCase(),
+                  language.name[0].toUpperCase() + language.name.substring(1),
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 16),
@@ -257,12 +267,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
         title: const Text('Dashboard'),
         actions: [
           IconButton(
+            icon: const Icon(Icons.home),
+            tooltip: 'Home',
+            onPressed: () => Navigator.pop(context),
+          ),
+          IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: _loadStats,
           ),
         ],
       ),
-      body: RefreshIndicator(
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 640),
+          child: RefreshIndicator(
         onRefresh: _loadStats,
         child: ListView(
           children: [
@@ -271,6 +289,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             _buildLanguageProgressCards(),
           ],
         ),
+      ),
+      ),
       ),
     );
   }
