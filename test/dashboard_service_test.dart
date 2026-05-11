@@ -136,4 +136,86 @@ void main() {
     expect(accuracy[Language.english]!['presentSimple'], closeTo(50.0, 0.01));
     expect(accuracy[Language.english]!['pastSimple'], closeTo(66.6667, 0.01));
   });
+
+  test('computeMetrics handles VerbService fetchVerbs throwing', () async {
+    SharedPreferences.setMockInitialValues({});
+    final statsPrefs = await SharedPreferences.getInstance();
+    final stats = StatsService(statsPrefs);
+    final dashboard = DashboardService(stats, _FailingVerbService());
+
+    final metrics = await dashboard.computeMetrics();
+
+    expect(metrics['overallCoverage'], equals(0.0));
+    expect(metrics['perLanguageProgress'], isA<Map<Language, Map<String, double>>>());
+    expect(metrics['perLanguageAccuracy'], isA<Map<Language, Map<String, double>>>());
+  });
+
+  test('aggregateProgress returns empty maps when fetchVerbs throws', () async {
+    SharedPreferences.setMockInitialValues({});
+    final statsPrefs = await SharedPreferences.getInstance();
+    final stats = StatsService(statsPrefs);
+    final dashboard = DashboardService(stats, _FailingVerbService());
+
+    final progress = await dashboard.aggregateProgress();
+
+    for (final language in Language.values) {
+      expect(progress.containsKey(language), isTrue);
+      expect(progress[language], isEmpty);
+    }
+  });
+
+  test('computeMetrics clamps practiced count to total available', () async {
+    SharedPreferences.setMockInitialValues({
+      'verbs_practiced': jsonEncode({
+        'english_presentSimple': ['v1', 'v2', 'v3', 'v4'],
+      }),
+      'verb_stats': jsonEncode({
+        'english_presentSimple': {'total': 5, 'correct': 3},
+      }),
+    });
+
+    final statsPrefs = await SharedPreferences.getInstance();
+    final stats = StatsService(statsPrefs);
+
+    final verbs = <Verb>[
+      _buildVerb(
+        id: 'v1',
+        language: Language.english,
+        tenses: [VerbTense.presentSimple],
+      ),
+    ];
+
+    final dashboard = DashboardService(
+      stats,
+      _FakeVerbService({Language.english: verbs}),
+    );
+
+    final metrics = await dashboard.computeMetrics();
+    final progress = metrics['perLanguageProgress'] as Map<Language, Map<String, double>>;
+
+    expect(progress[Language.english]!['presentSimple'], closeTo(100.0, 0.01));
+  });
+
+  test('computeMetrics returns zero coverage when totalAvailable is zero', () async {
+    SharedPreferences.setMockInitialValues({
+      'verbs_practiced': jsonEncode({
+        'english_presentSimple': ['v1'],
+      }),
+    });
+
+    final statsPrefs = await SharedPreferences.getInstance();
+    final stats = StatsService(statsPrefs);
+    final dashboard = DashboardService(stats, _FakeVerbService({}));
+
+    final metrics = await dashboard.computeMetrics();
+
+    expect(metrics['overallCoverage'], equals(0.0));
+  });
+}
+
+class _FailingVerbService extends VerbService {
+  @override
+  Future<List<Verb>> fetchVerbs(Language language) async {
+    throw Exception('Simulated load failure');
+  }
 }
