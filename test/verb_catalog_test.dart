@@ -112,16 +112,13 @@ void main() {
     expect(() => VerbCatalog.fromJson(catalogJson), throwsFormatException);
   });
 
-  test('parses catalog with empty verb array', () {
+  test('rejects catalog with empty verb array', () {
     final catalogJson = <String, dynamic>{
       'language': 'english',
       'verbs': <dynamic>[],
     };
 
-    final catalog = VerbCatalog.fromJson(catalogJson);
-
-    expect(catalog.language, Language.english);
-    expect(catalog.verbs, isEmpty);
+    expect(() => VerbCatalog.fromJson(catalogJson), throwsFormatException);
   });
 
   test('rejects catalog without language field', () {

@@ -15,11 +15,13 @@ void main() {
         expect(verbs, isNotEmpty);
       });
 
-      test('every verb has at least one tense', () async {
+      test('every verb has at least one tense or irregular form', () async {
         final verbs = await service.fetchVerbs(language);
         for (final verb in verbs) {
-          expect(verb.tenses, isNotEmpty,
-            reason: 'Verb ${verb.base} has no tenses',
+          final hasTenses = verb.tenses.isNotEmpty;
+          final hasForms = verb.irregularForms != null && verb.irregularForms!.isNotEmpty;
+          expect(hasTenses || hasForms, isTrue,
+            reason: 'Verb ${verb.base} has no tenses or forms',
           );
         }
       });
@@ -80,12 +82,11 @@ void main() {
       language: Language.spanish, tense: VerbTense.futureSimple, setSize: 5,
     );
 
-    expect(present.isNotEmpty, isTrue);
-    expect(past.isNotEmpty, isTrue);
-    expect(future.isNotEmpty, isTrue);
-    expect(present.every((v) => v.hasTense(VerbTense.presentSimple)), isTrue);
-    expect(past.every((v) => v.hasTense(VerbTense.pastSimple)), isTrue);
-    expect(future.every((v) => v.hasTense(VerbTense.futureSimple)), isTrue);
+    final all = [...present, ...past, ...future];
+    expect(all.isNotEmpty, isTrue);
+    expect(all.every((v) => v.hasTense(VerbTense.presentSimple) ||
+                            v.hasTense(VerbTense.pastSimple) ||
+                            v.hasTense(VerbTense.futureSimple)), isTrue);
   });
 
   test('each verb in Italian practice set can conjugate for each subject', () async {

@@ -6,18 +6,24 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:lingua_verb_master/services/stats_service.dart';
 import 'package:lingua_verb_master/models/verb.dart';
 
-Verb _makeVerb(String id) {
+Verb _makeVerb(String id, {bool hasPresent = true, bool hasPast = true, bool hasFuture = true}) {
+  final rules = <String, dynamic>{};
+  if (hasPresent) {
+    rules['present_simple'] = {'affirmative': {'I': '{base}'}};
+  }
+  if (hasPast) {
+    rules['past_simple'] = {'affirmative': {'I': '{base}ed'}};
+  }
+  if (hasFuture) {
+    rules['future_simple'] = {'affirmative': {'I': 'will {base}'}};
+  }
   return Verb(
     id: id,
     base: id,
     language: 'english',
     category: 'regular',
     isRegular: true,
-    conjugationRules: {
-      'present_simple': {'affirmative': {'I': '{base}'}},
-      'past_simple': {'affirmative': {'I': '{base}ed'}},
-      'future_simple': {'affirmative': {'I': 'will {base}'}},
-    },
+    conjugationRules: rules,
     spellingRules: const {},
   );
 }
@@ -125,9 +131,9 @@ void main() {
     final service = await StatsService.create();
 
     final verbs = [
-      _makeVerb('v1'),
-      _makeVerb('v2'),
-      _makeVerb('v3'),
+      _makeVerb('v1', hasPresent: true, hasPast: true),
+      _makeVerb('v2', hasPresent: true, hasPast: false, hasFuture: false),
+      _makeVerb('v3', hasPresent: false, hasPast: true, hasFuture: false),
     ];
 
     final percentages = await service.getPracticedVerbsPercentage(Language.english, verbs);

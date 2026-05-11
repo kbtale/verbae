@@ -94,7 +94,7 @@ void main() {
     final service = VerbService();
 
     final verbs = await service.generatePracticeSet(
-      language: Language.italian,
+      language: Language.spanish,
       tense: VerbTense.futureContinuous,
       setSize: 5,
     );

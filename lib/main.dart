@@ -9,6 +9,10 @@ import 'services/verb_service.dart';
 import 'theme/app_theme.dart';
 
 void main() {
+  FlutterError.onError = (details) {
+    developer.log('Flutter framework error',
+      name: 'VerbaeApp', error: details.exception, stackTrace: details.stack,);
+  };
   runApp(const VerbaeApp());
 }
 
@@ -17,10 +21,6 @@ class VerbaeApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FlutterError.onError = (details) {
-      developer.log('Flutter framework error',
-        name: 'VerbaeApp', error: details.exception, stackTrace: details.stack,);
-    };
     return MaterialApp(
       title: 'Verbae',
       theme: AppTheme.light(),
