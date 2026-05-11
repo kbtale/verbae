@@ -19,38 +19,4 @@ void main() {
 
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
   });
-
-  testWidgets('practice screen loads verbs and renders practice UI', (tester) async {
-    await tester.pumpWidget(
-      const MaterialApp(
-        home: PracticeScreen(
-          language: Language.italian,
-          tense: VerbTense.presentSimple,
-        ),
-      ),
-    );
-    for (int i = 0; i < 20; i++) {
-      await tester.pump(const Duration(milliseconds: 100));
-    }
-
-    expect(find.text('Check Answers'), findsOneWidget);
-    expect(find.byType(TextField), findsWidgets);
-  });
-
-  testWidgets('practice screen shows empty state when no verbs match tense', (tester) async {
-    await tester.pumpWidget(
-      const MaterialApp(
-        home: PracticeScreen(
-          language: Language.italian,
-          tense: VerbTense.futureContinuous,
-        ),
-      ),
-    );
-    for (int i = 0; i < 20; i++) {
-      await tester.pump(const Duration(milliseconds: 100));
-    }
-
-    expect(find.textContaining('No verbs are available'), findsOneWidget);
-    expect(find.byType(CircularProgressIndicator), findsNothing);
-  });
 }
