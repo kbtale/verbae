@@ -92,8 +92,8 @@ class DashboardService {
           final total = verbs.where((v) => v.hasTense(tense)).length;
           if (total == 0) continue;
 
-          final practiced = practicedVerbs[key]?.length ?? 0;
-          final practicedClamped = practiced > total ? total : practiced;
+          final int practiced = practicedVerbs[key]?.length ?? 0;
+          final int practicedClamped = practiced > total ? total : practiced;
 
           languageProgress[tense.name] = (practicedClamped / total) * 100;
 

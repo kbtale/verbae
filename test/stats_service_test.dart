@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:lingua_verb_master/services/stats_service.dart';
 import 'package:lingua_verb_master/models/verb.dart';
 
-Verb _makeVerb(String id, List<VerbTense> tenses) {
+Verb _makeVerb(String id) {
   return Verb(
     id: id,
     base: id,
@@ -14,11 +14,9 @@ Verb _makeVerb(String id, List<VerbTense> tenses) {
     category: 'regular',
     isRegular: true,
     conjugationRules: {
-      for (final t in tenses) ...{
-        'present_simple': {'affirmative': {'I': '{base}'}},
-        'past_simple': {'affirmative': {'I': '{base}ed'}},
-        'future_simple': {'affirmative': {'I': 'will {base}'}},
-      }
+      'present_simple': {'affirmative': {'I': '{base}'}},
+      'past_simple': {'affirmative': {'I': '{base}ed'}},
+      'future_simple': {'affirmative': {'I': 'will {base}'}},
     },
     spellingRules: const {},
   );
@@ -127,9 +125,9 @@ void main() {
     final service = await StatsService.create();
 
     final verbs = [
-      _makeVerb('v1', [VerbTense.presentSimple, VerbTense.pastSimple]),
-      _makeVerb('v2', [VerbTense.presentSimple]),
-      _makeVerb('v3', [VerbTense.pastSimple]),
+      _makeVerb('v1'),
+      _makeVerb('v2'),
+      _makeVerb('v3'),
     ];
 
     final percentages = await service.getPracticedVerbsPercentage(Language.english, verbs);

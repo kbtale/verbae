@@ -97,6 +97,9 @@ class StatsService {
       debugPrint('StatsService.getPracticeTimes JSON parse error: $e');
       return {};
     }
+  }
+
+  // Get streak information
   Future<Map<String, dynamic>> getStreakInfo() async {
     final lastPracticeMs = _prefs.getInt(_lastPracticeKey);
     final streak = _prefs.getInt(_streakKey) ?? 0;
@@ -221,4 +224,5 @@ class StatsService {
     await _prefs.remove(_practiceTimeKey);
     await _prefs.remove(_verbsPracticedKey);
   }
+}
 }

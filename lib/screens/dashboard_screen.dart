@@ -161,7 +161,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ],
                 ),
               );
-            }).toList(),
+            }),
           ],
         ),
       ),
@@ -184,7 +184,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           const SizedBox(height: 4),
           LinearProgressIndicator(
             value: progress / 100,
-            backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
+            backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
             valueColor: AlwaysStoppedAnimation<Color>(
               progress > 70
                   ? Colors.green
@@ -248,7 +248,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     category: entry.key,
                     progress: entry.value,
                   );
-                }).toList(),
+                }),
               ],
             ),
           ),

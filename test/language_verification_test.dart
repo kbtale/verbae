@@ -9,7 +9,7 @@ void main() {
   final service = VerbService();
 
   for (final language in Language.values) {
-    group('${language.name}', () {
+    group(language.name, () {
       test('loads at least one verb', () async {
         final verbs = await service.fetchVerbs(language);
         expect(verbs, isNotEmpty);

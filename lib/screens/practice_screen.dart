@@ -10,11 +10,11 @@ class PracticeScreen extends StatefulWidget {
   final VerbCategory? category;
 
   const PracticeScreen({
-    Key? key, 
+    super.key, 
     required this.language,
     required this.tense,
     this.category,
-  }) : super(key: key);
+  });
 
   @override
   State<PracticeScreen> createState() => _PracticeScreenState();
@@ -37,6 +37,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   int _sessionTotal = 0;
   DateTime? _practiceStartTime;
   DateTime _sessionStartTime = DateTime.now();
+  bool _canPop = false;
   bool _isLoading = true;
   String? _loadErrorMessage;
 
@@ -224,9 +225,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
     }
 
     if (_currentVerbIndex >= _verbSet.length - 1) {
-      final totalTime = _practiceStartTime != null
-          ? DateTime.now().difference(_sessionStartTime ?? DateTime.now()).inMinutes
-          : 0;
+      final totalTime = DateTime.now().difference(_sessionStartTime).inMinutes;
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -398,9 +397,11 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
     final currentVerb = _verbSet[_currentVerbIndex];
     final conjugations = currentVerb.tenses[widget.tense] ?? {};
 
-    return WillPopScope(
-      onWillPop: () async {
-        return await showDialog<bool>(
+    return PopScope(
+      canPop: _canPop,
+      onPopInvokedWithResult: (didPop, _) async {
+        if (didPop) return;
+        final shouldPop = await showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(
             title: const Text('Leave Practice?'),
@@ -417,6 +418,10 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
             ],
           ),
         ) ?? false;
+        if (shouldPop && mounted) {
+          setState(() => _canPop = true);
+          Navigator.pop(context);
+        }
       },
       child: Scaffold(
       appBar: AppBar(
@@ -487,7 +492,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
                   },
                 ),
               )
-            ).toList(),
+            ),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _statsReady ? _checkAnswer : null,
