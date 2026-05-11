@@ -29,9 +29,9 @@ void main() {
         ),
       ),
     );
-    await tester.runAsync(() => Future.delayed(const Duration(seconds: 2)));
-    await tester.pump();
-    await tester.pump();
+    for (int i = 0; i < 20; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
 
     expect(find.text('Check Answers'), findsOneWidget);
     expect(find.byType(TextField), findsWidgets);
@@ -46,9 +46,9 @@ void main() {
         ),
       ),
     );
-    await tester.runAsync(() => Future.delayed(const Duration(seconds: 2)));
-    await tester.pump();
-    await tester.pump();
+    for (int i = 0; i < 20; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
 
     expect(find.textContaining('No verbs are available'), findsOneWidget);
     expect(find.byType(CircularProgressIndicator), findsNothing);
