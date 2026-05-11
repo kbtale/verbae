@@ -194,17 +194,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
       return Card(
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(24),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              const Icon(Icons.school, size: 48, color: Colors.grey),
+              const SizedBox(height: 12),
               Text(
                 'Progress will appear here after your first practice session.',
                 style: Theme.of(context).textTheme.titleMedium,
+                textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),
               const Text(
                 'Choose a language and tense to start building stats.',
+                textAlign: TextAlign.center,
               ),
             ],
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../models/verb.dart';
 import '../services/verb_service.dart';
 import '../services/stats_service.dart';
@@ -32,7 +33,10 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   bool _masterMode = false;
   bool _answersLocked = false;
   bool _isAdvancing = false;
+  int _sessionCorrect = 0;
+  int _sessionTotal = 0;
   DateTime? _practiceStartTime;
+  DateTime _sessionStartTime = DateTime.now();
   bool _isLoading = true;
   String? _loadErrorMessage;
 
@@ -136,11 +140,39 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
       }
     });
 
+    if (allCorrect) {
+      HapticFeedback.lightImpact();
+    } else {
+      HapticFeedback.heavyImpact();
+      final wrongFields = _validationStatus.entries
+          .where((e) => e.value == false)
+          .map((e) => e.key)
+          .toList();
+      if (wrongFields.isNotEmpty && mounted) {
+        final correctValues = wrongFields.map((p) => '$p: ${conjugations[p]}').join(', ');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Correct forms: $correctValues'),
+            duration: const Duration(seconds: 4),
+            action: SnackBarAction(
+              label: 'OK',
+              onPressed: () {},
+            ),
+          ),
+        );
+      }
+    }
+
     // Calculate practice time
     final now = DateTime.now();
     final practiceTimeSeconds = _practiceStartTime != null
         ? now.difference(_practiceStartTime!).inSeconds
         : 0;
+
+    _sessionTotal++;
+    if (allCorrect) {
+      _sessionCorrect++;
+    }
 
     // Record practice results
     if (_statsReady) {
@@ -192,12 +224,16 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
     }
 
     if (_currentVerbIndex >= _verbSet.length - 1) {
-      // If we're at the last verb, show a completion dialog
+      final totalTime = _practiceStartTime != null
+          ? DateTime.now().difference(_sessionStartTime ?? DateTime.now()).inMinutes
+          : 0;
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('Practice Complete!'),
-          content: const Text('You\'ve completed this practice set.'),
+          content: Text(
+            'You got $_sessionCorrect out of $_sessionTotal correct.\n\nPractice time: $totalTime min',
+          ),
           actions: [
             TextButton(
               onPressed: () {
@@ -212,6 +248,9 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
                 setState(() {
                   _currentVerbIndex = 0;
                   _practiceStartTime = DateTime.now();
+                  _sessionStartTime = DateTime.now();
+                  _sessionCorrect = 0;
+                  _sessionTotal = 0;
                   _resetControllers();
                 });
               },
@@ -333,9 +372,23 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(24.0),
-            child: Text(
-              'No verbs are available for ${widget.tense.getDisplayNameForLanguage(widget.language)} in this language.',
-              textAlign: TextAlign.center,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.search_off, size: 48, color: Colors.grey),
+                const SizedBox(height: 16),
+                Text(
+                  'No verbs are available for ${widget.tense.getDisplayNameForLanguage(widget.language)} in this language.',
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Try Present Simple instead.',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
