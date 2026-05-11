@@ -111,4 +111,52 @@ void main() {
 
     expect(() => VerbCatalog.fromJson(catalogJson), throwsFormatException);
   });
+
+  test('parses catalog with empty verb array', () {
+    final catalogJson = <String, dynamic>{
+      'language': 'english',
+      'verbs': <dynamic>[],
+    };
+
+    final catalog = VerbCatalog.fromJson(catalogJson);
+
+    expect(catalog.language, Language.english);
+    expect(catalog.verbs, isEmpty);
+  });
+
+  test('rejects catalog without language field', () {
+    final catalogJson = <String, dynamic>{
+      'verbs': <dynamic>[],
+    };
+
+    expect(() => VerbCatalog.fromJson(catalogJson), throwsFormatException);
+  });
+
+  test('parses catalog with only irregular verbs', () {
+    final catalogJson = <String, dynamic>{
+      'language': 'english',
+      'verbs': [
+        {
+          'type': 'irregular',
+          'base': 'go',
+          'language': 'english',
+          'category': 'irregular',
+          'forms': {
+            'present_simple': {
+              'affirmative': {
+                'I': 'go',
+              },
+            },
+          },
+        },
+      ],
+    };
+
+    final catalog = VerbCatalog.fromJson(catalogJson);
+
+    expect(catalog.language, Language.english);
+    expect(catalog.verbs, hasLength(1));
+    expect(catalog.verbs.first.isRegular, isFalse);
+    expect(catalog.verbs.first.base, 'go');
+  });
 }

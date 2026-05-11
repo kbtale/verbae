@@ -89,4 +89,47 @@ void main() {
     expect(verbs, isNotEmpty);
     expect(verbs.every((verb) => verb.hasTense(VerbTense.pastSimple)), isTrue);
   });
+
+  test('generatePracticeSet returns empty when no verbs match tense', () async {
+    final service = VerbService();
+
+    final verbs = await service.generatePracticeSet(
+      language: Language.italian,
+      tense: VerbTense.futureContinuous,
+      setSize: 5,
+    );
+
+    expect(verbs, isEmpty);
+  });
+
+  test('generatePracticeSet returns empty when setSize is zero', () async {
+    final service = VerbService();
+
+    final verbs = await service.generatePracticeSet(
+      language: Language.italian,
+      tense: VerbTense.presentSimple,
+      setSize: 0,
+    );
+
+    expect(verbs, isEmpty);
+  });
+
+  test('generatePracticeSet shuffles when more verbs than setSize', () async {
+    final service = VerbService();
+
+    final first = await service.generatePracticeSet(
+      language: Language.italian,
+      tense: VerbTense.presentSimple,
+      setSize: 5,
+    );
+    final second = await service.generatePracticeSet(
+      language: Language.italian,
+      tense: VerbTense.presentSimple,
+      setSize: 5,
+    );
+
+    expect(first.length, 5);
+    expect(second.length, 5);
+    expect(first.every((v) => v.hasTense(VerbTense.presentSimple)), isTrue);
+  });
 }
