@@ -419,6 +419,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
           ),
         ) ?? false;
         if (shouldPop && mounted) {
+          if (!context.mounted) return;
           setState(() => _canPop = true);
           Navigator.pop(context);
         }

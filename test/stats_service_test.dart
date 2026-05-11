@@ -52,7 +52,7 @@ void main() {
     );
 
     final stats = await service.getStats();
-    final key = 'english_presentSimple';
+    const key = 'english_presentSimple';
     expect(stats[key]!['total'], 1);
     expect(stats[key]!['correct'], 1);
   });
@@ -77,7 +77,7 @@ void main() {
     );
 
     final stats = await service.getStats();
-    final key = 'english_presentSimple';
+    const key = 'english_presentSimple';
     expect(stats[key]!['total'], 2);
     expect(stats[key]!['correct'], 1);
   });
@@ -109,7 +109,7 @@ void main() {
     );
 
     final practiced = await service.getPracticedVerbs();
-    final key = 'english_presentSimple';
+    const key = 'english_presentSimple';
     expect(practiced[key], contains('v1'));
     expect(practiced[key], contains('v2'));
     expect(practiced[key]!.length, 2);
