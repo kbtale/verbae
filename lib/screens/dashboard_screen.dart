@@ -63,7 +63,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     _hasActivity = _practiceTimes.values.any((seconds) => seconds > 0) ||
         _progressData.values.any((languageProgress) =>
-            languageProgress.values.any((progress) => progress > 0));
+            languageProgress.values.any((progress) => progress > 0),
+        );
 
     if (!mounted) {
       return;
@@ -161,7 +162,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ],
                 ),
               );
-            }).toList(),
+            }),
           ],
         ),
       ),
@@ -184,7 +185,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           const SizedBox(height: 4),
           LinearProgressIndicator(
             value: progress / 100,
-            backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
+            backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
             valueColor: AlwaysStoppedAnimation<Color>(
               progress > 70
                   ? Colors.green
@@ -248,7 +249,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     category: entry.key,
                     progress: entry.value,
                   );
-                }).toList(),
+                }),
               ],
             ),
           ),

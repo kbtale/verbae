@@ -59,13 +59,13 @@ class AppTheme {
       titleLarge: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.w500,
-        color: colorScheme.primary.withOpacity(0.8),
+        color: colorScheme.primary.withValues(alpha: 0.8),
       ),
       bodyLarge: TextStyle(
         color: colorScheme.onSurface,
       ),
       bodyMedium: TextStyle(
-        color: colorScheme.onSurface.withOpacity(0.8),
+        color: colorScheme.onSurface.withValues(alpha: 0.8),
       ),
     );
   }
@@ -81,8 +81,8 @@ class AppTheme {
     );
   }
 
-  static CardTheme _cardTheme() {
-    return CardTheme(
+  static CardThemeData _cardTheme() {
+    return CardThemeData(
       elevation: 1,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),

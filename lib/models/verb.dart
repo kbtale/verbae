@@ -38,7 +38,8 @@ class Verb {
     final tenseStr = _getTenseString(tense);
     final formStr = _getFormString(form);
     
-    var template = conjugationRules[tenseStr][formStr][subject];
+    final template = conjugationRules[tenseStr]?[formStr]?[subject];
+    if (template == null) return '';
     return _applyTemplate(template, base);
   }
 

@@ -28,7 +28,7 @@ class DashboardService {
       } catch (e, st) {
         if (kDebugMode) {
           developer.log('aggregateProgress error for $language',
-            name: 'DashboardService', error: e, stackTrace: st);
+            name: 'DashboardService', error: e, stackTrace: st,);
         }
         result[language] = {};
       }
@@ -53,7 +53,7 @@ class DashboardService {
     } catch (e, st) {
       if (kDebugMode) {
         developer.log('computeMetrics error',
-          name: 'DashboardService', error: e, stackTrace: st);
+          name: 'DashboardService', error: e, stackTrace: st,);
       }
       return {
         'practiceTimes': <String, int>{},
@@ -92,8 +92,8 @@ class DashboardService {
           final total = verbs.where((v) => v.hasTense(tense)).length;
           if (total == 0) continue;
 
-          final practiced = practicedVerbs[key]?.length ?? 0;
-          final practicedClamped = practiced > total ? total : practiced;
+          final int practiced = practicedVerbs[key]?.length ?? 0;
+          final int practicedClamped = practiced > total ? total : practiced;
 
           languageProgress[tense.name] = (practicedClamped / total) * 100;
 
@@ -110,7 +110,7 @@ class DashboardService {
       } catch (e, st) {
         if (kDebugMode) {
           developer.log('_aggregateMetrics error for $language',
-            name: 'DashboardService', error: e, stackTrace: st);
+            name: 'DashboardService', error: e, stackTrace: st,);
         }
       }
 

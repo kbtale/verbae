@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/verb.dart';
 
@@ -94,9 +95,14 @@ class StatsService {
         return MapEntry(key, parsedValue);
       });
     } catch (e) {
-      debugPrint('StatsService.getPracticeTimes JSON parse error: $e');
+      if (kDebugMode) {
+        debugPrint('StatsService.getPracticeTimes JSON parse error: $e');
+      }
       return {};
     }
+  }
+
+  // Get streak information
   Future<Map<String, dynamic>> getStreakInfo() async {
     final lastPracticeMs = _prefs.getInt(_lastPracticeKey);
     final streak = _prefs.getInt(_streakKey) ?? 0;
@@ -161,7 +167,9 @@ class StatsService {
         return MapEntry(key, <String>{});
       });
     } catch (e) {
-      debugPrint('StatsService.getPracticedVerbs JSON parse error: $e');
+      if (kDebugMode) {
+        debugPrint('StatsService.getPracticedVerbs JSON parse error: $e');
+      }
       return {};
     }
   }
@@ -170,7 +178,7 @@ class StatsService {
   Future<void> _savePracticedVerbs(Map<String, Set<String>> practicedVerbs) async {
     // Convert Sets to Lists for JSON serialization
     final jsonMap = practicedVerbs.map((key, value) => 
-      MapEntry(key, value.toList())
+      MapEntry(key, value.toList()),
     );
     await _prefs.setString(_verbsPracticedKey, jsonEncode(jsonMap));
   }
@@ -196,7 +204,9 @@ class StatsService {
         return MapEntry(key, <String, int>{});
       });
     } catch (e) {
-      debugPrint('StatsService.getStats JSON parse error: $e');
+      if (kDebugMode) {
+        debugPrint('StatsService.getStats JSON parse error: $e');
+      }
       return {};
     }
   }

@@ -9,6 +9,10 @@ import 'services/verb_service.dart';
 import 'theme/app_theme.dart';
 
 void main() {
+  FlutterError.onError = (details) {
+    developer.log('Flutter framework error',
+      name: 'VerbaeApp', error: details.exception, stackTrace: details.stack,);
+  };
   runApp(const VerbaeApp());
 }
 
@@ -17,10 +21,6 @@ class VerbaeApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FlutterError.onError = (details) {
-      developer.log('Flutter framework error',
-        name: 'VerbaeApp', error: details.exception, stackTrace: details.stack);
-    };
     return MaterialApp(
       title: 'Verbae',
       theme: AppTheme.light(),
@@ -209,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () {
                       Navigator.push(
                         context, 
-                        MaterialPageRoute(builder: (context) => const DashboardScreen())
+                        MaterialPageRoute(builder: (context) => const DashboardScreen()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -223,12 +223,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(fontSize: 16),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),
           ),
         ),
+      ),
       ),
     );
   }
@@ -257,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 8),
             Text(
               'Pick a language, choose a tense, and practice verb conjugations. Track your progress anytime with View Progress.',
-              style: TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer.withOpacity(0.8)),
+              style: TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer.withValues(alpha: 0.8)),
             ),
             const SizedBox(height: 12),
             Align(
@@ -326,8 +327,8 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context) => PracticeScreen(
           language: language,
           tense: _selectedTense,
-        )
-      )
+        ),
+      ),
     );
   }
 }

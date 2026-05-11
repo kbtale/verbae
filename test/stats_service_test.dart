@@ -6,20 +6,24 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:lingua_verb_master/services/stats_service.dart';
 import 'package:lingua_verb_master/models/verb.dart';
 
-Verb _makeVerb(String id, List<VerbTense> tenses) {
+Verb _makeVerb(String id, {bool hasPresent = true, bool hasPast = true, bool hasFuture = true}) {
+  final rules = <String, dynamic>{};
+  if (hasPresent) {
+    rules['present_simple'] = {'affirmative': {'I': '{base}'}};
+  }
+  if (hasPast) {
+    rules['past_simple'] = {'affirmative': {'I': '{base}ed'}};
+  }
+  if (hasFuture) {
+    rules['future_simple'] = {'affirmative': {'I': 'will {base}'}};
+  }
   return Verb(
     id: id,
     base: id,
     language: 'english',
     category: 'regular',
     isRegular: true,
-    conjugationRules: {
-      for (final t in tenses) ...{
-        'present_simple': {'affirmative': {'I': '{base}'}},
-        'past_simple': {'affirmative': {'I': '{base}ed'}},
-        'future_simple': {'affirmative': {'I': 'will {base}'}},
-      }
-    },
+    conjugationRules: rules,
     spellingRules: const {},
   );
 }
@@ -54,7 +58,7 @@ void main() {
     );
 
     final stats = await service.getStats();
-    final key = 'english_presentSimple';
+    const key = 'english_presentSimple';
     expect(stats[key]!['total'], 1);
     expect(stats[key]!['correct'], 1);
   });
@@ -79,7 +83,7 @@ void main() {
     );
 
     final stats = await service.getStats();
-    final key = 'english_presentSimple';
+    const key = 'english_presentSimple';
     expect(stats[key]!['total'], 2);
     expect(stats[key]!['correct'], 1);
   });
@@ -111,7 +115,7 @@ void main() {
     );
 
     final practiced = await service.getPracticedVerbs();
-    final key = 'english_presentSimple';
+    const key = 'english_presentSimple';
     expect(practiced[key], contains('v1'));
     expect(practiced[key], contains('v2'));
     expect(practiced[key]!.length, 2);
@@ -127,9 +131,9 @@ void main() {
     final service = await StatsService.create();
 
     final verbs = [
-      _makeVerb('v1', [VerbTense.presentSimple, VerbTense.pastSimple]),
-      _makeVerb('v2', [VerbTense.presentSimple]),
-      _makeVerb('v3', [VerbTense.pastSimple]),
+      _makeVerb('v1', hasPresent: true, hasPast: true),
+      _makeVerb('v2', hasPresent: true, hasPast: false, hasFuture: false),
+      _makeVerb('v3', hasPresent: false, hasPast: true, hasFuture: false),
     ];
 
     final percentages = await service.getPracticedVerbsPercentage(Language.english, verbs);
