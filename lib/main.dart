@@ -46,6 +46,12 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _tensesLoading = true;
   static const String _onboardingKey = 'onboarding_shown';
 
+  static const _languageIcons = {
+    Language.italian: '🇮🇹',
+    Language.english: '🇬🇧',
+    Language.spanish: '🇪🇸',
+  };
+
   @override
   void initState() {
     super.initState();
@@ -74,12 +80,8 @@ class _HomeScreenState extends State<HomeScreen> {
       for (var verb in verbs) {
         tenses.addAll(verb.tenses.keys);
       }
-      if (!mounted) {
-        return;
-      }
-      setState(() {
-        _availableTenses[language] = tenses;
-      });
+      if (!mounted) return;
+      setState(() => _availableTenses[language] = tenses);
     }
     if (!mounted) return;
     setState(() => _tensesLoading = false);
@@ -91,98 +93,129 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final cs = theme.colorScheme;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Verbae'),
+        title: Text(
+          'Verbae',
+          style: theme.textTheme.headlineSmall?.copyWith(
+            fontWeight: FontWeight.w700,
+            color: cs.onSurface,
+          ),
+        ),
         centerTitle: false,
+        scrolledUnderElevation: 1,
       ),
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 640),
-            child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+            child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               children: [
                 if (_showWelcomeCard) _buildWelcomeCard(context),
-                // Logo
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 24.0),
+
+                const SizedBox(height: 8),
+
+                Center(
                   child: Image.asset(
                     'assets/images/verbae-high-resolution-logo-transparent.png',
-                    height: 120,
+                    height: 100,
                     fit: BoxFit.contain,
                   ),
                 ),
-                
-                // Language selection text
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: Text(
-                    'Select a Language',
-                    style: Theme.of(context).textTheme.headlineSmall,
+
+                const SizedBox(height: 32),
+
+                Text(
+                  'Choose a language',
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    color: cs.onSurface,
                   ),
                 ),
+                const SizedBox(height: 4),
+                Text(
+                  'Select the language you want to practice',
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: cs.onSurface.withValues(alpha: 0.6),
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+
                 if (_tensesLoading)
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 12.0),
-                    child: Text(
-                      'Loading available tenses...',
-                      style: TextStyle(color: Colors.grey),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: cs.primary,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Loading available tenses...',
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: cs.onSurface.withValues(alpha: 0.5),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
 
-                // Language buttons
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    final languageButtons = <Widget>[
-                      _buildLanguageButton(
-                        context, 
-                        'Italian', 
-                        () => _navigateToPractice(context, Language.italian),
-                        _isTenseAvailable(Language.italian),
-                      ),
-                      _buildLanguageButton(
-                        context, 
-                        'English', 
-                        () => _navigateToPractice(context, Language.english),
-                        _isTenseAvailable(Language.english),
-                      ),
-                      _buildLanguageButton(
-                        context, 
-                        'Spanish', 
-                        () => _navigateToPractice(context, Language.spanish),
-                        _isTenseAvailable(Language.spanish),
-                      ),
-                    ];
+                ...Language.values.map((lang) {
+                  final enabled = _isTenseAvailable(lang);
+                  final name = lang.name[0].toUpperCase() + lang.name.substring(1);
+                  final flag = _languageIcons[lang] ?? '';
 
-                    if (constraints.maxWidth > 720) {
-                      return GridView.count(
-                        shrinkWrap: true,
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 12,
-                        crossAxisSpacing: 12,
-                        physics: const NeverScrollableScrollPhysics(),
-                        children: languageButtons,
-                      );
-                    }
-                    return Column(children: languageButtons);
-                  },
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: _LanguageCard(
+                      name: name,
+                      flag: flag,
+                      enabled: enabled,
+                      loading: _tensesLoading,
+                      tenseName: _selectedTense.displayName,
+                      onTap: enabled ? () => _navigateToPractice(context, lang) : null,
+                    ),
+                  );
+                }),
+
+                const SizedBox(height: 16),
+
+                Text(
+                  'Practice tense',
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    color: cs.onSurface,
+                  ),
                 ),
-                const SizedBox(height: 24),
-                
-                // Tense selector
+                const SizedBox(height: 4),
+                Text(
+                  'Choose which tense to practice',
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: cs.onSurface.withValues(alpha: 0.6),
+                  ),
+                ),
+
+                const SizedBox(height: 12),
+
                 Container(
-                  width: double.infinity,
-                  margin: const EdgeInsets.symmetric(horizontal: 24),
+                  decoration: BoxDecoration(
+                    color: cs.surfaceContainerHighest,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                   child: DropdownButtonFormField<VerbTense>(
-                    initialValue: _selectedTense,
+                    value: _selectedTense,
                     decoration: const InputDecoration(
-                      labelText: 'Select Tense',
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      labelText: 'Tense',
+                      border: InputBorder.none,
                     ),
                     items: VerbTense.values.map((tense) {
                       return DropdownMenuItem(
@@ -192,52 +225,46 @@ class _HomeScreenState extends State<HomeScreen> {
                     }).toList(),
                     onChanged: (VerbTense? value) {
                       if (value != null) {
-                        setState(() {
-                          _selectedTense = value;
-                        });
+                        setState(() => _selectedTense = value);
                       }
                     },
                   ),
                 ),
-                const SizedBox(height: 24),
-                
-                // Dashboard button
-                Container(
-                  width: double.infinity,
-                  margin: const EdgeInsets.symmetric(horizontal: 24),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context, 
-                        MaterialPageRoute(builder: (context) => const DashboardScreen()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    child: const Text(
-                      'View Progress',
-                      style: TextStyle(fontSize: 16),
+
+                const SizedBox(height: 32),
+
+                OutlinedButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const DashboardScreen()),
+                    );
+                  },
+                  icon: const Icon(Icons.bar_chart_rounded, size: 20),
+                  label: const Text('View Progress'),
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                 ),
+
+                const SizedBox(height: 24),
               ],
             ),
           ),
-          ),
         ),
-      ),
       ),
     );
   }
 
   Widget _buildWelcomeCard(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      color: Theme.of(context).colorScheme.primaryContainer,
+      color: cs.primaryContainer,
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -245,28 +272,32 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Row(
               children: [
-                Icon(Icons.waving_hand, color: Theme.of(context).colorScheme.primary),
+                Icon(Icons.waving_hand_rounded, color: cs.primary, size: 22),
                 const SizedBox(width: 8),
                 Text(
                   'Welcome to Verbae!',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                    color: cs.onPrimaryContainer,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 8),
             Text(
-              'Pick a language, choose a tense, and practice verb conjugations. Track your progress anytime with View Progress.',
-              style: TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer.withValues(alpha: 0.8)),
+              'Pick a language, choose a tense, and practice verb conjugations. '
+              'Track your progress anytime on the dashboard.',
+              style: TextStyle(
+                color: cs.onPrimaryContainer.withValues(alpha: 0.8),
+                height: 1.5,
+              ),
             ),
             const SizedBox(height: 12),
             Align(
               alignment: Alignment.centerRight,
-              child: TextButton.icon(
+              child: TextButton(
                 onPressed: _dismissWelcome,
-                icon: const Icon(Icons.check, size: 18),
-                label: const Text('Got it'),
+                child: const Text('Got it'),
               ),
             ),
           ],
@@ -275,54 +306,9 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildLanguageButton(
-    BuildContext context, 
-    String language, 
-    VoidCallback onPressed,
-    bool enabled,
-  ) {
-    final button = Container(
-      width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 24),
-      child: ElevatedButton(
-        onPressed: enabled ? onPressed : null,
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          backgroundColor: enabled ? Theme.of(context).colorScheme.primary : Colors.grey[300],
-          foregroundColor: Colors.white,
-          elevation: enabled ? 2 : 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-        child: Text(
-          language, 
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
-    );
-
-    if (!enabled && _tensesLoading) {
-      return Tooltip(
-        message: 'Loading available tenses...',
-        child: button,
-      );
-    }
-    if (!enabled) {
-      return Tooltip(
-        message: 'No verbs available for ${_selectedTense.displayName}',
-        child: button,
-      );
-    }
-    return button;
-  }
-
   void _navigateToPractice(BuildContext context, Language language) {
     Navigator.push(
-      context, 
+      context,
       MaterialPageRoute(
         builder: (context) => PracticeScreen(
           language: language,
@@ -330,5 +316,105 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+}
+
+class _LanguageCard extends StatelessWidget {
+  final String name;
+  final String flag;
+  final bool enabled;
+  final bool loading;
+  final String tenseName;
+  final VoidCallback? onTap;
+
+  const _LanguageCard({
+    required this.name,
+    required this.flag,
+    required this.enabled,
+    required this.loading,
+    required this.tenseName,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+
+    String tooltipMessage;
+    if (loading) {
+      tooltipMessage = 'Loading available tenses...';
+    } else if (!enabled) {
+      tooltipMessage = 'No $tenseName verbs available for $name';
+    } else {
+      tooltipMessage = '';
+    }
+
+    final card = Material(
+      color: enabled
+          ? cs.primaryContainer
+          : cs.surfaceContainerHighest,
+      borderRadius: BorderRadius.circular(12),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+          child: Row(
+            children: [
+              Text(
+                flag,
+                style: const TextStyle(fontSize: 28),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      name,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: enabled ? cs.onPrimaryContainer : cs.onSurface.withValues(alpha: 0.4),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    if (enabled)
+                      Text(
+                        '$tenseName verbs available',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: cs.onPrimaryContainer.withValues(alpha: 0.6),
+                        ),
+                      ),
+                    if (!enabled && !loading)
+                      Text(
+                        'No $tenseName verbs',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: cs.onSurface.withValues(alpha: 0.4),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              if (enabled)
+                Icon(
+                  Icons.chevron_right_rounded,
+                  color: cs.primary,
+                )
+              else if (loading)
+                SizedBox(
+                  width: 16,
+                  height: 16,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: cs.onSurface.withValues(alpha: 0.3),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    if (tooltipMessage.isEmpty) return card;
+    return Tooltip(message: tooltipMessage, child: card);
   }
 }

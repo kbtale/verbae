@@ -27,16 +27,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Future<void> _initializeStats() async {
     _statsService = await StatsService.create();
-    if (!mounted) {
-      return;
-    }
+    if (!mounted) return;
     await _loadStats();
   }
 
   Future<void> _loadStats() async {
-    if (!mounted) {
-      return;
-    }
+    if (!mounted) return;
     setState(() => _isLoading = true);
 
     _progressData.clear();
@@ -44,13 +40,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
     _streakInfo = {'currentStreak': 0, 'lastPractice': DateTime.now()};
     _hasActivity = false;
 
-    // Load practice times
     _practiceTimes = await _statsService.getPracticeTimes();
-
-    // Load streak info
     _streakInfo = await _statsService.getStreakInfo();
 
-    // Load progress for each language
     for (final language in Language.values) {
       try {
         final verbs = await _verbService.fetchVerbs(language);
@@ -63,14 +55,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     _hasActivity = _practiceTimes.values.any((seconds) => seconds > 0) ||
         _progressData.values.any((languageProgress) =>
-            languageProgress.values.any((progress) => progress > 0),
-        );
+            languageProgress.values.any((progress) => progress > 0));
 
-    if (!mounted) {
-      return;
-    }
-
+    if (!mounted) return;
     setState(() => _isLoading = false);
+  }
+
+  String _formatPracticeTime(int seconds) {
+    if (seconds == 0) return 'No practice yet';
+    final hours = seconds ~/ 3600;
+    final minutes = (seconds % 3600) ~/ 60;
+    if (hours > 0) return '$hours h $minutes min';
+    return '$minutes min';
   }
 
   String _formatTenseName(String key) {
@@ -79,18 +75,98 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return words[0].toUpperCase() + words.substring(1);
   }
 
-  String _formatPracticeTime(int seconds) {
-    if (seconds == 0) return 'No practice yet';
-    
-    final hours = seconds ~/ 3600;
-    final minutes = (seconds % 3600) ~/ 60;
-    if (hours > 0) {
-      return '$hours h $minutes min';
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+    final tt = Theme.of(context).textTheme;
+
+    if (_isLoading) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Dashboard'),
+          scrolledUnderElevation: 1,
+        ),
+        body: const Center(child: CircularProgressIndicator()),
+      );
     }
-    return '$minutes min';
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Dashboard'),
+        scrolledUnderElevation: 1,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.home_rounded),
+            tooltip: 'Home',
+            onPressed: () => Navigator.pop(context),
+          ),
+          IconButton(
+            icon: const Icon(Icons.refresh_rounded),
+            onPressed: _loadStats,
+          ),
+        ],
+      ),
+      body: _hasActivity
+          ? Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 640),
+                child: ListView(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  children: [
+                    _buildStreakCard(cs, tt),
+                    const SizedBox(height: 16),
+                    _buildPracticeTimeCard(cs, tt),
+                    const SizedBox(height: 24),
+                    _buildLanguageProgressCards(cs, tt),
+                    const SizedBox(height: 16),
+                  ],
+                ),
+              ),
+            )
+          : _buildEmptyState(cs, tt),
+    );
   }
 
-  Widget _buildStreakInfo() {
+  Widget _buildEmptyState(ColorScheme cs, TextTheme tt) {
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 640),
+        child: ListView(
+          children: [
+            const SizedBox(height: 80),
+            Icon(Icons.school_rounded, size: 64, color: cs.onSurface.withValues(alpha: 0.15)),
+            const SizedBox(height: 24),
+            Text(
+              'No practice data yet',
+              textAlign: TextAlign.center,
+              style: tt.headlineSmall?.copyWith(
+                color: cs.onSurface.withValues(alpha: 0.6),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Complete your first practice session\nto start tracking progress.',
+              textAlign: TextAlign.center,
+              style: tt.bodyMedium?.copyWith(
+                color: cs.onSurface.withValues(alpha: 0.4),
+                height: 1.5,
+              ),
+            ),
+            const SizedBox(height: 24),
+            Center(
+              child: IconButton(
+                icon: const Icon(Icons.refresh_rounded),
+                tooltip: 'Refresh',
+                onPressed: _loadStats,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStreakCard(ColorScheme cs, TextTheme tt) {
     final streak = _streakInfo['currentStreak'] as int;
     final lastPractice = _streakInfo['lastPractice'] as DateTime;
     final today = DateTime.now();
@@ -99,26 +175,56 @@ class _DashboardScreenState extends State<DashboardScreen> {
     final daysSinceLastPractice = todayDay.difference(lastPracticeDay).inDays;
 
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      elevation: 0,
+      color: cs.primaryContainer,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        padding: const EdgeInsets.all(20),
+        child: Row(
           children: [
-            Row(
-              children: [
-                const Icon(Icons.local_fire_department, color: Colors.orange),
-                const SizedBox(width: 8),
-                Text(
-                  'Current Streak: $streak days',
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-              ],
+            Container(
+              width: 56,
+              height: 56,
+              decoration: BoxDecoration(
+                color: cs.primary.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Icon(Icons.local_fire_department_rounded, color: cs.primary, size: 32),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '$streak day${streak == 1 ? '' : 's'}',
+                    style: tt.headlineMedium?.copyWith(
+                      color: cs.onPrimaryContainer,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  Text(
+                    'Current streak',
+                    style: tt.bodySmall?.copyWith(
+                      color: cs.onPrimaryContainer.withValues(alpha: 0.7),
+                    ),
+                  ),
+                ],
+              ),
             ),
             if (daysSinceLastPractice > 0)
-              Text(
-                'Last practice: ${daysSinceLastPractice == 1 ? 'yesterday' : '$daysSinceLastPractice days ago'}',
-                style: const TextStyle(color: Colors.grey),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: cs.onPrimaryContainer.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Text(
+                  daysSinceLastPractice == 1 ? 'yesterday' : '${daysSinceLastPractice}d ago',
+                  style: tt.labelSmall?.copyWith(
+                    color: cs.onPrimaryContainer.withValues(alpha: 0.7),
+                  ),
+                ),
               ),
           ],
         ),
@@ -126,39 +232,36 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _buildPracticeTimeCard() {
-    if (_practiceTimes.isEmpty) {
-      return const Card(
-        margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        child: Padding(
-          padding: EdgeInsets.all(16),
-          child: Text('No practice time recorded yet'),
-        ),
-      );
-    }
-
+  Widget _buildPracticeTimeCard(ColorScheme cs, TextTheme tt) {
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      elevation: 0,
+      color: cs.surfaceContainerLow,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Practice Time',
-              style: Theme.of(context).textTheme.titleMedium,
+            Row(
+              children: [
+                Icon(Icons.timer_outlined, size: 20, color: cs.onSurface.withValues(alpha: 0.6)),
+                const SizedBox(width: 8),
+                Text('Practice Time', style: tt.titleSmall?.copyWith(color: cs.onSurface.withValues(alpha: 0.6))),
+              ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 16),
+            if (_practiceTimes.isEmpty)
+              Text('No practice time recorded yet', style: tt.bodyMedium?.copyWith(color: cs.onSurface.withValues(alpha: 0.5))),
             ..._practiceTimes.entries.map((entry) {
               final language = entry.key;
               final timeInSeconds = entry.value;
+              final name = language[0].toUpperCase() + language.substring(1);
               return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
+                padding: const EdgeInsets.only(bottom: 8),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(language[0].toUpperCase() + language.substring(1)),
-                    Text(_formatPracticeTime(timeInSeconds)),
+                    Expanded(child: Text(name, style: tt.bodyLarge)),
+                    Text(_formatPracticeTime(timeInSeconds), style: tt.titleSmall?.copyWith(color: cs.primary, fontWeight: FontWeight.w600)),
                   ],
                 ),
               );
@@ -169,134 +272,84 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _buildProgressBar({
-    required String category,
-    required double progress,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            _formatTenseName(category),
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-          const SizedBox(height: 4),
-          LinearProgressIndicator(
-            value: progress / 100,
-            backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-            valueColor: AlwaysStoppedAnimation<Color>(
-              progress > 70
-                  ? Colors.green
-                  : progress > 40
-                      ? Colors.orange
-                      : Theme.of(context).colorScheme.error,
-            ),
-          ),
-          Text('${progress.toStringAsFixed(1)}% verbs practiced'),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildLanguageProgressCards() {
-    if (!_hasActivity) {
-      return Card(
-        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Icon(Icons.school, size: 48, color: Colors.grey),
-              const SizedBox(height: 12),
-              Text(
-                'Progress will appear here after your first practice session.',
-                style: Theme.of(context).textTheme.titleMedium,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 8),
-              const Text(
-                'Choose a language and tense to start building stats.',
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-
+  Widget _buildLanguageProgressCards(ColorScheme cs, TextTheme tt) {
     return Column(
-      children: _progressData.entries.map((languageEntry) {
-        final language = languageEntry.key;
-        final tensesProgress = languageEntry.value;
-
-        return Card(
-          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  language.name[0].toUpperCase() + language.name.substring(1),
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                const SizedBox(height: 16),
-                ...tensesProgress.entries.map((entry) {
-                  return _buildProgressBar(
-                    category: entry.key,
-                    progress: entry.value,
-                  );
-                }),
-              ],
-            ),
-          ),
-        );
-      }).toList(),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (_isLoading) {
-      return Scaffold(
-        appBar: AppBar(title: const Text('Dashboard')),
-        body: const Center(child: CircularProgressIndicator()),
-      );
-    }
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dashboard'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.home),
-            tooltip: 'Home',
-            onPressed: () => Navigator.pop(context),
-          ),
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: _loadStats,
-          ),
-        ],
-      ),
-      body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 640),
-          child: RefreshIndicator(
-        onRefresh: _loadStats,
-        child: ListView(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
           children: [
-            _buildStreakInfo(),
-            _buildPracticeTimeCard(),
-            _buildLanguageProgressCards(),
+            Icon(Icons.trending_up_rounded, size: 20, color: cs.onSurface.withValues(alpha: 0.6)),
+            const SizedBox(width: 8),
+            Text('Progress', style: tt.titleSmall?.copyWith(color: cs.onSurface.withValues(alpha: 0.6))),
           ],
         ),
-      ),
-      ),
-      ),
+        const SizedBox(height: 12),
+        ..._progressData.entries.where((e) => e.value.isNotEmpty).map((languageEntry) {
+          final language = languageEntry.key;
+          final tensesProgress = languageEntry.value;
+          final name = language.name[0].toUpperCase() + language.name.substring(1);
+
+          return Card(
+            elevation: 0,
+            color: cs.surfaceContainerLow,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            margin: const EdgeInsets.only(bottom: 12),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(name, style: tt.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+                  const SizedBox(height: 16),
+                  ...tensesProgress.entries.map((entry) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(_formatTenseName(entry.key), style: tt.bodySmall),
+                              Text(
+                                '${entry.value.toStringAsFixed(0)}%',
+                                style: tt.labelMedium?.copyWith(
+                                  color: entry.value > 70
+                                      ? Colors.green
+                                      : entry.value > 30
+                                          ? cs.tertiary
+                                          : cs.error,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 6),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(4),
+                            child: LinearProgressIndicator(
+                              value: entry.value / 100,
+                              minHeight: 8,
+                              backgroundColor: cs.surfaceContainerHighest,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                entry.value > 70
+                                    ? Colors.green
+                                    : entry.value > 30
+                                        ? cs.tertiary
+                                        : cs.error,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+                ],
+              ),
+            ),
+          );
+        }),
+      ],
     );
   }
 }
