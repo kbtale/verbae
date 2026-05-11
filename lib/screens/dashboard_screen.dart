@@ -257,6 +257,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
         title: const Text('Dashboard'),
         actions: [
           IconButton(
+            icon: const Icon(Icons.home),
+            tooltip: 'Home',
+            onPressed: () => Navigator.pop(context),
+          ),
+          IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: _loadStats,
           ),

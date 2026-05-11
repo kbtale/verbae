@@ -345,7 +345,27 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
     final currentVerb = _verbSet[_currentVerbIndex];
     final conjugations = currentVerb.tenses[widget.tense] ?? {};
 
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        return await showDialog<bool>(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Leave Practice?'),
+            content: const Text('Your progress in this session will be saved.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: const Text('Stay'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: const Text('Leave'),
+              ),
+            ],
+          ),
+        ) ?? false;
+      },
+      child: Scaffold(
       appBar: AppBar(
         title: Text('Practice ${widget.tense.getDisplayNameForLanguage(widget.language)}'),
         actions: [
@@ -377,7 +397,14 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
               'Infinitive: ${currentVerb.infinitive}',
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 8),
+            Text(
+              'Verb ${_currentVerbIndex + 1} of ${_verbSet.length}',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Colors.grey,
+              ),
+            ),
+            const SizedBox(height: 12),
             ...conjugations.entries.map((entry) => 
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -432,6 +459,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
             ),
           ],
         ),
+      ),
       ),
     );
   }
