@@ -95,7 +95,9 @@ class StatsService {
         return MapEntry(key, parsedValue);
       });
     } catch (e) {
-      debugPrint('StatsService.getPracticeTimes JSON parse error: $e');
+      if (kDebugMode) {
+        debugPrint('StatsService.getPracticeTimes JSON parse error: $e');
+      }
       return {};
     }
   }
@@ -165,7 +167,9 @@ class StatsService {
         return MapEntry(key, <String>{});
       });
     } catch (e) {
-      debugPrint('StatsService.getPracticedVerbs JSON parse error: $e');
+      if (kDebugMode) {
+        debugPrint('StatsService.getPracticedVerbs JSON parse error: $e');
+      }
       return {};
     }
   }
@@ -200,7 +204,9 @@ class StatsService {
         return MapEntry(key, <String, int>{});
       });
     } catch (e) {
-      debugPrint('StatsService.getStats JSON parse error: $e');
+      if (kDebugMode) {
+        debugPrint('StatsService.getStats JSON parse error: $e');
+      }
       return {};
     }
   }
