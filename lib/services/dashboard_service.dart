@@ -28,7 +28,7 @@ class DashboardService {
       } catch (e, st) {
         if (kDebugMode) {
           developer.log('aggregateProgress error for $language',
-            name: 'DashboardService', error: e, stackTrace: st);
+            name: 'DashboardService', error: e, stackTrace: st,);
         }
         result[language] = {};
       }
@@ -110,7 +110,7 @@ class DashboardService {
       } catch (e, st) {
         if (kDebugMode) {
           developer.log('_aggregateMetrics error for $language',
-            name: 'DashboardService', error: e, stackTrace: st);
+            name: 'DashboardService', error: e, stackTrace: st,);
         }
       }
 

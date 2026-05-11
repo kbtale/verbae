@@ -37,7 +37,7 @@ class VerbService {
     required Language language, 
     required VerbTense tense,
     String? category,
-    int setSize = 10
+    int setSize = 10,
   }) async {
     final verbs = await fetchVerbs(language);
     final validVerbs = verbs.where((v) => v.hasTense(tense)).toList(growable: false);

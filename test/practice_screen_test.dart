@@ -8,23 +8,27 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('practice screen shows loading indicator on start', (tester) async {
-    await tester.pumpWidget(const MaterialApp(
-      home: PracticeScreen(
-        language: Language.italian,
-        tense: VerbTense.futureContinuous,
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: PracticeScreen(
+          language: Language.italian,
+          tense: VerbTense.futureContinuous,
+        ),
       ),
-    ));
+    );
 
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
   });
 
   testWidgets('practice screen loads verbs and renders practice UI', (tester) async {
-    await tester.pumpWidget(const MaterialApp(
-      home: PracticeScreen(
-        language: Language.italian,
-        tense: VerbTense.presentSimple,
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: PracticeScreen(
+          language: Language.italian,
+          tense: VerbTense.presentSimple,
+        ),
       ),
-    ));
+    );
     await tester.pumpAndSettle();
 
     expect(find.text('Check Answers'), findsOneWidget);
@@ -32,36 +36,42 @@ void main() {
   });
 
   testWidgets('practice screen shows empty state when no verbs match tense', (tester) async {
-    await tester.pumpWidget(const MaterialApp(
-      home: PracticeScreen(
-        language: Language.italian,
-        tense: VerbTense.futureContinuous,
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: PracticeScreen(
+          language: Language.italian,
+          tense: VerbTense.futureContinuous,
+        ),
       ),
-    ));
+    );
     await tester.pumpAndSettle();
 
     expect(find.textContaining('No verbs are available'), findsOneWidget);
   });
 
   testWidgets('Check Answers button is present', (tester) async {
-    await tester.pumpWidget(const MaterialApp(
-      home: PracticeScreen(
-        language: Language.italian,
-        tense: VerbTense.presentSimple,
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: PracticeScreen(
+          language: Language.italian,
+          tense: VerbTense.presentSimple,
+        ),
       ),
-    ));
+    );
     await tester.pumpAndSettle();
 
     expect(find.text('Check Answers'), findsOneWidget);
   });
 
   testWidgets('Next Verb button is present in non-master mode', (tester) async {
-    await tester.pumpWidget(const MaterialApp(
-      home: PracticeScreen(
-        language: Language.italian,
-        tense: VerbTense.presentSimple,
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: PracticeScreen(
+          language: Language.italian,
+          tense: VerbTense.presentSimple,
+        ),
       ),
-    ));
+    );
     await tester.pumpAndSettle();
 
     final nextButton = find.text('Next Verb');
@@ -69,12 +79,14 @@ void main() {
   });
 
   testWidgets('Master Mode switch is present', (tester) async {
-    await tester.pumpWidget(const MaterialApp(
-      home: PracticeScreen(
-        language: Language.italian,
-        tense: VerbTense.presentSimple,
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: PracticeScreen(
+          language: Language.italian,
+          tense: VerbTense.presentSimple,
+        ),
       ),
-    ));
+    );
     await tester.pumpAndSettle();
 
     expect(find.text('Master Mode'), findsOneWidget);
@@ -82,24 +94,28 @@ void main() {
   });
 
   testWidgets('practice screen shows infinitive of current verb', (tester) async {
-    await tester.pumpWidget(const MaterialApp(
-      home: PracticeScreen(
-        language: Language.italian,
-        tense: VerbTense.presentSimple,
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: PracticeScreen(
+          language: Language.italian,
+          tense: VerbTense.presentSimple,
+        ),
       ),
-    ));
+    );
     await tester.pumpAndSettle();
 
     expect(find.textContaining('Infinitive:'), findsOneWidget);
   });
 
   testWidgets('practice complete dialog appears after advancing through all verbs', (tester) async {
-    await tester.pumpWidget(const MaterialApp(
-      home: PracticeScreen(
-        language: Language.italian,
-        tense: VerbTense.presentSimple,
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: PracticeScreen(
+          language: Language.italian,
+          tense: VerbTense.presentSimple,
+        ),
       ),
-    ));
+    );
     await tester.pumpAndSettle();
 
     int maxIterations = 20;

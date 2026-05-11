@@ -19,7 +19,8 @@ void main() {
         final verbs = await service.fetchVerbs(language);
         for (final verb in verbs) {
           expect(verb.tenses, isNotEmpty,
-            reason: 'Verb ${verb.base} has no tenses');
+            reason: 'Verb ${verb.base} has no tenses',
+          );
         }
       });
 
@@ -101,7 +102,8 @@ void main() {
           form: VerbForm.affirmative,
         );
         expect(conjugated, isNotEmpty,
-          reason: '${verb.base} conjugate presentSimple $subject returned empty');
+          reason: '${verb.base} conjugate presentSimple $subject returned empty',
+        );
       }
     }
   });

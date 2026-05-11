@@ -19,7 +19,7 @@ class VerbaeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     FlutterError.onError = (details) {
       developer.log('Flutter framework error',
-        name: 'VerbaeApp', error: details.exception, stackTrace: details.stack);
+        name: 'VerbaeApp', error: details.exception, stackTrace: details.stack,);
     };
     return MaterialApp(
       title: 'Verbae',
@@ -209,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () {
                       Navigator.push(
                         context, 
-                        MaterialPageRoute(builder: (context) => const DashboardScreen())
+                        MaterialPageRoute(builder: (context) => const DashboardScreen()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -223,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(fontSize: 16),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -327,8 +327,8 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context) => PracticeScreen(
           language: language,
           tense: _selectedTense,
-        )
-      )
+        ),
+      ),
     );
   }
 }

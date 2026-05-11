@@ -492,7 +492,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
                     });
                   },
                 ),
-              )
+              ),
             ),
             const SizedBox(height: 20),
             ElevatedButton(

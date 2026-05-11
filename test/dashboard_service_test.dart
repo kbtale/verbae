@@ -42,7 +42,7 @@ Verb _buildVerb({
   final Map<String, dynamic> conjugationRules = {};
   for (final tense in tenses) {
     conjugationRules[_tenseKey(tense)] = {
-      'affirmative': {'I': 'x'}
+      'affirmative': {'I': 'x'},
     };
   }
 

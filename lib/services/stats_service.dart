@@ -174,7 +174,7 @@ class StatsService {
   Future<void> _savePracticedVerbs(Map<String, Set<String>> practicedVerbs) async {
     // Convert Sets to Lists for JSON serialization
     final jsonMap = practicedVerbs.map((key, value) => 
-      MapEntry(key, value.toList())
+      MapEntry(key, value.toList()),
     );
     await _prefs.setString(_verbsPracticedKey, jsonEncode(jsonMap));
   }
