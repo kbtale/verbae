@@ -115,7 +115,10 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: false,
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 640),
+            child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -150,25 +153,41 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
 
                 // Language buttons
-                _buildLanguageButton(
-                  context, 
-                  'Italian', 
-                  () => _navigateToPractice(context, Language.italian),
-                  _isTenseAvailable(Language.italian),
-                ),
-                const SizedBox(height: 12),
-                _buildLanguageButton(
-                  context, 
-                  'English', 
-                  () => _navigateToPractice(context, Language.english),
-                  _isTenseAvailable(Language.english),
-                ),
-                const SizedBox(height: 12),
-                _buildLanguageButton(
-                  context, 
-                  'Spanish', 
-                  () => _navigateToPractice(context, Language.spanish),
-                  _isTenseAvailable(Language.spanish),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final languageButtons = <Widget>[
+                      _buildLanguageButton(
+                        context, 
+                        'Italian', 
+                        () => _navigateToPractice(context, Language.italian),
+                        _isTenseAvailable(Language.italian),
+                      ),
+                      _buildLanguageButton(
+                        context, 
+                        'English', 
+                        () => _navigateToPractice(context, Language.english),
+                        _isTenseAvailable(Language.english),
+                      ),
+                      _buildLanguageButton(
+                        context, 
+                        'Spanish', 
+                        () => _navigateToPractice(context, Language.spanish),
+                        _isTenseAvailable(Language.spanish),
+                      ),
+                    ];
+
+                    if (constraints.maxWidth > 720) {
+                      return GridView.count(
+                        shrinkWrap: true,
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 12,
+                        crossAxisSpacing: 12,
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: languageButtons,
+                      );
+                    }
+                    return Column(children: languageButtons);
+                  },
                 ),
                 const SizedBox(height: 24),
                 
@@ -225,6 +244,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 )
               ],
             ),
+          ),
           ),
         ),
       ),

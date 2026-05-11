@@ -271,7 +271,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ],
       ),
-      body: RefreshIndicator(
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 640),
+          child: RefreshIndicator(
         onRefresh: _loadStats,
         child: ListView(
           children: [
@@ -280,6 +283,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             _buildLanguageProgressCards(),
           ],
         ),
+      ),
+      ),
       ),
     );
   }

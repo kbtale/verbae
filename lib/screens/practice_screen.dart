@@ -441,7 +441,10 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
           ),
         ],
       ),
-      body: Padding(
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 640),
+          child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -523,6 +526,8 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
             ),
           ],
         ),
+      ),
+      ),
       ),
       ),
     );
