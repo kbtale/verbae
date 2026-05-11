@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 class AppSpacing {
   AppSpacing._();
 
-  static const double small = 8.0;
-  static const double medium = 16.0;
-  static const double large = 24.0;
+  static const double xs = 4.0;
+  static const double sm = 8.0;
+  static const double md = 16.0;
+  static const double lg = 24.0;
+  static const double xl = 32.0;
+  static const double xxl = 48.0;
 }
 
 class AppTheme {
@@ -18,16 +21,7 @@ class AppTheme {
       brightness: Brightness.light,
     );
 
-    return ThemeData(
-      useMaterial3: true,
-      colorScheme: colorScheme,
-      primarySwatch: Colors.indigo,
-      visualDensity: VisualDensity.adaptivePlatformDensity,
-      textTheme: _textTheme(colorScheme),
-      elevatedButtonTheme: _elevatedButtonTheme(),
-      cardTheme: _cardTheme(),
-      inputDecorationTheme: _inputDecorationTheme(),
-    );
+    return _buildTheme(colorScheme);
   }
 
   static ThemeData dark() {
@@ -37,15 +31,38 @@ class AppTheme {
       brightness: Brightness.dark,
     );
 
+    return _buildTheme(colorScheme);
+  }
+
+  static ThemeData _buildTheme(ColorScheme colorScheme) {
+    final isDark = colorScheme.brightness == Brightness.dark;
+
     return ThemeData(
       useMaterial3: true,
       colorScheme: colorScheme,
-      primarySwatch: Colors.indigo,
       visualDensity: VisualDensity.adaptivePlatformDensity,
+      scaffoldBackgroundColor: isDark ? colorScheme.surface : null,
+
       textTheme: _textTheme(colorScheme),
-      elevatedButtonTheme: _elevatedButtonTheme(),
-      cardTheme: _cardTheme(),
-      inputDecorationTheme: _inputDecorationTheme(),
+      cardTheme: _cardTheme(colorScheme, isDark),
+      filledButtonTheme: _filledButtonTheme(),
+      outlinedButtonTheme: _outlinedButtonTheme(),
+      inputDecorationTheme: _inputDecorationTheme(colorScheme),
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) return colorScheme.primary;
+          return colorScheme.outline;
+        }),
+        trackColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) return colorScheme.primary.withValues(alpha: 0.4);
+          return colorScheme.surfaceContainerHighest;
+        }),
+      ),
+      dropdownMenuTheme: DropdownMenuThemeData(
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        ),
+      ),
     );
   }
 
@@ -54,48 +71,100 @@ class AppTheme {
       headlineSmall: TextStyle(
         fontSize: 24,
         fontWeight: FontWeight.w600,
-        color: colorScheme.primary,
+        color: colorScheme.onSurface,
+      ),
+      headlineMedium: TextStyle(
+        fontSize: 28,
+        fontWeight: FontWeight.w700,
+        color: colorScheme.onSurface,
       ),
       titleLarge: TextStyle(
         fontSize: 20,
-        fontWeight: FontWeight.w500,
-        color: colorScheme.primary.withValues(alpha: 0.8),
+        fontWeight: FontWeight.w600,
+        color: colorScheme.onSurface,
+      ),
+      titleMedium: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        color: colorScheme.onSurface,
+      ),
+      titleSmall: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+        color: colorScheme.onSurface.withValues(alpha: 0.6),
       ),
       bodyLarge: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
         color: colorScheme.onSurface,
       ),
       bodyMedium: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
         color: colorScheme.onSurface.withValues(alpha: 0.8),
       ),
-    );
-  }
-
-  static ElevatedButtonThemeData _elevatedButtonTheme() {
-    return ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        elevation: 2,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
+      bodySmall: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w400,
+        color: colorScheme.onSurface.withValues(alpha: 0.6),
+      ),
+      labelMedium: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w600,
+        color: colorScheme.onSurface,
+      ),
+      labelSmall: TextStyle(
+        fontSize: 11,
+        fontWeight: FontWeight.w500,
+        color: colorScheme.onSurface.withValues(alpha: 0.6),
       ),
     );
   }
 
-  static CardThemeData _cardTheme() {
+  static CardThemeData _cardTheme(ColorScheme colorScheme, bool isDark) {
     return CardThemeData(
-      elevation: 1,
+      elevation: 0,
+      color: isDark ? colorScheme.surfaceContainerLow : colorScheme.surfaceContainerLow,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(16),
       ),
     );
   }
 
-  static InputDecorationTheme _inputDecorationTheme() {
-    return InputDecorationTheme(
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
+  static FilledButtonThemeData _filledButtonTheme() {
+    return FilledButtonThemeData(
+      style: FilledButton.styleFrom(
+        elevation: 0,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+    );
+  }
+
+  static OutlinedButtonThemeData _outlinedButtonTheme() {
+    return OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+    );
+  }
+
+  static InputDecorationTheme _inputDecorationTheme(ColorScheme colorScheme) {
+    return InputDecorationTheme(
+      filled: true,
+      fillColor: colorScheme.surfaceContainerHighest,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: colorScheme.outline),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: colorScheme.outline),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: colorScheme.primary, width: 2),
+      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
     );
   }
 }
