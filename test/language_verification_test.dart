@@ -109,8 +109,8 @@ void main() {
     }
   });
 
-  test('Italian requires exactly 68 verbs in the catalog', () async {
+  test('Italian requires exactly 78 verbs in the catalog', () async {
     final verbs = await service.fetchVerbs(Language.italian);
-    expect(verbs.length, 68);
+    expect(verbs.length, 78);
   });
 }

@@ -596,6 +596,110 @@
         "present_simple": { "affirmative": { "I": "{base}", "you": "{base}", "he/she/it": "{base}s", "we": "{base}", "they": "{base}" } }
       },
       "spelling_rules": { "third_person_singular": "default", "past_simple": "default", "present_participle": "default" }
+    },
+    {
+      "type": "regular",
+      "base": "build",
+      "language": "english",
+      "category": "regular",
+      "conjugation_rules": { "present_simple": { "affirmative": { "I": "{base}", "you": "{base}", "he/she/it": "{base}s", "we": "{base}", "they": "{base}" } }, "past_simple": { "affirmative": { "I": "{base}ed", "you": "{base}ed", "he/she/it": "{base}ed", "we": "{base}ed", "they": "{base}ed" } } },
+      "spelling_rules": { "third_person_singular": "default" }
+    },
+    {
+      "type": "regular",
+      "base": "buy",
+      "language": "english",
+      "category": "regular",
+      "conjugation_rules": { "present_simple": { "affirmative": { "I": "{base}", "you": "{base}", "he/she/it": "{base}s", "we": "{base}", "they": "{base}" } }, "past_simple": { "affirmative": { "I": "{base}ed", "you": "{base}ed", "he/she/it": "{base}ed", "we": "{base}ed", "they": "{base}ed" } } },
+      "spelling_rules": { "third_person_singular": "default" }
+    },
+    {
+      "type": "regular",
+      "base": "sell",
+      "language": "english",
+      "category": "regular",
+      "conjugation_rules": { "present_simple": { "affirmative": { "I": "{base}", "you": "{base}", "he/she/it": "{base}s", "we": "{base}", "they": "{base}" } }, "past_simple": { "affirmative": { "I": "{base}ed", "you": "{base}ed", "he/she/it": "{base}ed", "we": "{base}ed", "they": "{base}ed" } } },
+      "spelling_rules": { "third_person_singular": "default" }
+    },
+    {
+      "type": "regular",
+      "base": "teach",
+      "language": "english",
+      "category": "regular",
+      "conjugation_rules": { "present_simple": { "affirmative": { "I": "{base}", "you": "{base}", "he/she/it": "{base}s", "we": "{base}", "they": "{base}" } }, "past_simple": { "affirmative": { "I": "{base}ed", "you": "{base}ed", "he/she/it": "{base}ed", "we": "{base}ed", "they": "{base}ed" } } },
+      "spelling_rules": { "third_person_singular": "default" }
+    },
+    {
+      "type": "regular",
+      "base": "help",
+      "language": "english",
+      "category": "regular",
+      "conjugation_rules": { "present_simple": { "affirmative": { "I": "{base}", "you": "{base}", "he/she/it": "{base}s", "we": "{base}", "they": "{base}" } } },
+      "spelling_rules": { "third_person_singular": "default" }
+    },
+    {
+      "type": "regular",
+      "base": "drive",
+      "language": "english",
+      "category": "regular",
+      "conjugation_rules": { "present_simple": { "affirmative": { "I": "{base}", "you": "{base}", "he/she/it": "{base}s", "we": "{base}", "they": "{base}" } } },
+      "spelling_rules": { "third_person_singular": "default" }
+    },
+    {
+      "type": "regular",
+      "base": "ride",
+      "language": "english",
+      "category": "regular",
+      "conjugation_rules": { "present_simple": { "affirmative": { "I": "{base}", "you": "{base}", "he/she/it": "{base}s", "we": "{base}", "they": "{base}" } } },
+      "spelling_rules": { "third_person_singular": "default" }
+    },
+    {
+      "type": "regular",
+      "base": "read",
+      "language": "english",
+      "category": "regular",
+      "conjugation_rules": { "present_simple": { "affirmative": { "I": "{base}", "you": "{base}", "he/she/it": "{base}s", "we": "{base}", "they": "{base}" } } },
+      "spelling_rules": { "third_person_singular": "default" }
+    },
+    {
+      "type": "regular",
+      "base": "write",
+      "language": "english",
+      "category": "regular",
+      "conjugation_rules": { "present_simple": { "affirmative": { "I": "{base}", "you": "{base}", "he/she/it": "{base}s", "we": "{base}", "they": "{base}" } } },
+      "spelling_rules": { "third_person_singular": "default" }
+    },
+    {
+      "type": "regular",
+      "base": "speak",
+      "language": "english",
+      "category": "regular",
+      "conjugation_rules": { "present_simple": { "affirmative": { "I": "{base}", "you": "{base}", "he/she/it": "{base}s", "we": "{base}", "they": "{base}" } } },
+      "spelling_rules": { "third_person_singular": "default" }
+    },
+    {
+      "type": "regular",
+      "base": "hear",
+      "language": "english",
+      "category": "regular",
+      "conjugation_rules": { "present_simple": { "affirmative": { "I": "{base}", "you": "{base}", "he/she/it": "{base}s", "we": "{base}", "they": "{base}" } } },
+      "spelling_rules": { "third_person_singular": "default" }
+    },
+    {
+      "type": "regular",
+      "base": "see",
+      "language": "english",
+      "category": "regular",
+      "conjugation_rules": { "present_simple": { "affirmative": { "I": "{base}", "you": "{base}", "he/she/it": "{base}s", "we": "{base}", "they": "{base}" } } },
+      "spelling_rules": { "third_person_singular": "default" }
+    },
+    {
+      "type": "regular",
+      "base": "smile",
+      "language": "english",
+      "category": "regular",
+      "conjugation_rules": { "present_simple": { "affirmative": { "I": "{base}", "you": "{base}", "he/she/it": "{base}s", "we": "{base}", "they": "{base}" } } },
+      "spelling_rules": { "third_person_singular": "default" }
     }
   ]
 }

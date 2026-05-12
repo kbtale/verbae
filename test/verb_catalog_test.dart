@@ -71,7 +71,7 @@ void main() {
     final catalog = VerbCatalog.fromJson(italianJson);
 
     expect(catalog.language, Language.italian);
-    expect(catalog.verbs, hasLength(68));
+    expect(catalog.verbs, hasLength(78));
     expect(catalog.verbs.any((verb) => verb.base == 'parlare' && verb.isRegular), isTrue);
     expect(catalog.verbs.any((verb) => verb.base == 'essere' && !verb.isRegular), isTrue);
   });
