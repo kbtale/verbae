@@ -507,6 +507,232 @@
         "past_simple": { "affirmative": { "io": "dovevo", "tu": "dovevi", "luiLei": "doveva", "noi": "dovevamo", "voi": "dovevate", "loro": "dovevano" } },
         "future_simple": { "affirmative": { "io": "dovrò", "tu": "dovrai", "luiLei": "dovrà", "noi": "dovremo", "voi": "dovrete", "loro": "dovranno" } }
       }
+    },
+    {
+      "type": "regular",
+      "base": "nuotare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } },
+        "present_continuous": { "affirmative": { "io": "sto {base}ando", "tu": "stai {base}ando", "luiLei": "sta {base}ando", "noi": "stiamo {base}ando", "voi": "state {base}ando", "loro": "stanno {base}ando" } },
+        "past_simple": { "affirmative": { "io": "{base}ai", "tu": "{base}asti", "luiLei": "{base}ò", "noi": "{base}ammo", "voi": "{base}aste", "loro": "{base}arono" } },
+        "past_continuous": { "affirmative": { "io": "ero {base}ando", "tu": "eri {base}ando", "luiLei": "era {base}ando", "noi": "eravamo {base}ando", "voi": "eravate {base}ando", "loro": "erano {base}ando" } },
+        "future_simple": { "affirmative": { "io": "{base}erò", "tu": "{base}erai", "luiLei": "{base}erà", "noi": "{base}eremo", "voi": "{base}erete", "loro": "{base}eranno" } },
+        "future_continuous": { "affirmative": { "io": "sarò {base}ando", "tu": "sarai {base}ando", "luiLei": "sarà {base}ando", "noi": "saremo {base}ando", "voi": "sarete {base}ando", "loro": "saranno {base}ando" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "irregular",
+      "base": "uscire",
+      "language": "italian",
+      "category": "irregular",
+      "forms": {
+        "present_simple": { "affirmative": { "io": "esco", "tu": "esci", "luiLei": "esce", "noi": "usciamo", "voi": "uscite", "loro": "escono" } },
+        "past_simple": { "affirmative": { "io": "uscivo", "tu": "uscivi", "luiLei": "usciva", "noi": "uscivamo", "voi": "uscivate", "loro": "uscivano" } },
+        "future_simple": { "affirmative": { "io": "uscirò", "tu": "uscirai", "luiLei": "uscirà", "noi": "usciremo", "voi": "uscirete", "loro": "usciranno" } }
+      }
+    },
+    {
+      "type": "regular",
+      "base": "giocare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "mangiare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "comprare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "aspettare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "chiamare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "arrivare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "tornare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "insegnare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "cercare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "trovare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "portare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "lasciare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "usare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "pagare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "preparare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "ricordare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "aiutare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "guidare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "spiegare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "organizzare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } }
+      },
+      "spelling_rules": { "default": "regular" }
     }
   ]
 }
