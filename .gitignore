@@ -37,6 +37,9 @@ migrate_working_dir/
 /windows/flutter/generated_plugin_registrant.h
 /windows/flutter/generated_plugins.cmake
 
+# Windows reserved device names that can break git on checkout/commit
+nul
+
 # Symbolication related
 app.*.symbols
 

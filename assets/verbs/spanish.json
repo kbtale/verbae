@@ -91,6 +91,433 @@
         "present_simple_vosotros": "vais",
         "present_simple_ellosEllasUstedes": "van"
       }
+    },
+    {
+      "type": "regular",
+      "base": "comer",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": {
+          "affirmative": {
+            "yo": "{base}o",
+            "tu": "{base}es",
+            "elEllaUsted": "{base}e",
+            "nosotros": "{base}emos",
+            "vosotros": "{base}éis",
+            "ellosEllasUstedes": "{base}en"
+          }
+        }
+      },
+      "spelling_rules": {
+        "default": "regular"
+      }
+    },
+    {
+      "type": "regular",
+      "base": "vivir",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": {
+          "affirmative": {
+            "yo": "{base}o",
+            "tu": "{base}es",
+            "elEllaUsted": "{base}e",
+            "nosotros": "{base}imos",
+            "vosotros": "{base}ís",
+            "ellosEllasUstedes": "{base}en"
+          }
+        }
+      },
+      "spelling_rules": {
+        "default": "regular"
+      }
+    },
+    {
+      "type": "irregular",
+      "base": "tener",
+      "language": "spanish",
+      "category": "irregular",
+      "forms": {
+        "present_simple": {
+          "affirmative": {
+            "yo": "tengo",
+            "tu": "tienes",
+            "elEllaUsted": "tiene",
+            "nosotros": "tenemos",
+            "vosotros": "tenéis",
+            "ellosEllasUstedes": "tienen"
+          }
+        },
+        "past_simple": {
+          "affirmative": {
+            "yo": "tuve",
+            "tu": "tuviste",
+            "elEllaUsted": "tuvo",
+            "nosotros": "tuvimos",
+            "vosotros": "tuvisteis",
+            "ellosEllasUstedes": "tuvieron"
+          }
+        },
+        "future_simple": {
+          "affirmative": {
+            "yo": "tendré",
+            "tu": "tendrás",
+            "elEllaUsted": "tendrá",
+            "nosotros": "tendremos",
+            "vosotros": "tendréis",
+            "ellosEllasUstedes": "tendrán"
+          }
+        }
+      }
+    },
+    {
+      "type": "regular",
+      "base": "trabajar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "estudiar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "caminar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "mirar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "escuchar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "amar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "hablar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } },
+        "present_continuous": { "affirmative": { "yo": "estoy {base}ando", "tu": "estás {base}ando", "elEllaUsted": "está {base}ando", "nosotros": "estamos {base}ando", "vosotros": "estáis {base}ando", "ellosEllasUstedes": "están {base}ando" } },
+        "past_simple": { "affirmative": { "yo": "{base}é", "tu": "{base}aste", "elEllaUsted": "{base}ó", "nosotros": "{base}amos", "vosotros": "{base}asteis", "ellosEllasUstedes": "{base}aron" } },
+        "past_continuous": { "affirmative": { "yo": "estaba {base}ando", "tu": "estabas {base}ando", "elEllaUsted": "estaba {base}ando", "nosotros": "estábamos {base}ando", "vosotros": "estabais {base}ando", "ellosEllasUstedes": "estaban {base}ando" } },
+        "future_simple": { "affirmative": { "yo": "{base}aré", "tu": "{base}arás", "elEllaUsted": "{base}ará", "nosotros": "{base}aremos", "vosotros": "{base}aréis", "ellosEllasUstedes": "{base}arán" } },
+        "future_continuous": { "affirmative": { "yo": "estaré {base}ando", "tu": "estarás {base}ando", "elEllaUsted": "estará {base}ando", "nosotros": "estaremos {base}ando", "vosotros": "estaréis {base}ando", "ellosEllasUstedes": "estarán {base}ando" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "dejar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } },
+        "present_continuous": { "affirmative": { "yo": "estoy {base}ando", "tu": "estás {base}ando", "elEllaUsted": "está {base}ando", "nosotros": "estamos {base}ando", "vosotros": "estáis {base}ando", "ellosEllasUstedes": "están {base}ando" } },
+        "past_simple": { "affirmative": { "yo": "{base}é", "tu": "{base}aste", "elEllaUsted": "{base}ó", "nosotros": "{base}amos", "vosotros": "{base}asteis", "ellosEllasUstedes": "{base}aron" } },
+        "past_continuous": { "affirmative": { "yo": "estaba {base}ando", "tu": "estabas {base}ando", "elEllaUsted": "estaba {base}ando", "nosotros": "estábamos {base}ando", "vosotros": "estabais {base}ando", "ellosEllasUstedes": "estaban {base}ando" } },
+        "future_simple": { "affirmative": { "yo": "{base}aré", "tu": "{base}arás", "elEllaUsted": "{base}ará", "nosotros": "{base}aremos", "vosotros": "{base}aréis", "ellosEllasUstedes": "{base}arán" } },
+        "future_continuous": { "affirmative": { "yo": "estaré {base}ando", "tu": "estarás {base}ando", "elEllaUsted": "estará {base}ando", "nosotros": "estaremos {base}ando", "vosotros": "estaréis {base}ando", "ellosEllasUstedes": "estarán {base}ando" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "usar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } },
+        "present_continuous": { "affirmative": { "yo": "estoy {base}ando", "tu": "estás {base}ando", "elEllaUsted": "está {base}ando", "nosotros": "estamos {base}ando", "vosotros": "estáis {base}ando", "ellosEllasUstedes": "están {base}ando" } },
+        "past_simple": { "affirmative": { "yo": "{base}é", "tu": "{base}aste", "elEllaUsted": "{base}ó", "nosotros": "{base}amos", "vosotros": "{base}asteis", "ellosEllasUstedes": "{base}aron" } },
+        "past_continuous": { "affirmative": { "yo": "estaba {base}ando", "tu": "estabas {base}ando", "elEllaUsted": "estaba {base}ando", "nosotros": "estábamos {base}ando", "vosotros": "estabais {base}ando", "ellosEllasUstedes": "estaban {base}ando" } },
+        "future_simple": { "affirmative": { "yo": "{base}aré", "tu": "{base}arás", "elEllaUsted": "{base}ará", "nosotros": "{base}aremos", "vosotros": "{base}aréis", "ellosEllasUstedes": "{base}arán" } },
+        "future_continuous": { "affirmative": { "yo": "estaré {base}ando", "tu": "estarás {base}ando", "elEllaUsted": "estará {base}ando", "nosotros": "estaremos {base}ando", "vosotros": "estaréis {base}ando", "ellosEllasUstedes": "estarán {base}ando" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "pagar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } },
+        "present_continuous": { "affirmative": { "yo": "estoy {base}ando", "tu": "estás {base}ando", "elEllaUsted": "está {base}ando", "nosotros": "estamos {base}ando", "vosotros": "estáis {base}ando", "ellosEllasUstedes": "están {base}ando" } },
+        "past_simple": { "affirmative": { "yo": "{base}é", "tu": "{base}aste", "elEllaUsted": "{base}ó", "nosotros": "{base}amos", "vosotros": "{base}asteis", "ellosEllasUstedes": "{base}aron" } },
+        "past_continuous": { "affirmative": { "yo": "estaba {base}ando", "tu": "estabas {base}ando", "elEllaUsted": "estaba {base}ando", "nosotros": "estábamos {base}ando", "vosotros": "estabais {base}ando", "ellosEllasUstedes": "estaban {base}ando" } },
+        "future_simple": { "affirmative": { "yo": "{base}aré", "tu": "{base}arás", "elEllaUsted": "{base}ará", "nosotros": "{base}aremos", "vosotros": "{base}aréis", "ellosEllasUstedes": "{base}arán" } },
+        "future_continuous": { "affirmative": { "yo": "estaré {base}ando", "tu": "estarás {base}ando", "elEllaUsted": "estará {base}ando", "nosotros": "estaremos {base}ando", "vosotros": "estaréis {base}ando", "ellosEllasUstedes": "estarán {base}ando" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "preparar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } },
+        "present_continuous": { "affirmative": { "yo": "estoy {base}ando", "tu": "estás {base}ando", "elEllaUsted": "está {base}ando", "nosotros": "estamos {base}ando", "vosotros": "estáis {base}ando", "ellosEllasUstedes": "están {base}ando" } },
+        "past_simple": { "affirmative": { "yo": "{base}é", "tu": "{base}aste", "elEllaUsted": "{base}ó", "nosotros": "{base}amos", "vosotros": "{base}asteis", "ellosEllasUstedes": "{base}aron" } },
+        "past_continuous": { "affirmative": { "yo": "estaba {base}ando", "tu": "estabas {base}ando", "elEllaUsted": "estaba {base}ando", "nosotros": "estábamos {base}ando", "vosotros": "estabais {base}ando", "ellosEllasUstedes": "estaban {base}ando" } },
+        "future_simple": { "affirmative": { "yo": "{base}aré", "tu": "{base}arás", "elEllaUsted": "{base}ará", "nosotros": "{base}aremos", "vosotros": "{base}aréis", "ellosEllasUstedes": "{base}arán" } },
+        "future_continuous": { "affirmative": { "yo": "estaré {base}ando", "tu": "estarás {base}ando", "elEllaUsted": "estará {base}ando", "nosotros": "estaremos {base}ando", "vosotros": "estaréis {base}ando", "ellosEllasUstedes": "estarán {base}ando" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "pintar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "comprar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "esperar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "llamar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "llegar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "regresar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "buscar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "encontrar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "llevar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "dejar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "usar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "pagar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "preparar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "ayudar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "beber",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": { "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}es", "elEllaUsted": "{base}e", "nosotros": "{base}emos", "vosotros": "{base}éis", "ellosEllasUstedes": "{base}en" } } },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "escribir",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": { "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}es", "elEllaUsted": "{base}e", "nosotros": "{base}imos", "vosotros": "{base}ís", "ellosEllasUstedes": "{base}en" } } },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "leer",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": { "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}es", "elEllaUsted": "{base}e", "nosotros": "{base}emos", "vosotros": "{base}éis", "ellosEllasUstedes": "{base}en" } } },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "vender",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": { "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}es", "elEllaUsted": "{base}e", "nosotros": "{base}emos", "vosotros": "{base}éis", "ellosEllasUstedes": "{base}en" } } },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "abrir",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": { "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}es", "elEllaUsted": "{base}e", "nosotros": "{base}imos", "vosotros": "{base}ís", "ellosEllasUstedes": "{base}en" } } },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "cerrar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": { "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } } },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "correr",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": { "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}es", "elEllaUsted": "{base}e", "nosotros": "{base}emos", "vosotros": "{base}éis", "ellosEllasUstedes": "{base}en" } } },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "jugar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": { "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } } },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "cantar",
+      "language": "spanish",
+      "category": "regular",
+      "conjugation_rules": { "present_simple": { "affirmative": { "yo": "{base}o", "tu": "{base}as", "elEllaUsted": "{base}a", "nosotros": "{base}amos", "vosotros": "{base}áis", "ellosEllasUstedes": "{base}an" } } },
+      "spelling_rules": { "default": "regular" }
     }
   ]
 }
