@@ -733,6 +733,141 @@
         "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } }
       },
       "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "mangiare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } },
+        "present_continuous": { "affirmative": { "io": "sto {base}ando", "tu": "stai {base}ando", "luiLei": "sta {base}ando", "noi": "stiamo {base}ando", "voi": "state {base}ando", "loro": "stanno {base}ando" } },
+        "past_simple": { "affirmative": { "io": "{base}ai", "tu": "{base}asti", "luiLei": "{base}ò", "noi": "{base}ammo", "voi": "{base}aste", "loro": "{base}arono" } },
+        "past_continuous": { "affirmative": { "io": "ero {base}ando", "tu": "eri {base}ando", "luiLei": "era {base}ando", "noi": "eravamo {base}ando", "voi": "eravate {base}ando", "loro": "erano {base}ando" } },
+        "future_simple": { "affirmative": { "io": "{base}erò", "tu": "{base}erai", "luiLei": "{base}erà", "noi": "{base}eremo", "voi": "{base}erete", "loro": "{base}eranno" } },
+        "future_continuous": { "affirmative": { "io": "sarò {base}ando", "tu": "sarai {base}ando", "luiLei": "sarà {base}ando", "noi": "saremo {base}ando", "voi": "sarete {base}ando", "loro": "saranno {base}ando" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "cucinare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } },
+        "present_continuous": { "affirmative": { "io": "sto {base}ando", "tu": "stai {base}ando", "luiLei": "sta {base}ando", "noi": "stiamo {base}ando", "voi": "state {base}ando", "loro": "stanno {base}ando" } },
+        "past_simple": { "affirmative": { "io": "{base}ai", "tu": "{base}asti", "luiLei": "{base}ò", "noi": "{base}ammo", "voi": "{base}aste", "loro": "{base}arono" } },
+        "past_continuous": { "affirmative": { "io": "ero {base}ando", "tu": "eri {base}ando", "luiLei": "era {base}ando", "noi": "eravamo {base}ando", "voi": "eravate {base}ando", "loro": "erano {base}ando" } },
+        "future_simple": { "affirmative": { "io": "{base}erò", "tu": "{base}erai", "luiLei": "{base}erà", "noi": "{base}eremo", "voi": "{base}erete", "loro": "{base}eranno" } },
+        "future_continuous": { "affirmative": { "io": "sarò {base}ando", "tu": "sarai {base}ando", "luiLei": "sarà {base}ando", "noi": "saremo {base}ando", "voi": "sarete {base}ando", "loro": "saranno {base}ando" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "telefonare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } },
+        "present_continuous": { "affirmative": { "io": "sto {base}ando", "tu": "stai {base}ando", "luiLei": "sta {base}ando", "noi": "stiamo {base}ando", "voi": "state {base}ando", "loro": "stanno {base}ando" } },
+        "past_simple": { "affirmative": { "io": "{base}ai", "tu": "{base}asti", "luiLei": "{base}ò", "noi": "{base}ammo", "voi": "{base}aste", "loro": "{base}arono" } },
+        "past_continuous": { "affirmative": { "io": "ero {base}ando", "tu": "eri {base}ando", "luiLei": "era {base}ando", "noi": "eravamo {base}ando", "voi": "eravate {base}ando", "loro": "erano {base}ando" } },
+        "future_simple": { "affirmative": { "io": "{base}erò", "tu": "{base}erai", "luiLei": "{base}erà", "noi": "{base}eremo", "voi": "{base}erete", "loro": "{base}eranno" } },
+        "future_continuous": { "affirmative": { "io": "sarò {base}ando", "tu": "sarai {base}ando", "luiLei": "sarà {base}ando", "noi": "saremo {base}ando", "voi": "sarete {base}ando", "loro": "saranno {base}ando" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "viaggiare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } },
+        "present_continuous": { "affirmative": { "io": "sto {base}ando", "tu": "stai {base}ando", "luiLei": "sta {base}ando", "noi": "stiamo {base}ando", "voi": "state {base}ando", "loro": "stanno {base}ando" } },
+        "past_simple": { "affirmative": { "io": "{base}ai", "tu": "{base}asti", "luiLei": "{base}ò", "noi": "{base}ammo", "voi": "{base}aste", "loro": "{base}arono" } },
+        "past_continuous": { "affirmative": { "io": "ero {base}ando", "tu": "eri {base}ando", "luiLei": "era {base}ando", "noi": "eravamo {base}ando", "voi": "eravate {base}ando", "loro": "erano {base}ando" } },
+        "future_simple": { "affirmative": { "io": "{base}erò", "tu": "{base}erai", "luiLei": "{base}erà", "noi": "{base}eremo", "voi": "{base}erete", "loro": "{base}eranno" } },
+        "future_continuous": { "affirmative": { "io": "sarò {base}ando", "tu": "sarai {base}ando", "luiLei": "sarà {base}ando", "noi": "saremo {base}ando", "voi": "sarete {base}ando", "loro": "saranno {base}ando" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "desiderare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } },
+        "present_continuous": { "affirmative": { "io": "sto {base}ando", "tu": "stai {base}ando", "luiLei": "sta {base}ando", "noi": "stiamo {base}ando", "voi": "state {base}ando", "loro": "stanno {base}ando" } },
+        "past_simple": { "affirmative": { "io": "{base}ai", "tu": "{base}asti", "luiLei": "{base}ò", "noi": "{base}ammo", "voi": "{base}aste", "loro": "{base}arono" } },
+        "past_continuous": { "affirmative": { "io": "ero {base}ando", "tu": "eri {base}ando", "luiLei": "era {base}ando", "noi": "eravamo {base}ando", "voi": "eravate {base}ando", "loro": "erano {base}ando" } },
+        "future_simple": { "affirmative": { "io": "{base}erò", "tu": "{base}erai", "luiLei": "{base}erà", "noi": "{base}eremo", "voi": "{base}erete", "loro": "{base}eranno" } },
+        "future_continuous": { "affirmative": { "io": "sarò {base}ando", "tu": "sarai {base}ando", "luiLei": "sarà {base}ando", "noi": "saremo {base}ando", "voi": "sarete {base}ando", "loro": "saranno {base}ando" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "respirare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } },
+        "present_continuous": { "affirmative": { "io": "sto {base}ando", "tu": "stai {base}ando", "luiLei": "sta {base}ando", "noi": "stiamo {base}ando", "voi": "state {base}ando", "loro": "stanno {base}ando" } },
+        "past_simple": { "affirmative": { "io": "{base}ai", "tu": "{base}asti", "luiLei": "{base}ò", "noi": "{base}ammo", "voi": "{base}aste", "loro": "{base}arono" } },
+        "past_continuous": { "affirmative": { "io": "ero {base}ando", "tu": "eri {base}ando", "luiLei": "era {base}ando", "noi": "eravamo {base}ando", "voi": "eravate {base}ando", "loro": "erano {base}ando" } },
+        "future_simple": { "affirmative": { "io": "{base}erò", "tu": "{base}erai", "luiLei": "{base}erà", "noi": "{base}eremo", "voi": "{base}erete", "loro": "{base}eranno" } },
+        "future_continuous": { "affirmative": { "io": "sarò {base}ando", "tu": "sarai {base}ando", "luiLei": "sarà {base}ando", "noi": "saremo {base}ando", "voi": "sarete {base}ando", "loro": "saranno {base}ando" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "saltare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } },
+        "present_continuous": { "affirmative": { "io": "sto {base}ando", "tu": "stai {base}ando", "luiLei": "sta {base}ando", "noi": "stiamo {base}ando", "voi": "state {base}ando", "loro": "stanno {base}ando" } },
+        "past_simple": { "affirmative": { "io": "{base}ai", "tu": "{base}asti", "luiLei": "{base}ò", "noi": "{base}ammo", "voi": "{base}aste", "loro": "{base}arono" } },
+        "past_continuous": { "affirmative": { "io": "ero {base}ando", "tu": "eri {base}ando", "luiLei": "era {base}ando", "noi": "eravamo {base}ando", "voi": "eravate {base}ando", "loro": "erano {base}ando" } },
+        "future_simple": { "affirmative": { "io": "{base}erò", "tu": "{base}erai", "luiLei": "{base}erà", "noi": "{base}eremo", "voi": "{base}erete", "loro": "{base}eranno" } },
+        "future_continuous": { "affirmative": { "io": "sarò {base}ando", "tu": "sarai {base}ando", "luiLei": "sarà {base}ando", "noi": "saremo {base}ando", "voi": "sarete {base}ando", "loro": "saranno {base}ando" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "trasformare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } },
+        "present_continuous": { "affirmative": { "io": "sto {base}ando", "tu": "stai {base}ando", "luiLei": "sta {base}ando", "noi": "stiamo {base}ando", "voi": "state {base}ando", "loro": "stanno {base}ando" } },
+        "past_simple": { "affirmative": { "io": "{base}ai", "tu": "{base}asti", "luiLei": "{base}ò", "noi": "{base}ammo", "voi": "{base}aste", "loro": "{base}arono" } },
+        "past_continuous": { "affirmative": { "io": "ero {base}ando", "tu": "eri {base}ando", "luiLei": "era {base}ando", "noi": "eravamo {base}ando", "voi": "eravate {base}ando", "loro": "erano {base}ando" } },
+        "future_simple": { "affirmative": { "io": "{base}erò", "tu": "{base}erai", "luiLei": "{base}erà", "noi": "{base}eremo", "voi": "{base}erete", "loro": "{base}eranno" } },
+        "future_continuous": { "affirmative": { "io": "sarò {base}ando", "tu": "sarai {base}ando", "luiLei": "sarà {base}ando", "noi": "saremo {base}ando", "voi": "sarete {base}ando", "loro": "saranno {base}ando" } }
+      },
+      "spelling_rules": { "default": "regular" }
+    },
+    {
+      "type": "regular",
+      "base": "controllare",
+      "language": "italian",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "io": "{base}o", "tu": "{base}i", "luiLei": "{base}a", "noi": "{base}iamo", "voi": "{base}ate", "loro": "{base}ano" } },
+        "present_continuous": { "affirmative": { "io": "sto {base}ando", "tu": "stai {base}ando", "luiLei": "sta {base}ando", "noi": "stiamo {base}ando", "voi": "state {base}ando", "loro": "stanno {base}ando" } },
+        "past_simple": { "affirmative": { "io": "{base}ai", "tu": "{base}asti", "luiLei": "{base}ò", "noi": "{base}ammo", "voi": "{base}aste", "loro": "{base}arono" } },
+        "past_continuous": { "affirmative": { "io": "ero {base}ando", "tu": "eri {base}ando", "luiLei": "era {base}ando", "noi": "eravamo {base}ando", "voi": "eravate {base}ando", "loro": "erano {base}ando" } },
+        "future_simple": { "affirmative": { "io": "{base}erò", "tu": "{base}erai", "luiLei": "{base}erà", "noi": "{base}eremo", "voi": "{base}erete", "loro": "{base}eranno" } },
+        "future_continuous": { "affirmative": { "io": "sarò {base}ando", "tu": "sarai {base}ando", "luiLei": "sarà {base}ando", "noi": "saremo {base}ando", "voi": "sarete {base}ando", "loro": "saranno {base}ando" } }
+      },
+      "spelling_rules": { "default": "regular" }
     }
   ]
 }

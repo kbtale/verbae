@@ -88,40 +88,121 @@
       "language": "english",
       "category": "regular",
       "conjugation_rules": {
-        "present_simple": {
-          "affirmative": {
-            "I": "{base}",
-            "you": "{base}",
-            "he/she/it": "{base}s",
-            "we": "{base}",
-            "they": "{base}"
-          }
-        },
-        "past_simple": {
-          "affirmative": {
-            "I": "{base}ed",
-            "you": "{base}ed",
-            "he/she/it": "{base}ed",
-            "we": "{base}ed",
-            "they": "{base}ed"
-          }
-        },
-        "future_simple": {
-          "affirmative": {
-            "I": "will {base}",
-            "you": "will {base}",
-            "he/she/it": "will {base}",
-            "we": "will {base}",
-            "they": "will {base}"
-          }
-        }
+        "present_simple": { "affirmative": { "I": "{base}", "you": "{base}", "he/she/it": "{base}s", "we": "{base}", "they": "{base}" } },
+        "past_simple": { "affirmative": { "I": "{base}ed", "you": "{base}ed", "he/she/it": "{base}ed", "we": "{base}ed", "they": "{base}ed" } },
+        "future_simple": { "affirmative": { "I": "will {base}", "you": "will {base}", "he/she/it": "will {base}", "we": "will {base}", "they": "will {base}" } }
       },
-      "spelling_rules": {
-        "third_person_singular": "default",
-        "past_simple": "default",
-        "present_participle": "default"
-      }
+      "spelling_rules": { "third_person_singular": "default", "past_simple": "default", "present_participle": "default" }
     },
+    {
+      "type": "regular",
+      "base": "call",
+      "language": "english",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "I": "{base}", "you": "{base}", "he/she/it": "{base}s", "we": "{base}", "they": "{base}" } },
+        "past_simple": { "affirmative": { "I": "{base}ed", "you": "{base}ed", "he/she/it": "{base}ed", "we": "{base}ed", "they": "{base}ed" } },
+        "future_simple": { "affirmative": { "I": "will {base}", "you": "will {base}", "he/she/it": "will {base}", "we": "will {base}", "they": "will {base}" } }
+      },
+      "spelling_rules": { "third_person_singular": "default", "past_simple": "default", "present_participle": "default" }
+    },
+    {
+      "type": "regular",
+      "base": "ask",
+      "language": "english",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "I": "{base}", "you": "{base}", "he/she/it": "{base}s", "we": "{base}", "they": "{base}" } },
+        "past_simple": { "affirmative": { "I": "{base}ed", "you": "{base}ed", "he/she/it": "{base}ed", "we": "{base}ed", "they": "{base}ed" } },
+        "future_simple": { "affirmative": { "I": "will {base}", "you": "will {base}", "he/she/it": "will {base}", "we": "will {base}", "they": "will {base}" } }
+      },
+      "spelling_rules": { "third_person_singular": "default", "past_simple": "default", "present_participle": "default" }
+    },
+    {
+      "type": "regular",
+      "base": "move",
+      "language": "english",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "I": "{base}", "you": "{base}", "he/she/it": "{base}s", "we": "{base}", "they": "{base}" } },
+        "past_simple": { "affirmative": { "I": "{base}ed", "you": "{base}ed", "he/she/it": "{base}ed", "we": "{base}ed", "they": "{base}ed" } },
+        "future_simple": { "affirmative": { "I": "will {base}", "you": "will {base}", "he/she/it": "will {base}", "we": "will {base}", "they": "will {base}" } }
+      },
+      "spelling_rules": { "third_person_singular": "default", "past_simple": "default", "present_participle": "default" }
+    },
+    {
+      "type": "regular",
+      "base": "need",
+      "language": "english",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "I": "{base}", "you": "{base}", "he/she/it": "{base}s", "we": "{base}", "they": "{base}" } },
+        "past_simple": { "affirmative": { "I": "{base}ed", "you": "{base}ed", "he/she/it": "{base}ed", "we": "{base}ed", "they": "{base}ed" } },
+        "future_simple": { "affirmative": { "I": "will {base}", "you": "will {base}", "he/she/it": "will {base}", "we": "will {base}", "they": "will {base}" } }
+      },
+      "spelling_rules": { "third_person_singular": "default", "past_simple": "default", "present_participle": "default" }
+    },
+    {
+      "type": "regular",
+      "base": "cook",
+      "language": "english",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "I": "{base}", "you": "{base}", "he/she/it": "{base}s", "we": "{base}", "they": "{base}" } },
+        "past_simple": { "affirmative": { "I": "{base}ed", "you": "{base}ed", "he/she/it": "{base}ed", "we": "{base}ed", "they": "{base}ed" } },
+        "future_simple": { "affirmative": { "I": "will {base}", "you": "will {base}", "he/she/it": "will {base}", "we": "will {base}", "they": "will {base}" } }
+      },
+      "spelling_rules": { "third_person_singular": "default", "past_simple": "default", "present_participle": "default" }
+    },
+    {
+      "type": "regular",
+      "base": "travel",
+      "language": "english",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "I": "{base}", "you": "{base}", "he/she/it": "{base}s", "we": "{base}", "they": "{base}" } },
+        "past_simple": { "affirmative": { "I": "{base}ed", "you": "{base}ed", "he/she/it": "{base}ed", "we": "{base}ed", "they": "{base}ed" } },
+        "future_simple": { "affirmative": { "I": "will {base}", "you": "will {base}", "he/she/it": "will {base}", "we": "will {base}", "they": "will {base}" } }
+      },
+      "spelling_rules": { "third_person_singular": "default", "past_simple": "default", "present_participle": "default" }
+    },
+    {
+      "type": "regular",
+      "base": "visit",
+      "language": "english",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "I": "{base}", "you": "{base}", "he/she/it": "{base}s", "we": "{base}", "they": "{base}" } },
+        "past_simple": { "affirmative": { "I": "{base}ed", "you": "{base}ed", "he/she/it": "{base}ed", "we": "{base}ed", "they": "{base}ed" } },
+        "future_simple": { "affirmative": { "I": "will {base}", "you": "will {base}", "he/she/it": "will {base}", "we": "will {base}", "they": "will {base}" } }
+      },
+      "spelling_rules": { "third_person_singular": "default", "past_simple": "default", "present_participle": "default" }
+    },
+    {
+      "type": "regular",
+      "base": "answer",
+      "language": "english",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "I": "{base}", "you": "{base}", "he/she/it": "{base}s", "we": "{base}", "they": "{base}" } },
+        "past_simple": { "affirmative": { "I": "{base}ed", "you": "{base}ed", "he/she/it": "{base}ed", "we": "{base}ed", "they": "{base}ed" } },
+        "future_simple": { "affirmative": { "I": "will {base}", "you": "will {base}", "he/she/it": "will {base}", "we": "will {base}", "they": "will {base}" } }
+      },
+      "spelling_rules": { "third_person_singular": "default", "past_simple": "default", "present_participle": "default" }
+    },
+    {
+      "type": "regular",
+      "base": "follow",
+      "language": "english",
+      "category": "regular",
+      "conjugation_rules": {
+        "present_simple": { "affirmative": { "I": "{base}", "you": "{base}", "he/she/it": "{base}s", "we": "{base}", "they": "{base}" } },
+        "past_simple": { "affirmative": { "I": "{base}ed", "you": "{base}ed", "he/she/it": "{base}ed", "we": "{base}ed", "they": "{base}ed" } },
+        "future_simple": { "affirmative": { "I": "will {base}", "you": "will {base}", "he/she/it": "will {base}", "we": "will {base}", "they": "will {base}" } }
+      },
+      "spelling_rules": { "third_person_singular": "default", "past_simple": "default", "present_participle": "default" }
+    },
+
     {
       "type": "irregular",
       "base": "be",
