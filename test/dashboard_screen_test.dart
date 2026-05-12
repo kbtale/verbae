@@ -21,7 +21,7 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(seconds: 1));
 
-    expect(find.text('Progress will appear here after your first practice session.'), findsOneWidget);
-    expect(find.text('Choose a language and tense to start building stats.'), findsOneWidget);
+    expect(find.text('No practice data yet'), findsOneWidget);
+    expect(find.textContaining('Complete your first practice session'), findsOneWidget);
   });
 }

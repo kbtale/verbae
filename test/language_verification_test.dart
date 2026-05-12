@@ -86,7 +86,7 @@ void main() {
     expect(all.isNotEmpty, isTrue);
     expect(all.every((v) => v.hasTense(VerbTense.presentSimple) ||
                             v.hasTense(VerbTense.pastSimple) ||
-                            v.hasTense(VerbTense.futureSimple)), isTrue);
+                            v.hasTense(VerbTense.futureSimple),), isTrue);
   });
 
   test('each verb in Italian practice set can conjugate for each subject', () async {
