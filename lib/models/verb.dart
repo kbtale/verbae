@@ -277,7 +277,17 @@ class Verb {
         if (forms is Map<String, dynamic>) {
           final affirmative = forms['affirmative'];
           if (affirmative is Map<String, dynamic>) {
-            entries = affirmative.map((k, v) => MapEntry(k.toString(), v.toString()));
+            entries = affirmative.keys.fold<Map<String, String>>({}, (map, subject) {
+              final conjugated = conjugate(
+                tense: vt,
+                subject: subject.toString(),
+                form: VerbForm.affirmative,
+              );
+              if (conjugated.isNotEmpty) {
+                map[subject.toString()] = conjugated;
+              }
+              return map;
+            });
           }
         }
       }

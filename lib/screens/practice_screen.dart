@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/app_theme.dart';
 import 'package:flutter/services.dart';
 import '../models/verb.dart';
 import '../services/verb_service.dart';
@@ -191,6 +192,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   void _nextVerb() {
     if (_verbSet.isEmpty) return;
     if (_isAdvancing) _isAdvancing = false;
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
 
     if (_currentVerbIndex >= _verbSet.length - 1) {
       final totalTime = DateTime.now().difference(_sessionStartTime).inMinutes;
@@ -259,7 +261,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
     if (status == null) {
       borderColor = cs.outline;
     } else if (status == true) {
-      borderColor = Colors.green;
+      borderColor = AppColors.stormyTeal;
     } else {
       borderColor = cs.error;
     }
@@ -566,20 +568,20 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
                             parent: _animationController,
                             curve: Curves.elasticOut,
                           ),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                            decoration: BoxDecoration(
-                              color: Colors.green.withValues(alpha: 0.1),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Text(
-                              'Correct!',
-                              style: tt.titleMedium?.copyWith(
-                                color: Colors.green,
-                                fontWeight: FontWeight.bold,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              decoration: BoxDecoration(
+                                color: AppColors.stormyTeal.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Text(
+                                'Correct!',
+                                style: tt.titleMedium?.copyWith(
+                                  color: AppColors.stormyTeal,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
-                          ),
                         ),
                       ),
                     ],

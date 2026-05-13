@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../theme/app_theme.dart';
 import '../models/verb.dart';
 import '../services/stats_service.dart';
 import '../services/verb_service.dart';
@@ -316,7 +317,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 '${entry.value.toStringAsFixed(0)}%',
                                 style: tt.labelMedium?.copyWith(
                                   color: entry.value > 70
-                                      ? Colors.green
+                                      ? AppColors.stormyTeal
                                       : entry.value > 30
                                           ? cs.tertiary
                                           : cs.error,
@@ -334,7 +335,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               backgroundColor: cs.surfaceContainerHighest,
                               valueColor: AlwaysStoppedAnimation<Color>(
                                 entry.value > 70
-                                    ? Colors.green
+                                    ? AppColors.stormyTeal
                                     : entry.value > 30
                                         ? cs.tertiary
                                         : cs.error,

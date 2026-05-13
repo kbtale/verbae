@@ -185,9 +185,9 @@ class VerbService {
 
     if (language == Language.italian) {
       final base = entry[0] as String;
-      const presentSubjects = ['io', 'tu', 'luiLei', 'noi', 'voi', 'loro'];
-      const pastSubjects = ['io', 'tu', 'luiLei', 'noi', 'voi', 'loro'];
-      const futureSubjects = ['io', 'tu', 'luiLei', 'noi', 'voi', 'loro'];
+      const presentSubjects = ['io', 'tu', 'lui/lei', 'noi', 'voi', 'loro'];
+      const pastSubjects = ['io', 'tu', 'lui/lei', 'noi', 'voi', 'loro'];
+      const futureSubjects = ['io', 'tu', 'lui/lei', 'noi', 'voi', 'loro'];
 
       return Verb(
         id: '${language.name}_$base',
@@ -356,7 +356,7 @@ class VerbService {
             'affirmative': {
               'io': '{base}o',
               'tu': '{base}i',
-              'luiLei': '{base}a',
+              'lui/lei': '{base}a',
               'noi': '{base}iamo',
               'voi': '{base}ate',
               'loro': '{base}ano',
@@ -366,7 +366,7 @@ class VerbService {
             'affirmative': {
               'io': 'sto {base}ando',
               'tu': 'stai {base}ando',
-              'luiLei': 'sta {base}ando',
+              'lui/lei': 'sta {base}ando',
               'noi': 'stiamo {base}ando',
               'voi': 'state {base}ando',
               'loro': 'stanno {base}ando',
@@ -376,7 +376,7 @@ class VerbService {
             'affirmative': {
               'io': '{base}ai',
               'tu': '{base}asti',
-              'luiLei': '{base}ò',
+              'lui/lei': '{base}ò',
               'noi': '{base}ammo',
               'voi': '{base}aste',
               'loro': '{base}arono',
@@ -386,7 +386,7 @@ class VerbService {
             'affirmative': {
               'io': 'ero {base}ando',
               'tu': 'eri {base}ando',
-              'luiLei': 'era {base}ando',
+              'lui/lei': 'era {base}ando',
               'noi': 'eravamo {base}ando',
               'voi': 'eravate {base}ando',
               'loro': 'erano {base}ando',
@@ -396,7 +396,7 @@ class VerbService {
             'affirmative': {
               'io': '{base}erò',
               'tu': '{base}erai',
-              'luiLei': '{base}erà',
+              'lui/lei': '{base}erà',
               'noi': '{base}eremo',
               'voi': '{base}erete',
               'loro': '{base}eranno',
@@ -406,7 +406,7 @@ class VerbService {
             'affirmative': {
               'io': 'sarò {base}ando',
               'tu': 'sarai {base}ando',
-              'luiLei': 'sarà {base}ando',
+              'lui/lei': 'sarà {base}ando',
               'noi': 'saremo {base}ando',
               'voi': 'sarete {base}ando',
               'loro': 'saranno {base}ando',

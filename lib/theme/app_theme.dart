@@ -1,5 +1,15 @@
 import 'package:flutter/material.dart';
 
+class AppColors {
+  AppColors._();
+
+  static const Color graphite = Color(0xFF353535);
+  static const Color stormyTeal = Color(0xFF3C6E71);
+  static const Color white = Color(0xFFFFFFFF);
+  static const Color dustGrey = Color(0xFFD9D9D9);
+  static const Color yaleBlue = Color(0xFF284B63);
+}
+
 class AppSpacing {
   AppSpacing._();
 
@@ -16,8 +26,8 @@ class AppTheme {
 
   static ThemeData light() {
     final colorScheme = ColorScheme.fromSeed(
-      seedColor: Colors.indigo,
-      secondary: Colors.amber,
+      seedColor: AppColors.yaleBlue,
+      secondary: AppColors.stormyTeal,
       brightness: Brightness.light,
     );
 
@@ -26,8 +36,8 @@ class AppTheme {
 
   static ThemeData dark() {
     final colorScheme = ColorScheme.fromSeed(
-      seedColor: Colors.indigo,
-      secondary: Colors.amber,
+      seedColor: AppColors.yaleBlue,
+      secondary: AppColors.stormyTeal,
       brightness: Brightness.dark,
     );
 
@@ -41,7 +51,7 @@ class AppTheme {
       useMaterial3: true,
       colorScheme: colorScheme,
       visualDensity: VisualDensity.adaptivePlatformDensity,
-      scaffoldBackgroundColor: isDark ? colorScheme.surface : null,
+      scaffoldBackgroundColor: isDark ? colorScheme.surface : AppColors.white,
 
       textTheme: _textTheme(colorScheme),
       cardTheme: _cardTheme(colorScheme, isDark),
@@ -50,17 +60,17 @@ class AppTheme {
       inputDecorationTheme: _inputDecorationTheme(colorScheme),
       switchTheme: SwitchThemeData(
         thumbColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) return colorScheme.primary;
-          return colorScheme.outline;
+          if (states.contains(WidgetState.selected)) return AppColors.yaleBlue;
+          return AppColors.graphite;
         }),
         trackColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) return colorScheme.primary.withValues(alpha: 0.4);
-          return colorScheme.surfaceContainerHighest;
+          if (states.contains(WidgetState.selected)) return AppColors.yaleBlue.withOpacity(0.4);
+          return AppColors.dustGrey;
         }),
       ),
       dropdownMenuTheme: DropdownMenuThemeData(
         inputDecorationTheme: InputDecorationTheme(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: AppColors.graphite)),
         ),
       ),
     );
@@ -135,6 +145,8 @@ class AppTheme {
     return FilledButtonThemeData(
       style: FilledButton.styleFrom(
         elevation: 0,
+        backgroundColor: AppColors.yaleBlue,
+        foregroundColor: AppColors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
     );
@@ -144,6 +156,8 @@ class AppTheme {
     return OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        side: BorderSide(color: AppColors.yaleBlue, width: 1),
+        foregroundColor: AppColors.yaleBlue,
       ),
     );
   }
@@ -151,18 +165,18 @@ class AppTheme {
   static InputDecorationTheme _inputDecorationTheme(ColorScheme colorScheme) {
     return InputDecorationTheme(
       filled: true,
-      fillColor: colorScheme.surfaceContainerHighest,
+      fillColor: AppColors.dustGrey,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: colorScheme.outline),
+        borderSide: BorderSide(color: AppColors.graphite),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: colorScheme.outline),
+        borderSide: BorderSide(color: AppColors.graphite),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: colorScheme.primary, width: 2),
+        borderSide: BorderSide(color: AppColors.yaleBlue, width: 2),
       ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
     );
