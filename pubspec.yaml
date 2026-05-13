@@ -16,6 +16,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_svg: ^2.0.10
+
   # State management
   provider: ^6.1.0
 
@@ -50,6 +52,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/verbs/
+    - assets/images/logo.svg
     - assets/images/verbae-high-resolution-logo-transparent.png
 
   # An image asset can refer to one or more resolution-specific "variants", see

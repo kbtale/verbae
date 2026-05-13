@@ -1,6 +1,7 @@
 import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/practice_screen.dart';
 import 'screens/dashboard_screen.dart';
@@ -98,12 +99,24 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Verbae',
-          style: theme.textTheme.headlineSmall?.copyWith(
-            fontWeight: FontWeight.w700,
-            color: cs.onSurface,
-          ),
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SvgPicture.asset(
+              'assets/images/logo.svg',
+              height: 28,
+              width: 28,
+              colorFilter: ColorFilter.mode(cs.primary, BlendMode.srcIn),
+            ),
+            const SizedBox(width: 10),
+            Text(
+              'Verbae',
+              style: theme.textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.w700,
+                color: cs.onSurface,
+              ),
+            ),
+          ],
         ),
         centerTitle: false,
         scrolledUnderElevation: 1,
@@ -120,10 +133,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 8),
 
                 Center(
-                  child: Image.asset(
-                    'assets/images/verbae-high-resolution-logo-transparent.png',
-                    height: 100,
+                  child: SvgPicture.asset(
+                    'assets/images/logo.svg',
+                    height: 112,
                     fit: BoxFit.contain,
+                    colorFilter: ColorFilter.mode(cs.primary, BlendMode.srcIn),
                   ),
                 ),
 
