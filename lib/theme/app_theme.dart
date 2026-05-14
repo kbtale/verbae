@@ -51,6 +51,7 @@ class AppTheme {
       useMaterial3: true,
       colorScheme: colorScheme,
       visualDensity: VisualDensity.adaptivePlatformDensity,
+      materialTapTargetSize: MaterialTapTargetSize.padded,
       scaffoldBackgroundColor: isDark ? colorScheme.surface : AppColors.white,
 
       textTheme: _textTheme(colorScheme),
@@ -64,13 +65,13 @@ class AppTheme {
           return AppColors.graphite;
         }),
         trackColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) return AppColors.yaleBlue.withOpacity(0.4);
+          if (states.contains(WidgetState.selected)) return AppColors.yaleBlue.withValues(alpha: 0.4);
           return AppColors.dustGrey;
         }),
       ),
       dropdownMenuTheme: DropdownMenuThemeData(
         inputDecorationTheme: InputDecorationTheme(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: AppColors.graphite)),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: AppColors.graphite)),
         ),
       ),
     );
@@ -79,22 +80,22 @@ class AppTheme {
   static TextTheme _textTheme(ColorScheme colorScheme) {
     return TextTheme(
       headlineSmall: TextStyle(
-        fontSize: 24,
+        fontSize: 26,
         fontWeight: FontWeight.w600,
         color: colorScheme.onSurface,
       ),
       headlineMedium: TextStyle(
-        fontSize: 28,
+        fontSize: 30,
         fontWeight: FontWeight.w700,
         color: colorScheme.onSurface,
       ),
       titleLarge: TextStyle(
-        fontSize: 20,
+        fontSize: 22,
         fontWeight: FontWeight.w600,
         color: colorScheme.onSurface,
       ),
       titleMedium: TextStyle(
-        fontSize: 16,
+        fontSize: 17,
         fontWeight: FontWeight.w600,
         color: colorScheme.onSurface,
       ),
@@ -109,12 +110,12 @@ class AppTheme {
         color: colorScheme.onSurface,
       ),
       bodyMedium: TextStyle(
-        fontSize: 14,
+        fontSize: 15,
         fontWeight: FontWeight.w400,
         color: colorScheme.onSurface.withValues(alpha: 0.8),
       ),
       bodySmall: TextStyle(
-        fontSize: 12,
+        fontSize: 13,
         fontWeight: FontWeight.w400,
         color: colorScheme.onSurface.withValues(alpha: 0.6),
       ),
@@ -147,17 +148,18 @@ class AppTheme {
         elevation: 0,
         backgroundColor: AppColors.yaleBlue,
         foregroundColor: AppColors.white,
+        tapTargetSize: MaterialTapTargetSize.padded,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
     );
   }
-
   static OutlinedButtonThemeData _outlinedButtonTheme() {
     return OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        side: BorderSide(color: AppColors.yaleBlue, width: 1),
+        side: const BorderSide(color: AppColors.yaleBlue, width: 1),
         foregroundColor: AppColors.yaleBlue,
+        tapTargetSize: MaterialTapTargetSize.padded,
       ),
     );
   }
@@ -165,18 +167,20 @@ class AppTheme {
   static InputDecorationTheme _inputDecorationTheme(ColorScheme colorScheme) {
     return InputDecorationTheme(
       filled: true,
-      fillColor: AppColors.dustGrey,
+      fillColor: colorScheme.brightness == Brightness.dark
+          ? colorScheme.surfaceContainerHighest
+          : AppColors.dustGrey.withValues(alpha: 0.72),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: AppColors.graphite),
+        borderSide: const BorderSide(color: AppColors.graphite),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: AppColors.graphite),
+        borderSide: const BorderSide(color: AppColors.graphite),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: AppColors.yaleBlue, width: 2),
+        borderSide: const BorderSide(color: AppColors.yaleBlue, width: 2),
       ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
     );

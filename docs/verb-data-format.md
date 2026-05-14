@@ -68,7 +68,7 @@ An irregular verb provides explicit conjugated forms instead of templates.
       "affirmative": {
         "io": "sono",
         "tu": "sei",
-        "luiLei": "è"
+        "lui/lei": "è"
       }
     }
   }
@@ -88,7 +88,7 @@ An irregular verb provides explicit conjugated forms instead of templates.
 | Language | JSON value | File | Subjects |
 |----------|-----------|------|----------|
 | English | `"english"` | `assets/verbs/english.json` | `I`, `you`, `he/she/it`, `we`, `they` |
-| Italian | `"italian"` | `assets/verbs/italian.json` | `io`, `tu`, `luiLei`, `noi`, `voi`, `loro` |
+| Italian | `"italian"` | `assets/verbs/italian.json` | `io`, `tu`, `lui/lei`, `noi`, `voi`, `loro` |
 | Spanish | `"spanish"` | `assets/verbs/spanish.json` | `yo`, `tu`, `elEllaUsted`, `nosotros`, `vosotros`, `ellosEllasUstedes` |
 
 ## Supported Tenses

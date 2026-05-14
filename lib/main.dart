@@ -126,145 +126,183 @@ class _HomeScreenState extends State<HomeScreen> {
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 640),
             child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               children: [
                 if (_showWelcomeCard) _buildWelcomeCard(context),
 
-                const SizedBox(height: 8),
+                const SizedBox(height: 6),
 
                 Center(
-                  child: SvgPicture.asset(
-                    'assets/images/logo.svg',
-                    height: 112,
-                    fit: BoxFit.contain,
-                    colorFilter: ColorFilter.mode(cs.primary, BlendMode.srcIn),
+                  child: Semantics(
+                    label: 'Verbae logo',
+                    image: true,
+                    child: SvgPicture.asset(
+                      'assets/images/logo.svg',
+                      height: 88,
+                      fit: BoxFit.contain,
+                      colorFilter: ColorFilter.mode(cs.primary, BlendMode.srcIn),
+                      semanticsLabel: 'Verbae logo',
+                    ),
                   ),
                 ),
 
-                const SizedBox(height: 32),
+                const SizedBox(height: 20),
 
                 Text(
                   'Choose a language',
                   style: theme.textTheme.titleLarge?.copyWith(
                     color: cs.onSurface,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Select the language you want to practice',
+                  'The language cards are the main action on this screen.',
                   style: theme.textTheme.bodyMedium?.copyWith(
-                    color: cs.onSurface.withValues(alpha: 0.6),
-                  ),
-                ),
-
-                const SizedBox(height: 16),
-
-                if (_tensesLoading)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 16,
-                          height: 16,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: cs.primary,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          'Loading available tenses...',
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            color: cs.onSurface.withValues(alpha: 0.5),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                ...Language.values.map((lang) {
-                  final enabled = _isTenseAvailable(lang);
-                  final name = lang.name[0].toUpperCase() + lang.name.substring(1);
-                  final flag = _languageIcons[lang] ?? '';
-
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: _LanguageCard(
-                      name: name,
-                      flag: flag,
-                      enabled: enabled,
-                      loading: _tensesLoading,
-                      tenseName: _selectedTense.displayName,
-                      onTap: enabled ? () => _navigateToPractice(context, lang) : null,
-                    ),
-                  );
-                }),
-
-                const SizedBox(height: 16),
-
-                Text(
-                  'Practice tense',
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    color: cs.onSurface,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'Choose which tense to practice',
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: cs.onSurface.withValues(alpha: 0.6),
+                    color: cs.onSurface.withValues(alpha: 0.45),
                   ),
                 ),
 
                 const SizedBox(height: 12),
 
-                Container(
-                  decoration: BoxDecoration(
-                    color: cs.surfaceContainerHighest,
-                    borderRadius: BorderRadius.circular(12),
+                Card(
+                  elevation: 0,
+                  color: cs.surfaceContainerLow,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    side: BorderSide(color: cs.outlineVariant.withValues(alpha: 0.35)),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Primary action',
+                          style: theme.textTheme.labelSmall?.copyWith(
+                            color: cs.primary,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 0.4,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Pick a language',
+                          style: theme.textTheme.titleMedium?.copyWith(
+                            color: cs.onSurface,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Tap a card to start practicing.',
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color: cs.onSurface.withValues(alpha: 0.45),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        if (_tensesLoading)
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 12),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 16,
+                                  height: 16,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: cs.primary,
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  'Loading available tenses...',
+                                  style: theme.textTheme.bodySmall?.copyWith(
+                                    color: cs.onSurface.withValues(alpha: 0.45),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ...Language.values.map((lang) {
+                          final enabled = _isTenseAvailable(lang);
+                          final name = lang.name[0].toUpperCase() + lang.name.substring(1);
+                          final flag = _languageIcons[lang] ?? '';
+
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 12),
+                            child: _LanguageCard(
+                              name: name,
+                              flag: flag,
+                              enabled: enabled,
+                              loading: _tensesLoading,
+                              tenseName: _selectedTense.displayName,
+                              onTap: enabled ? () => _navigateToPractice(context, lang) : null,
+                            ),
+                          );
+                        }),
+                      ],
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+
+                Card(
+                  elevation: 0,
+                  color: cs.surfaceContainerLow,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    side: BorderSide(color: cs.outlineVariant.withValues(alpha: 0.22)),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
                     child: DropdownButtonFormField<VerbTense>(
                       initialValue: _selectedTense,
-                    decoration: const InputDecoration(
-                      labelText: 'Tense',
-                      border: InputBorder.none,
+                      decoration: const InputDecoration(
+                        labelText: 'Practice tense',
+                        border: InputBorder.none,
+                      ),
+                      items: VerbTense.values.map((tense) {
+                        return DropdownMenuItem(
+                          value: tense,
+                          child: Text(tense.displayName),
+                        );
+                      }).toList(),
+                      onChanged: (VerbTense? value) {
+                        if (value != null) {
+                          setState(() => _selectedTense = value);
+                        }
+                      },
                     ),
-                    items: VerbTense.values.map((tense) {
-                      return DropdownMenuItem(
-                        value: tense,
-                        child: Text(tense.displayName),
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                Semantics(
+                  button: true,
+                  label: 'Open progress dashboard',
+                  child: OutlinedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const DashboardScreen()),
                       );
-                    }).toList(),
-                    onChanged: (VerbTense? value) {
-                      if (value != null) {
-                        setState(() => _selectedTense = value);
-                      }
                     },
-                  ),
-                ),
-
-                const SizedBox(height: 32),
-
-                OutlinedButton.icon(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const DashboardScreen()),
-                    );
-                  },
-                  icon: const Icon(Icons.bar_chart_rounded, size: 20),
-                  label: const Text('View Progress'),
-                  style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                    icon: const Icon(Icons.bar_chart_rounded, size: 20),
+                    label: const Text('View Progress'),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 52),
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
                   ),
                 ),
 
-                const SizedBox(height: 24),
+                const SizedBox(height: 12),
               ],
             ),
           ),
@@ -278,9 +316,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Card(
       color: cs.primaryContainer,
       elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(14),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -297,16 +335,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 6),
             Text(
               'Pick a language, choose a tense, and practice verb conjugations. '
               'Track your progress anytime on the dashboard.',
               style: TextStyle(
-                color: cs.onPrimaryContainer.withValues(alpha: 0.8),
+                color: cs.onPrimaryContainer.withValues(alpha: 0.68),
                 height: 1.5,
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 8),
             Align(
               alignment: Alignment.centerRight,
               child: TextButton(
@@ -333,7 +371,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class _LanguageCard extends StatelessWidget {
+class _LanguageCard extends StatefulWidget {
   final String name;
   final String flag;
   final bool enabled;
@@ -351,78 +389,104 @@ class _LanguageCard extends StatelessWidget {
   });
 
   @override
+  State<_LanguageCard> createState() => _LanguageCardState();
+}
+
+class _LanguageCardState extends State<_LanguageCard> {
+  bool _isPressed = false;
+
+  void _setPressed(bool value) {
+    if (widget.onTap == null) return;
+    if (_isPressed == value) return;
+    setState(() => _isPressed = value);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
 
     String tooltipMessage;
-    if (loading) {
+    if (widget.loading) {
       tooltipMessage = 'Loading available tenses...';
-    } else if (!enabled) {
-      tooltipMessage = 'No $tenseName verbs available for $name';
+    } else if (!widget.enabled) {
+      tooltipMessage = 'No ${widget.tenseName} verbs available for ${widget.name}';
     } else {
       tooltipMessage = '';
     }
 
-    final card = Material(
-      color: enabled
-          ? cs.primaryContainer
-          : cs.surfaceContainerHighest,
-      borderRadius: BorderRadius.circular(12),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-          child: Row(
-            children: [
-              Text(
-                flag,
-                style: const TextStyle(fontSize: 28),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: enabled ? cs.onPrimaryContainer : cs.onSurface.withValues(alpha: 0.4),
-                        fontWeight: FontWeight.w600,
+    final card = AnimatedScale(
+      scale: widget.onTap == null ? 1 : (_isPressed ? 0.985 : 1),
+      duration: const Duration(milliseconds: 120),
+      curve: Curves.easeOut,
+      child: Semantics(
+        button: widget.enabled,
+        label: '${widget.name} language card',
+        hint: widget.enabled ? 'Tap to start practicing ${widget.name}' : tooltipMessage,
+        child: Material(
+          color: widget.enabled
+              ? cs.primaryContainer
+              : cs.surfaceContainerHighest,
+          borderRadius: BorderRadius.circular(12),
+          child: InkWell(
+            onTapDown: widget.onTap == null ? null : (_) => _setPressed(true),
+            onTapCancel: widget.onTap == null ? null : () => _setPressed(false),
+            onTapUp: widget.onTap == null ? null : (_) => _setPressed(false),
+            onTap: widget.onTap,
+            borderRadius: BorderRadius.circular(12),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+              child: Row(
+                children: [
+                  Text(
+                    widget.flag,
+                    style: const TextStyle(fontSize: 28),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.name,
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: widget.enabled ? cs.onPrimaryContainer : cs.onSurface.withValues(alpha: 0.4),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        if (widget.enabled)
+                          Text(
+                            '${widget.tenseName} verbs available',
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: cs.onPrimaryContainer.withValues(alpha: 0.5),
+                            ),
+                          ),
+                        if (!widget.enabled && !widget.loading)
+                          Text(
+                            'No ${widget.tenseName} verbs',
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: cs.onSurface.withValues(alpha: 0.35),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                  if (widget.enabled)
+                    Icon(
+                      Icons.chevron_right_rounded,
+                      color: cs.primary,
+                    )
+                  else if (widget.loading)
+                    SizedBox(
+                      width: 16,
+                      height: 16,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: cs.onSurface.withValues(alpha: 0.3),
                       ),
                     ),
-                    if (enabled)
-                      Text(
-                        '$tenseName verbs available',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: cs.onPrimaryContainer.withValues(alpha: 0.6),
-                        ),
-                      ),
-                    if (!enabled && !loading)
-                      Text(
-                        'No $tenseName verbs',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: cs.onSurface.withValues(alpha: 0.4),
-                        ),
-                      ),
-                  ],
-                ),
+                ],
               ),
-              if (enabled)
-                Icon(
-                  Icons.chevron_right_rounded,
-                  color: cs.primary,
-                )
-              else if (loading)
-                SizedBox(
-                  width: 16,
-                  height: 16,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: cs.onSurface.withValues(alpha: 0.3),
-                  ),
-                ),
-            ],
+            ),
           ),
         ),
       ),

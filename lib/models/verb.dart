@@ -9,6 +9,10 @@ class Verb {
   final Map<String, dynamic> spellingRules;
   final Map<String, dynamic>? irregularForms;
 
+  static const Map<String, String> _subjectAliases = {
+    'luiLei': 'lui/lei',
+  };
+
   Verb({
     required this.id,
     required this.base,
@@ -37,8 +41,11 @@ class Verb {
   String _conjugateRegular(VerbTense tense, String subject, VerbForm form) {
     final tenseStr = _getTenseString(tense);
     final formStr = _getFormString(form);
-    
-    final template = conjugationRules[tenseStr]?[formStr]?[subject];
+
+    final normalizedSubject = _normalizeSubject(subject);
+    final legacySubject = _legacySubject(normalizedSubject);
+    final template = conjugationRules[tenseStr]?[formStr]?[normalizedSubject] ??
+        conjugationRules[tenseStr]?[formStr]?[legacySubject];
     if (template == null) return '';
     return _applyTemplate(template, base);
   }
@@ -46,12 +53,14 @@ class Verb {
   String _conjugateIrregular(VerbTense tense, String subject, VerbForm form) {
     final tenseStr = _getTenseString(tense);
     final formStr = _getFormString(form);
+    final normalizedSubject = _normalizeSubject(subject);
+    final legacySubject = _legacySubject(normalizedSubject);
 
     final tenseForms = irregularForms?[tenseStr];
     if (tenseForms is Map<String, dynamic>) {
       final formForms = tenseForms[formStr];
       if (formForms is Map<String, dynamic>) {
-        final value = formForms[subject];
+        final value = formForms[normalizedSubject] ?? formForms[legacySubject];
         if (value is String) {
           return value;
         }
@@ -231,7 +240,7 @@ class Verb {
         language: json['language'],
         category: json['category'],
         isRegular: true,
-        conjugationRules: json['conjugation_rules'],
+        conjugationRules: _normalizeMapKeys(json['conjugation_rules']),
         spellingRules: json['spelling_rules'],
       );
     } else {
@@ -243,7 +252,7 @@ class Verb {
         isRegular: false,
         conjugationRules: {},
         spellingRules: {},
-        irregularForms: json['forms'],
+        irregularForms: _normalizeMapKeys(json['forms']),
       );
     }
   }
@@ -266,7 +275,9 @@ class Verb {
         if (tenseForms is Map<String, dynamic>) {
           final affirmative = tenseForms['affirmative'];
           if (affirmative is Map<String, dynamic>) {
-            entries = affirmative.map((k, v) => MapEntry(k.toString(), v.toString()));
+            entries = affirmative.map(
+              (k, v) => MapEntry(_normalizeSubject(k.toString()), v.toString()),
+            );
           }
         }
       }
@@ -278,13 +289,14 @@ class Verb {
           final affirmative = forms['affirmative'];
           if (affirmative is Map<String, dynamic>) {
             entries = affirmative.keys.fold<Map<String, String>>({}, (map, subject) {
+              final normalizedSubject = _normalizeSubject(subject.toString());
               final conjugated = conjugate(
                 tense: vt,
-                subject: subject.toString(),
+                subject: normalizedSubject,
                 form: VerbForm.affirmative,
               );
               if (conjugated.isNotEmpty) {
-                map[subject.toString()] = conjugated;
+                map[normalizedSubject] = conjugated;
               }
               return map;
             });
@@ -300,6 +312,34 @@ class Verb {
   }
 
   String get infinitive => base;
+
+  static String _normalizeSubject(String subject) {
+    return _subjectAliases[subject] ?? subject;
+  }
+
+  static String _legacySubject(String normalizedSubject) {
+    for (final alias in _subjectAliases.entries) {
+      if (alias.value == normalizedSubject) {
+        return alias.key;
+      }
+    }
+    return normalizedSubject;
+  }
+
+  static Map<String, dynamic> _normalizeMapKeys(dynamic raw) {
+    if (raw is! Map) return {};
+    final result = <String, dynamic>{};
+    for (final entry in raw.entries) {
+      final key = _normalizeSubject(entry.key.toString());
+      final value = entry.value;
+      if (value is Map) {
+        result[key] = _normalizeMapKeys(value);
+      } else {
+        result[key] = value;
+      }
+    }
+    return result;
+  }
 }
 
 // Enum for verb categories
