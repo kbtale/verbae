@@ -258,19 +258,42 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
     final correctAnswer = currentVerb.tenses[widget.tense]?[key] ?? '';
 
     Color borderColor;
+    Color fillColor;
+    IconData? suffixIcon;
+    Color? suffixIconColor;
+    String? helperText;
+    Color? helperColor;
+
     if (status == null) {
-      borderColor = cs.outline;
+      borderColor = cs.outlineVariant.withOpacity(0.35);
+      fillColor = cs.surfaceContainerLow;
     } else if (status == true) {
-      borderColor = AppColors.stormyTeal;
+      borderColor = AppColors.stormyTeal.withOpacity(0.8);
+      fillColor = AppColors.stormyTeal.withOpacity(0.12);
+      suffixIcon = Icons.check_circle_rounded;
+      suffixIconColor = AppColors.stormyTeal;
     } else {
-      borderColor = cs.error;
+      borderColor = cs.error.withOpacity(0.8);
+      fillColor = cs.errorContainer.withOpacity(0.82);
+      suffixIcon = Icons.error_outline_rounded;
+      suffixIconColor = cs.error;
+      helperText = 'Try: $correctAnswer';
+      helperColor = cs.onErrorContainer;
     }
 
     return InputDecoration(
       labelText: key,
       hintText: 'Enter $key conjugation',
-      helperText: _showCorrectAnswers && status == false ? 'Correct: $correctAnswer' : null,
-      helperStyle: TextStyle(color: cs.error),
+      helperText: _showCorrectAnswers && status == false ? helperText : null,
+      helperStyle: TextStyle(color: helperColor ?? cs.onSurfaceVariant),
+      suffixIcon: suffixIcon == null
+          ? null
+          : Icon(
+              suffixIcon,
+              color: suffixIconColor,
+              size: 20,
+            ),
+      suffixIconConstraints: const BoxConstraints(minWidth: 44, minHeight: 44),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide(color: borderColor),
@@ -280,7 +303,8 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
         borderSide: BorderSide(color: borderColor, width: 2),
       ),
       filled: true,
-      fillColor: cs.surfaceContainerHighest,
+      fillColor: fillColor,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
     );
   }
 
