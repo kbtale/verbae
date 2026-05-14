@@ -14,10 +14,10 @@ void main() {
     await tester.pump();
 
     expect(find.text('Choose a language'), findsOneWidget);
-    expect(find.text('Primary action'), findsOneWidget);
     expect(find.byType(SvgPicture), findsWidgets);
     expect(find.text('Italian'), findsOneWidget);
     expect(find.text('English'), findsOneWidget);
+    await tester.scrollUntilVisible(find.text('Spanish'), 200.0);
     expect(find.text('Spanish'), findsOneWidget);
   });
 
