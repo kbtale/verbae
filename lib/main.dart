@@ -362,7 +362,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class _LanguageCard extends StatelessWidget {
+class _LanguageCard extends StatefulWidget {
   final String name;
   final String flag;
   final bool enabled;
@@ -380,6 +380,19 @@ class _LanguageCard extends StatelessWidget {
   });
 
   @override
+  State<_LanguageCard> createState() => _LanguageCardState();
+}
+
+class _LanguageCardState extends State<_LanguageCard> {
+  bool _isPressed = false;
+
+  void _setPressed(bool value) {
+    if (widget.onTap == null) return;
+    if (_isPressed == value) return;
+    setState(() => _isPressed = value);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
 
@@ -392,68 +405,77 @@ class _LanguageCard extends StatelessWidget {
       tooltipMessage = '';
     }
 
-    final card = Material(
-      color: enabled
-          ? cs.primaryContainer
-          : cs.surfaceContainerHighest,
-      borderRadius: BorderRadius.circular(12),
-      child: InkWell(
-        onTap: onTap,
+    final card = AnimatedScale(
+      scale: widget.onTap == null ? 1 : (_isPressed ? 0.985 : 1),
+      duration: const Duration(milliseconds: 120),
+      curve: Curves.easeOut,
+      child: Material(
+        color: enabled
+            ? cs.primaryContainer
+            : cs.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-          child: Row(
-            children: [
-              Text(
-                flag,
-                style: const TextStyle(fontSize: 28),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: enabled ? cs.onPrimaryContainer : cs.onSurface.withValues(alpha: 0.4),
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    if (enabled)
-                      Text(
-                        '$tenseName verbs available',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: cs.onPrimaryContainer.withValues(alpha: 0.5),
-                        ),
-                      ),
-                    if (!enabled && !loading)
-                      Text(
-                        'No $tenseName verbs',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: cs.onSurface.withValues(alpha: 0.35),
-                        ),
-                      ),
-                  ],
+        child: InkWell(
+          onTapDown: widget.onTap == null ? null : (_) => _setPressed(true),
+          onTapCancel: widget.onTap == null ? null : () => _setPressed(false),
+          onTapUp: widget.onTap == null ? null : (_) => _setPressed(false),
+          onTap: widget.onTap,
+          borderRadius: BorderRadius.circular(12),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+            child: Row(
+              children: [
+                Text(
+                  flag,
+                  style: const TextStyle(fontSize: 28),
                 ),
-              ),
-              if (enabled)
-                Icon(
-                  Icons.chevron_right_rounded,
-                  color: cs.primary,
-                )
-              else if (loading)
-                SizedBox(
-                  width: 16,
-                  height: 16,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: cs.onSurface.withValues(alpha: 0.3),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          color: enabled ? cs.onPrimaryContainer : cs.onSurface.withValues(alpha: 0.4),
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      if (enabled)
+                        Text(
+                          '$tenseName verbs available',
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: cs.onPrimaryContainer.withValues(alpha: 0.5),
+                          ),
+                        ),
+                      if (!enabled && !loading)
+                        Text(
+                          'No $tenseName verbs',
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: cs.onSurface.withValues(alpha: 0.35),
+                          ),
+                        ),
+                    ],
                   ),
                 ),
-            ],
+                if (enabled)
+                  Icon(
+                    Icons.chevron_right_rounded,
+                    color: cs.primary,
+                  )
+                else if (loading)
+                  SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: cs.onSurface.withValues(alpha: 0.3),
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
+      ),
       ),
     );
 
