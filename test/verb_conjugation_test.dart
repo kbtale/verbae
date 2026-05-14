@@ -15,7 +15,7 @@ void main() {
           'affirmative': {
             'io': '{base}o',
             'tu': '{base}i',
-            'luiLei': '{base}a',
+            'lui/lei': '{base}a',
             'noi': '{base}iamo',
             'voi': '{base}ate',
             'loro': '{base}ano',
@@ -25,7 +25,7 @@ void main() {
           'affirmative': {
             'io': '{base}ai',
             'tu': '{base}asti',
-            'luiLei': '{base}ò',
+            'lui/lei': '{base}ò',
             'noi': '{base}ammo',
             'voi': '{base}aste',
             'loro': '{base}arono',
@@ -35,7 +35,7 @@ void main() {
           'affirmative': {
             'io': '{base}erò',
             'tu': '{base}erai',
-            'luiLei': '{base}erà',
+            'lui/lei': '{base}erà',
             'noi': '{base}eremo',
             'voi': '{base}erete',
             'loro': '{base}eranno',
@@ -85,7 +85,7 @@ void main() {
           'affirmative': {
             'io': 'sono',
             'tu': 'sei',
-            'luiLei': 'è',
+            'lui/lei': 'è',
             'noi': 'siamo',
             'voi': 'siete',
             'loro': 'sono',
@@ -95,7 +95,7 @@ void main() {
           'affirmative': {
             'io': 'ero',
             'tu': 'eri',
-            'luiLei': 'era',
+            'lui/lei': 'era',
             'noi': 'eravamo',
             'voi': 'eravate',
             'loro': 'erano',
@@ -105,7 +105,7 @@ void main() {
           'affirmative': {
             'io': 'sarò',
             'tu': 'sarai',
-            'luiLei': 'sarà',
+            'lui/lei': 'sarà',
             'noi': 'saremo',
             'voi': 'sarete',
             'loro': 'saranno',

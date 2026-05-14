@@ -70,7 +70,7 @@ class AppTheme {
       ),
       dropdownMenuTheme: DropdownMenuThemeData(
         inputDecorationTheme: InputDecorationTheme(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: AppColors.graphite)),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: const BorderSide(color: AppColors.graphite)),
         ),
       ),
     );
@@ -156,7 +156,7 @@ class AppTheme {
     return OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        side: BorderSide(color: AppColors.yaleBlue, width: 1),
+        side: const BorderSide(color: AppColors.yaleBlue, width: 1),
         foregroundColor: AppColors.yaleBlue,
       ),
     );
@@ -168,15 +168,15 @@ class AppTheme {
       fillColor: AppColors.dustGrey,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: AppColors.graphite),
+        borderSide: const BorderSide(color: AppColors.graphite),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: AppColors.graphite),
+        borderSide: const BorderSide(color: AppColors.graphite),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: AppColors.yaleBlue, width: 2),
+        borderSide: const BorderSide(color: AppColors.yaleBlue, width: 2),
       ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
     );
