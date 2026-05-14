@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -26,7 +27,8 @@ void main() {
     await tester.pump();
     await tester.pump();
 
-    expect(find.byType(DropdownButtonFormField<VerbTense>), findsOneWidget);
+    expect(find.text('Choose a language'), findsOneWidget);
+    await tester.scrollUntilVisible(find.text('View Progress'), 200.0);
     expect(find.text('View Progress'), findsOneWidget);
     expect(find.byType(SvgPicture), findsWidgets);
   });
