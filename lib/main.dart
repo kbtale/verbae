@@ -133,11 +133,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 6),
 
                 Center(
-                  child: SvgPicture.asset(
-                    'assets/images/logo.svg',
-                    height: 88,
-                    fit: BoxFit.contain,
-                    colorFilter: ColorFilter.mode(cs.primary, BlendMode.srcIn),
+                  child: Semantics(
+                    label: 'Verbae logo',
+                    image: true,
+                    child: SvgPicture.asset(
+                      'assets/images/logo.svg',
+                      height: 88,
+                      fit: BoxFit.contain,
+                      colorFilter: ColorFilter.mode(cs.primary, BlendMode.srcIn),
+                      semanticsLabel: 'Verbae logo',
+                    ),
                   ),
                 ),
 
@@ -275,20 +280,24 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 const SizedBox(height: 20),
 
-                OutlinedButton.icon(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const DashboardScreen()),
-                    );
-                  },
-                  icon: const Icon(Icons.bar_chart_rounded, size: 20),
-                  label: const Text('View Progress'),
-                  style: OutlinedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 52),
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                Semantics(
+                  button: true,
+                  label: 'Open progress dashboard',
+                  child: OutlinedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const DashboardScreen()),
+                      );
+                    },
+                    icon: const Icon(Icons.bar_chart_rounded, size: 20),
+                    label: const Text('View Progress'),
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 52),
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
                   ),
                 ),
@@ -409,69 +418,74 @@ class _LanguageCardState extends State<_LanguageCard> {
       scale: widget.onTap == null ? 1 : (_isPressed ? 0.985 : 1),
       duration: const Duration(milliseconds: 120),
       curve: Curves.easeOut,
-      child: Material(
-        color: enabled
-            ? cs.primaryContainer
-            : cs.surfaceContainerHighest,
-        borderRadius: BorderRadius.circular(12),
-        child: InkWell(
-          onTapDown: widget.onTap == null ? null : (_) => _setPressed(true),
-          onTapCancel: widget.onTap == null ? null : () => _setPressed(false),
-          onTapUp: widget.onTap == null ? null : (_) => _setPressed(false),
-          onTap: widget.onTap,
+      child: Semantics(
+        button: enabled,
+        label: '$name language card',
+        hint: enabled ? 'Tap to start practicing $name' : tooltipMessage,
+        child: Material(
+          color: enabled
+              ? cs.primaryContainer
+              : cs.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(12),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-            child: Row(
-              children: [
-                Text(
-                  flag,
-                  style: const TextStyle(fontSize: 28),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        name,
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: enabled ? cs.onPrimaryContainer : cs.onSurface.withValues(alpha: 0.4),
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      if (enabled)
-                        Text(
-                          '$tenseName verbs available',
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: cs.onPrimaryContainer.withValues(alpha: 0.5),
-                          ),
-                        ),
-                      if (!enabled && !loading)
-                        Text(
-                          'No $tenseName verbs',
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: cs.onSurface.withValues(alpha: 0.35),
-                          ),
-                        ),
-                    ],
+          child: InkWell(
+            onTapDown: widget.onTap == null ? null : (_) => _setPressed(true),
+            onTapCancel: widget.onTap == null ? null : () => _setPressed(false),
+            onTapUp: widget.onTap == null ? null : (_) => _setPressed(false),
+            onTap: widget.onTap,
+            borderRadius: BorderRadius.circular(12),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+              child: Row(
+                children: [
+                  Text(
+                    flag,
+                    style: const TextStyle(fontSize: 28),
                   ),
-                ),
-                if (enabled)
-                  Icon(
-                    Icons.chevron_right_rounded,
-                    color: cs.primary,
-                  )
-                else if (loading)
-                  SizedBox(
-                    width: 16,
-                    height: 16,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: cs.onSurface.withValues(alpha: 0.3),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          name,
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: enabled ? cs.onPrimaryContainer : cs.onSurface.withValues(alpha: 0.4),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        if (enabled)
+                          Text(
+                            '$tenseName verbs available',
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: cs.onPrimaryContainer.withValues(alpha: 0.5),
+                            ),
+                          ),
+                        if (!enabled && !loading)
+                          Text(
+                            'No $tenseName verbs',
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: cs.onSurface.withValues(alpha: 0.35),
+                            ),
+                          ),
+                      ],
                     ),
                   ),
-              ],
+                  if (enabled)
+                    Icon(
+                      Icons.chevron_right_rounded,
+                      color: cs.primary,
+                    )
+                  else if (loading)
+                    SizedBox(
+                      width: 16,
+                      height: 16,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: cs.onSurface.withValues(alpha: 0.3),
+                      ),
+                    ),
+                ],
+              ),
             ),
           ),
         ),

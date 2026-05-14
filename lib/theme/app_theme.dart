@@ -51,6 +51,7 @@ class AppTheme {
       useMaterial3: true,
       colorScheme: colorScheme,
       visualDensity: VisualDensity.adaptivePlatformDensity,
+      materialTapTargetSize: MaterialTapTargetSize.padded,
       scaffoldBackgroundColor: isDark ? colorScheme.surface : AppColors.white,
 
       textTheme: _textTheme(colorScheme),
@@ -79,22 +80,22 @@ class AppTheme {
   static TextTheme _textTheme(ColorScheme colorScheme) {
     return TextTheme(
       headlineSmall: TextStyle(
-        fontSize: 24,
+        fontSize: 26,
         fontWeight: FontWeight.w600,
         color: colorScheme.onSurface,
       ),
       headlineMedium: TextStyle(
-        fontSize: 28,
+        fontSize: 30,
         fontWeight: FontWeight.w700,
         color: colorScheme.onSurface,
       ),
       titleLarge: TextStyle(
-        fontSize: 20,
+        fontSize: 22,
         fontWeight: FontWeight.w600,
         color: colorScheme.onSurface,
       ),
       titleMedium: TextStyle(
-        fontSize: 16,
+        fontSize: 17,
         fontWeight: FontWeight.w600,
         color: colorScheme.onSurface,
       ),
@@ -109,12 +110,12 @@ class AppTheme {
         color: colorScheme.onSurface,
       ),
       bodyMedium: TextStyle(
-        fontSize: 14,
+        fontSize: 15,
         fontWeight: FontWeight.w400,
         color: colorScheme.onSurface.withValues(alpha: 0.8),
       ),
       bodySmall: TextStyle(
-        fontSize: 12,
+        fontSize: 13,
         fontWeight: FontWeight.w400,
         color: colorScheme.onSurface.withValues(alpha: 0.6),
       ),
@@ -147,6 +148,8 @@ class AppTheme {
         elevation: 0,
         backgroundColor: AppColors.yaleBlue,
         foregroundColor: AppColors.white,
+        tapTargetSize: MaterialTapTargetSize.padded,
+        tapTargetSize: MaterialTapTargetSize.padded,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
     );
@@ -154,7 +157,9 @@ class AppTheme {
 
   static OutlinedButtonThemeData _outlinedButtonTheme() {
     return OutlinedButtonThemeData(
-      style: OutlinedButton.styleFrom(
+      fillColor: colorScheme.brightness == Brightness.dark
+          ? colorScheme.surfaceContainerHighest
+          : AppColors.dustGrey.withOpacity(0.72),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         side: const BorderSide(color: AppColors.yaleBlue, width: 1),
         foregroundColor: AppColors.yaleBlue,
