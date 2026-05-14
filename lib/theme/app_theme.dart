@@ -65,7 +65,7 @@ class AppTheme {
           return AppColors.graphite;
         }),
         trackColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) return AppColors.yaleBlue.withOpacity(0.4);
+          if (states.contains(WidgetState.selected)) return AppColors.yaleBlue.withValues(alpha: 0.4);
           return AppColors.dustGrey;
         }),
       ),
@@ -149,20 +149,17 @@ class AppTheme {
         backgroundColor: AppColors.yaleBlue,
         foregroundColor: AppColors.white,
         tapTargetSize: MaterialTapTargetSize.padded,
-        tapTargetSize: MaterialTapTargetSize.padded,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
     );
   }
-
   static OutlinedButtonThemeData _outlinedButtonTheme() {
     return OutlinedButtonThemeData(
-      fillColor: colorScheme.brightness == Brightness.dark
-          ? colorScheme.surfaceContainerHighest
-          : AppColors.dustGrey.withOpacity(0.72),
+      style: OutlinedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         side: const BorderSide(color: AppColors.yaleBlue, width: 1),
         foregroundColor: AppColors.yaleBlue,
+        tapTargetSize: MaterialTapTargetSize.padded,
       ),
     );
   }
@@ -170,7 +167,9 @@ class AppTheme {
   static InputDecorationTheme _inputDecorationTheme(ColorScheme colorScheme) {
     return InputDecorationTheme(
       filled: true,
-      fillColor: AppColors.dustGrey,
+      fillColor: colorScheme.brightness == Brightness.dark
+          ? colorScheme.surfaceContainerHighest
+          : AppColors.dustGrey.withValues(alpha: 0.72),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
         borderSide: const BorderSide(color: AppColors.graphite),

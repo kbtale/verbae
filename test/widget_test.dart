@@ -1,7 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:lingua_verb_master/models/verb.dart';
 import 'package:lingua_verb_master/main.dart';
 
 void main() {
@@ -25,7 +26,7 @@ void main() {
     await tester.pump();
     await tester.pump();
 
-    expect(find.text('Practice tense'), findsOneWidget);
+    expect(find.byType(DropdownButtonFormField<VerbTense>), findsOneWidget);
     expect(find.text('View Progress'), findsOneWidget);
     expect(find.byType(SvgPicture), findsWidgets);
   });

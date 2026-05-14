@@ -270,16 +270,16 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
     Color? helperColor;
 
     if (status == null) {
-      borderColor = cs.outlineVariant.withOpacity(0.35);
+      borderColor = cs.outlineVariant.withValues(alpha: 0.35);
       fillColor = cs.surfaceContainerLow;
     } else if (status == true) {
-      borderColor = AppColors.stormyTeal.withOpacity(0.8);
-      fillColor = AppColors.stormyTeal.withOpacity(0.12);
+      borderColor = AppColors.stormyTeal.withValues(alpha: 0.8);
+      fillColor = AppColors.stormyTeal.withValues(alpha: 0.12);
       suffixIcon = Icons.check_circle_rounded;
       suffixIconColor = AppColors.stormyTeal;
     } else {
-      borderColor = cs.error.withOpacity(0.8);
-      fillColor = cs.errorContainer.withOpacity(0.82);
+      borderColor = cs.error.withValues(alpha: 0.8);
+      fillColor = cs.errorContainer.withValues(alpha: 0.82);
       suffixIcon = Icons.error_outline_rounded;
       suffixIconColor = cs.error;
       helperText = 'Try: $correctAnswer';
@@ -596,7 +596,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
                           child: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                             decoration: BoxDecoration(
-                              color: AppColors.stormyTeal.withOpacity(0.1),
+                              color: AppColors.stormyTeal.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
@@ -635,7 +635,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
       decoration: BoxDecoration(
         color: cs.surfaceContainerLow,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: cs.outlineVariant.withOpacity(0.24)),
+        border: Border.all(color: cs.outlineVariant.withValues(alpha: 0.24)),
       ),
       child: Row(
         children: [
@@ -691,7 +691,7 @@ class _SessionStat extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.08),
+          color: color.withValues(alpha: 0.08),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(

@@ -6,7 +6,10 @@ import '../services/verb_service.dart';
 import '../widgets/app_state_view.dart';
 
 class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({super.key});
+  final StatsService? statsService;
+  final VerbService? verbService;
+
+  const DashboardScreen({super.key, this.statsService, this.verbService});
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -14,7 +17,7 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   late StatsService _statsService;
-  final VerbService _verbService = VerbService();
+  late VerbService _verbService;
   final Map<Language, Map<String, double>> _progressData = {};
   Map<String, int> _practiceTimes = {};
   Map<String, dynamic> _streakInfo = {'currentStreak': 0, 'lastPractice': DateTime.now()};
@@ -28,7 +31,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Future<void> _initializeStats() async {
-    _statsService = await StatsService.create();
+    _statsService = widget.statsService ?? await StatsService.create();
+    _verbService = widget.verbService ?? VerbService();
     if (!mounted) return;
     await _loadStats();
   }

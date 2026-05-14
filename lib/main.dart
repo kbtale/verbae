@@ -170,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: cs.surfaceContainerLow,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
-                    side: BorderSide(color: cs.outlineVariant.withOpacity(0.35)),
+                    side: BorderSide(color: cs.outlineVariant.withValues(alpha: 0.35)),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(16),
@@ -253,7 +253,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: cs.surfaceContainerLow,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
-                    side: BorderSide(color: cs.outlineVariant.withOpacity(0.22)),
+                    side: BorderSide(color: cs.outlineVariant.withValues(alpha: 0.22)),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(16),
@@ -406,10 +406,10 @@ class _LanguageCardState extends State<_LanguageCard> {
     final cs = Theme.of(context).colorScheme;
 
     String tooltipMessage;
-    if (loading) {
+    if (widget.loading) {
       tooltipMessage = 'Loading available tenses...';
-    } else if (!enabled) {
-      tooltipMessage = 'No $tenseName verbs available for $name';
+    } else if (!widget.enabled) {
+      tooltipMessage = 'No ${widget.tenseName} verbs available for ${widget.name}';
     } else {
       tooltipMessage = '';
     }
@@ -419,11 +419,11 @@ class _LanguageCardState extends State<_LanguageCard> {
       duration: const Duration(milliseconds: 120),
       curve: Curves.easeOut,
       child: Semantics(
-        button: enabled,
-        label: '$name language card',
-        hint: enabled ? 'Tap to start practicing $name' : tooltipMessage,
+        button: widget.enabled,
+        label: '${widget.name} language card',
+        hint: widget.enabled ? 'Tap to start practicing ${widget.name}' : tooltipMessage,
         child: Material(
-          color: enabled
+          color: widget.enabled
               ? cs.primaryContainer
               : cs.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(12),
@@ -438,7 +438,7 @@ class _LanguageCardState extends State<_LanguageCard> {
               child: Row(
                 children: [
                   Text(
-                    flag,
+                    widget.flag,
                     style: const TextStyle(fontSize: 28),
                   ),
                   const SizedBox(width: 16),
@@ -447,22 +447,22 @@ class _LanguageCardState extends State<_LanguageCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          name,
+                          widget.name,
                           style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: enabled ? cs.onPrimaryContainer : cs.onSurface.withValues(alpha: 0.4),
+                            color: widget.enabled ? cs.onPrimaryContainer : cs.onSurface.withValues(alpha: 0.4),
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        if (enabled)
+                        if (widget.enabled)
                           Text(
-                            '$tenseName verbs available',
+                            '${widget.tenseName} verbs available',
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               color: cs.onPrimaryContainer.withValues(alpha: 0.5),
                             ),
                           ),
-                        if (!enabled && !loading)
+                        if (!widget.enabled && !widget.loading)
                           Text(
-                            'No $tenseName verbs',
+                            'No ${widget.tenseName} verbs',
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               color: cs.onSurface.withValues(alpha: 0.35),
                             ),
@@ -470,12 +470,12 @@ class _LanguageCardState extends State<_LanguageCard> {
                       ],
                     ),
                   ),
-                  if (enabled)
+                  if (widget.enabled)
                     Icon(
                       Icons.chevron_right_rounded,
                       color: cs.primary,
                     )
-                  else if (loading)
+                  else if (widget.loading)
                     SizedBox(
                       width: 16,
                       height: 16,
@@ -489,7 +489,6 @@ class _LanguageCardState extends State<_LanguageCard> {
             ),
           ),
         ),
-      ),
       ),
     );
 

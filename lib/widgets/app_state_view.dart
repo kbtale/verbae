@@ -30,12 +30,12 @@ class AppStateView extends StatelessWidget {
         constraints: const BoxConstraints(maxWidth: 480),
         child: Padding(
           padding: const EdgeInsets.all(24),
-          child: Card(
+            child: Card(
             elevation: 0,
             color: cs.surfaceContainerLow,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(24),
-              side: BorderSide(color: cs.outlineVariant.withOpacity(0.24)),
+              side: BorderSide(color: cs.outlineVariant.withValues(alpha: 0.24)),
             ),
             child: Padding(
               padding: const EdgeInsets.all(24),
@@ -52,7 +52,7 @@ class AppStateView extends StatelessWidget {
                       width: 72,
                       height: 72,
                       decoration: BoxDecoration(
-                        color: AppColors.yaleBlue.withOpacity(0.10),
+                        color: AppColors.yaleBlue.withValues(alpha: 0.10),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Icon(icon, size: 36, color: AppColors.yaleBlue),

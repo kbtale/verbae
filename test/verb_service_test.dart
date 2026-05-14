@@ -3,6 +3,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:lingua_verb_master/models/verb.dart';
 import 'package:lingua_verb_master/services/verb_service.dart';
 
+class _FakeVerbService extends VerbService {
+  final List<Verb> verbs;
+
+  _FakeVerbService(this.verbs);
+
+  @override
+  Future<List<Verb>> fetchVerbs(Language language) async => verbs;
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -91,10 +100,24 @@ void main() {
   });
 
   test('generatePracticeSet returns empty when no verbs match tense', () async {
-    final service = VerbService();
+    final service = _FakeVerbService([
+      Verb(
+        id: 'italian_parlare',
+        base: 'parlare',
+        language: 'italian',
+        category: 'regular',
+        isRegular: true,
+        conjugationRules: {
+          'present_simple': {
+            'affirmative': {'io': '{base}o'},
+          },
+        },
+        spellingRules: const {'default': 'regular'},
+      ),
+    ]);
 
     final verbs = await service.generatePracticeSet(
-      language: Language.spanish,
+      language: Language.italian,
       tense: VerbTense.futureContinuous,
       setSize: 5,
     );
