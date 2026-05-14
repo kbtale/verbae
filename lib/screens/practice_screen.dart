@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import '../models/verb.dart';
 import '../services/verb_service.dart';
 import '../services/stats_service.dart';
+import '../widgets/app_state_view.dart';
 
 class PracticeScreen extends StatefulWidget {
   final Language language;
@@ -349,7 +350,11 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
           title: Text(widget.tense.displayName),
           scrolledUnderElevation: 1,
         ),
-        body: const Center(child: CircularProgressIndicator()),
+        body: const AppStateView(
+          title: 'Loading practice set',
+          message: 'Fetching verbs for this session...',
+          isLoading: true,
+        ),
       );
     }
 
@@ -359,29 +364,18 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
           title: Text(widget.tense.displayName),
           scrolledUnderElevation: 1,
         ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.error_outline_rounded, size: 48, color: cs.error),
-                const SizedBox(height: 16),
-                Text(_loadErrorMessage!, textAlign: TextAlign.center),
-                const SizedBox(height: 16),
-                FilledButton(
-                  onPressed: () {
-                    setState(() {
-                      _isLoading = true;
-                      _loadErrorMessage = null;
-                    });
-                    _loadVerbSet();
-                  },
-                  child: const Text('Retry'),
-                ),
-              ],
-            ),
-          ),
+        body: AppStateView(
+          title: 'Unable to load practice set',
+          message: _loadErrorMessage!,
+          icon: Icons.error_outline_rounded,
+          actionLabel: 'Retry',
+          onAction: () {
+            setState(() {
+              _isLoading = true;
+              _loadErrorMessage = null;
+            });
+            _loadVerbSet();
+          },
         ),
       );
     }
@@ -392,27 +386,10 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
           title: Text(widget.tense.displayName),
           scrolledUnderElevation: 1,
         ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.search_off_rounded, size: 48, color: cs.onSurface.withValues(alpha: 0.3)),
-                const SizedBox(height: 16),
-                Text(
-                  'No verbs are available for ${widget.tense.displayName} in this language.',
-                  textAlign: TextAlign.center,
-                  style: tt.bodyLarge,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Try selecting a different tense.',
-                  style: tt.bodySmall?.copyWith(color: cs.onSurface.withValues(alpha: 0.5)),
-                ),
-              ],
-            ),
-          ),
+        body: AppStateView(
+          title: 'No verbs available',
+          message: 'No verbs are available for ${widget.tense.displayName} in this language. Try selecting a different tense.',
+          icon: Icons.search_off_rounded,
         ),
       );
     }

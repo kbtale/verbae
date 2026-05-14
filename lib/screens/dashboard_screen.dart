@@ -3,6 +3,7 @@ import '../theme/app_theme.dart';
 import '../models/verb.dart';
 import '../services/stats_service.dart';
 import '../services/verb_service.dart';
+import '../widgets/app_state_view.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -88,7 +89,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
           title: const Text('Dashboard'),
           scrolledUnderElevation: 1,
         ),
-        body: const Center(child: CircularProgressIndicator()),
+        body: const AppStateView(
+          title: 'Loading dashboard',
+          message: 'Fetching your practice stats and progress.',
+          isLoading: true,
+        ),
       );
     }
 
@@ -125,46 +130,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               ),
             )
-          : _buildEmptyState(cs, tt),
+          : _buildEmptyState(),
     );
   }
 
-  Widget _buildEmptyState(ColorScheme cs, TextTheme tt) {
-    return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 640),
-        child: ListView(
-          children: [
-            const SizedBox(height: 80),
-            Icon(Icons.school_rounded, size: 64, color: cs.onSurface.withValues(alpha: 0.15)),
-            const SizedBox(height: 24),
-            Text(
-              'No practice data yet',
-              textAlign: TextAlign.center,
-              style: tt.headlineSmall?.copyWith(
-                color: cs.onSurface.withValues(alpha: 0.6),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Complete your first practice session\nto start tracking progress.',
-              textAlign: TextAlign.center,
-              style: tt.bodyMedium?.copyWith(
-                color: cs.onSurface.withValues(alpha: 0.4),
-                height: 1.5,
-              ),
-            ),
-            const SizedBox(height: 24),
-            Center(
-              child: IconButton(
-                icon: const Icon(Icons.refresh_rounded),
-                tooltip: 'Refresh',
-                onPressed: _loadStats,
-              ),
-            ),
-          ],
-        ),
-      ),
+  Widget _buildEmptyState() {
+    return AppStateView(
+      title: 'No practice data yet',
+      message: 'Complete your first practice session to start tracking progress.',
+      icon: Icons.school_rounded,
+      actionLabel: 'Refresh',
+      onAction: _loadStats,
     );
   }
 
