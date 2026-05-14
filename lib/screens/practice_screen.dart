@@ -38,6 +38,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   bool _isAdvancing = false;
   int _sessionCorrect = 0;
   int _sessionTotal = 0;
+  int _correctStreak = 0;
   DateTime? _practiceStartTime;
   DateTime _sessionStartTime = DateTime.now();
   bool _canPop = false;
@@ -131,6 +132,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
     if (allCorrect) {
       HapticFeedback.lightImpact();
     } else {
+      _correctStreak = 0;
       HapticFeedback.heavyImpact();
       final wrongFields = _validationStatus.entries
           .where((e) => e.value == false)
@@ -156,6 +158,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
 
     _sessionTotal++;
     if (allCorrect) _sessionCorrect++;
+    if (allCorrect) _correctStreak++;
 
     if (_statsReady) {
       await _statsService!.recordPractice(
@@ -236,6 +239,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
                   _sessionStartTime = DateTime.now();
                   _sessionCorrect = 0;
                   _sessionTotal = 0;
+                  _correctStreak = 0;
                   _resetControllers();
                 });
               },
@@ -475,14 +479,24 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
             constraints: const BoxConstraints(maxWidth: 640),
             child: Column(
               children: [
-                LinearProgressIndicator(
-                  value: progress,
-                  minHeight: 4,
-                  backgroundColor: cs.surfaceContainerHighest,
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
+                  child: _buildSessionStrip(cs, tt),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(999),
+                    child: LinearProgressIndicator(
+                      value: progress,
+                      minHeight: 4,
+                      backgroundColor: cs.surfaceContainerHighest,
+                    ),
+                  ),
                 ),
                 Expanded(
                   child: ListView(
-                    padding: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                     children: [
                       Card(
                         elevation: 0,
@@ -496,11 +510,21 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
                               Row(
                                 children: [
                                   Expanded(
-                                    child: Text(
-                                      currentVerb.infinitive,
-                                      style: tt.headlineSmall?.copyWith(
-                                        fontWeight: FontWeight.w600,
-                                        color: cs.onSurface,
+                                    child: AnimatedSwitcher(
+                                      duration: const Duration(milliseconds: 220),
+                                      transitionBuilder: (child, animation) {
+                                        return FadeTransition(
+                                          opacity: animation,
+                                          child: ScaleTransition(scale: animation, child: child),
+                                        );
+                                      },
+                                      child: Text(
+                                        currentVerb.infinitive,
+                                        key: ValueKey(currentVerb.id),
+                                        style: tt.headlineSmall?.copyWith(
+                                          fontWeight: FontWeight.w700,
+                                          color: cs.onSurface,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -525,7 +549,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
                                 Text(
                                   'Type the conjugation below and tap Check Answers',
                                   style: tt.bodySmall?.copyWith(
-                                    color: cs.onSurface.withValues(alpha: 0.5),
+                                    color: cs.onSurface.withValues(alpha: 0.45),
                                     fontStyle: FontStyle.italic,
                                   ),
                                 ),
@@ -590,22 +614,22 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
                         child: ScaleTransition(
                           scale: CurvedAnimation(
                             parent: _animationController,
-                            curve: Curves.elasticOut,
+                            curve: Curves.easeOutBack,
                           ),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                              decoration: BoxDecoration(
-                                color: AppColors.stormyTeal.withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Text(
-                                'Correct!',
-                                style: tt.titleMedium?.copyWith(
-                                  color: AppColors.stormyTeal,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: AppColors.stormyTeal.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              'Correct!',
+                              style: tt.titleMedium?.copyWith(
+                                color: AppColors.stormyTeal,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
+                          ),
                         ),
                       ),
                     ],
@@ -624,5 +648,103 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
     _disposeControllers();
     _animationController.dispose();
     super.dispose();
+  }
+
+  Widget _buildSessionStrip(ColorScheme cs, TextTheme tt) {
+    final accuracy = _sessionTotal == 0 ? 0 : ((_sessionCorrect / _sessionTotal) * 100).round();
+
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: cs.surfaceContainerLow,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: cs.outlineVariant.withOpacity(0.24)),
+      ),
+      child: Row(
+        children: [
+          _SessionStat(
+            label: 'Verb',
+            value: '${_currentVerbIndex + 1}/${_verbSet.length}',
+            icon: Icons.text_snippet_rounded,
+            color: cs.primary,
+            textTheme: tt,
+          ),
+          const SizedBox(width: 8),
+          _SessionStat(
+            label: 'Accuracy',
+            value: '$accuracy%',
+            icon: Icons.bolt_rounded,
+            color: AppColors.stormyTeal,
+            textTheme: tt,
+          ),
+          const SizedBox(width: 8),
+          _SessionStat(
+            label: 'Streak',
+            value: '$_correctStreak',
+            icon: Icons.local_fire_department_rounded,
+            color: cs.tertiary,
+            textTheme: tt,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SessionStat extends StatelessWidget {
+  final String label;
+  final String value;
+  final IconData icon;
+  final Color color;
+  final TextTheme textTheme;
+
+  const _SessionStat({
+    required this.label,
+    required this.value,
+    required this.icon,
+    required this.color,
+    required this.textTheme,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
+
+    return Expanded(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        decoration: BoxDecoration(
+          color: color.withOpacity(0.08),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, size: 18, color: color),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    label,
+                    style: textTheme.labelSmall?.copyWith(
+                      color: cs.onSurface.withValues(alpha: 0.55),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Text(
+                    value,
+                    style: textTheme.titleMedium?.copyWith(
+                      color: cs.onSurface,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
