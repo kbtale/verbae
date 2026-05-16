@@ -56,3 +56,4 @@ app.*.map.json
 !docs/verb-data-format.md
 .agents/
 skills-lock.json
+parse_md_verbs.py

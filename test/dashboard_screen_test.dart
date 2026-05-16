@@ -8,7 +8,7 @@ import 'package:lingua_verb_master/services/stats_service.dart';
 import 'package:lingua_verb_master/services/verb_service.dart';
 
 class _FakeStatsService extends StatsService {
-  _FakeStatsService(SharedPreferences prefs) : super(prefs);
+  _FakeStatsService(super.prefs);
 
   @override
   Future<Map<String, int>> getPracticeTimes() async => {};
