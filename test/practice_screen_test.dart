@@ -21,11 +21,14 @@ class _FakeVerbService extends VerbService {
     int setSize = 10,
   }) async {
     final filtered = verbs.where((v) => v.hasTense(tense)).toList();
-    if (filtered.length > setSize) {
-      filtered.shuffle();
-      return filtered.take(setSize).toList();
+    final categorized = category != null
+        ? filtered.where((v) => v.category == category).toList()
+        : filtered;
+    if (categorized.length > setSize) {
+      categorized.shuffle();
+      return categorized.take(setSize).toList();
     }
-    return filtered;
+    return categorized;
   }
 }
 
@@ -110,5 +113,44 @@ void main() {
 
     expect(find.textContaining('No verbs are available'), findsOneWidget);
     expect(find.byType(CircularProgressIndicator), findsNothing);
+  });
+
+  testWidgets('category dropdown persists selection and filters verbs', (tester) async {
+    SharedPreferences.setMockInitialValues({'practice_category': 'Irregular'});
+
+    final irregular = Verb(
+      id: 'italian_irreg',
+      base: 'irreg',
+      language: 'italian',
+      category: 'irregular',
+      isRegular: false,
+      conjugationRules: {
+        'present_simple': {
+          'affirmative': {'io': 'irrego', 'tu': 'irregi'}
+        }
+      },
+      spellingRules: const {'default': 'irregular'},
+    );
+
+    final fakeService = _FakeVerbService([
+      _makeVerb('parlare', 'italian', [VerbTense.presentSimple]),
+      irregular,
+    ]);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: PracticeScreen(
+          language: Language.italian,
+          tense: VerbTense.presentSimple,
+          verbService: fakeService,
+        ),
+      ),
+    );
+    await tester.pump();
+    await tester.pump();
+
+    expect(find.byType(DropdownButton<String>), findsOneWidget);
+    expect(find.text('irreg'), findsOneWidget);
+    expect(find.text('parlare'), findsNothing);
   });
 }

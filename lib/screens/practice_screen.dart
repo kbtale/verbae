@@ -5,6 +5,7 @@ import '../models/verb.dart';
 import '../services/verb_service.dart';
 import '../services/stats_service.dart';
 import '../widgets/app_state_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PracticeScreen extends StatefulWidget {
   final Language language;
@@ -45,12 +46,13 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   bool _canPop = false;
   bool _isLoading = true;
   String? _loadErrorMessage;
+  String _selectedCategoryLabel = 'All';
 
   @override
   void initState() {
     super.initState();
     _verbService = widget.verbService ?? VerbService();
-    _loadVerbSet();
+    _loadPersistedCategory().then((_) => _loadVerbSet());
     _initializeStatsService();
     _animationController = AnimationController(
       vsync: this,
@@ -68,10 +70,16 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
 
   Future<void> _loadVerbSet() async {
     try {
+      final String? categoryValue = widget.category != null
+          ? widget.category!.name
+          : (_selectedCategoryLabel == 'All'
+              ? null
+              : _selectedCategoryLabel.toLowerCase());
+
       final verbs = await _verbService.generatePracticeSet(
         language: widget.language,
         tense: widget.tense,
-        category: widget.category?.name,
+        category: categoryValue,
       );
       if (!mounted) return;
       setState(() {
@@ -89,6 +97,28 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
         _loadErrorMessage = 'Unable to load practice set. Please try again.';
         _isLoading = false;
       });
+    }
+  }
+
+  Future<void> _loadPersistedCategory() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final saved = prefs.getString('practice_category') ?? 'All';
+      if (!mounted) return;
+      setState(() {
+        _selectedCategoryLabel = saved;
+      });
+    } catch (_) {
+      // ignore errors and keep default
+    }
+  }
+
+  Future<void> _persistCategory(String label) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('practice_category', label);
+    } catch (_) {
+      // ignore persistence failures
     }
   }
 
@@ -434,6 +464,27 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
+                // Category filter dropdown
+                DropdownButton<String>(
+                  value: _selectedCategoryLabel,
+                  items: const [
+                    DropdownMenuItem(value: 'All', child: Text('All')),
+                    DropdownMenuItem(value: 'Regular', child: Text('Regular')),
+                    DropdownMenuItem(value: 'Irregular', child: Text('Irregular')),
+                  ],
+                  onChanged: (val) {
+                    if (val == null) return;
+                    setState(() {
+                      _selectedCategoryLabel = val;
+                      _isLoading = true;
+                    });
+                    _persistCategory(val);
+                    _loadVerbSet();
+                  },
+                ),
+
+                const SizedBox(width: 8),
+
                 Text('Master', style: tt.bodySmall?.copyWith(color: cs.onSurface.withValues(alpha: 0.6))),
                 Switch(
                   value: _masterMode,
