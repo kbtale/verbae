@@ -155,96 +155,49 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  'The language cards are the main action on this screen.',
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: cs.onSurface.withValues(alpha: 0.45),
-                  ),
-                ),
-
                 const SizedBox(height: 12),
 
-                Card(
-                  elevation: 0,
-                  color: cs.surfaceContainerLow,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    side: BorderSide(color: cs.outlineVariant.withValues(alpha: 0.35)),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                if (_tensesLoading)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: Row(
                       children: [
-                        Text(
-                          'Primary action',
-                          style: theme.textTheme.labelSmall?.copyWith(
+                        SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
                             color: cs.primary,
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: 0.4,
                           ),
                         ),
-                        const SizedBox(height: 4),
+                        const SizedBox(width: 8),
                         Text(
-                          'Pick a language',
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            color: cs.onSurface,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          'Tap a card to start practicing.',
+                          'Loading available tenses...',
                           style: theme.textTheme.bodySmall?.copyWith(
                             color: cs.onSurface.withValues(alpha: 0.45),
                           ),
                         ),
-                        const SizedBox(height: 16),
-                        if (_tensesLoading)
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 12),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width: 16,
-                                  height: 16,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: cs.primary,
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                Text(
-                                  'Loading available tenses...',
-                                  style: theme.textTheme.bodySmall?.copyWith(
-                                    color: cs.onSurface.withValues(alpha: 0.45),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ...Language.values.map((lang) {
-                          final enabled = _isTenseAvailable(lang);
-                          final name = lang.name[0].toUpperCase() + lang.name.substring(1);
-                          final flag = _languageIcons[lang] ?? '';
-
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 12),
-                            child: _LanguageCard(
-                              name: name,
-                              flag: flag,
-                              enabled: enabled,
-                              loading: _tensesLoading,
-                              tenseName: _selectedTense.displayName,
-                              onTap: enabled ? () => _navigateToPractice(context, lang) : null,
-                            ),
-                          );
-                        }),
                       ],
                     ),
                   ),
-                ),
+
+                ...Language.values.map((lang) {
+                  final enabled = _isTenseAvailable(lang);
+                  final name = lang.name[0].toUpperCase() + lang.name.substring(1);
+                  final flag = _languageIcons[lang] ?? '';
+
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: _LanguageCard(
+                      name: name,
+                      flag: flag,
+                      enabled: enabled,
+                      loading: _tensesLoading,
+                      tenseName: _selectedTense.displayName,
+                      onTap: enabled ? () => _navigateToPractice(context, lang) : null,
+                    ),
+                  );
+                }),
 
                 const SizedBox(height: 16),
 

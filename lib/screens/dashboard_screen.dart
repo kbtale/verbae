@@ -111,10 +111,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
             tooltip: 'Home',
             onPressed: () => Navigator.pop(context),
           ),
-          IconButton(
-            icon: const Icon(Icons.refresh_rounded),
-            onPressed: _loadStats,
-          ),
         ],
       ),
       body: _hasActivity
@@ -139,12 +135,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget _buildEmptyState() {
-    return AppStateView(
+    return const AppStateView(
       title: 'No practice data yet',
       message: 'Complete your first practice session to start tracking progress.',
       icon: Icons.school_rounded,
-      actionLabel: 'Refresh',
-      onAction: _loadStats,
     );
   }
 
