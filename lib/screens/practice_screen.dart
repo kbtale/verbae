@@ -52,8 +52,7 @@ class _PracticeScreenState extends State<PracticeScreen> with SingleTickerProvid
   void initState() {
     super.initState();
     _verbService = widget.verbService ?? VerbService();
-    _loadPersistedCategory();
-    _loadVerbSet();
+    _loadPersistedCategory().then((_) => _loadVerbSet());
     _initializeStatsService();
     _animationController = AnimationController(
       vsync: this,
