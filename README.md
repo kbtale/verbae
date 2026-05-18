@@ -1,7 +1,5 @@
 ## Verbae
 
-https://github.com/user-attachments/assets/fd2f39b6-b2d3-42bd-93a5-15299c435ac7
-
 A multilingual verb practice app (English / Spanish / Italian) built with Flutter.
 Provides practice sessions, configurable practice sets, a Markdown-driven verb
 ingestion pipeline, and desktop + Android builds.
